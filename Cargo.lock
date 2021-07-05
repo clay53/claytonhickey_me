@@ -109,15 +109,28 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
+name = "chrono"
+version = "0.4.19"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "670ad68c9088c2a963aaa298cb369688cf3f9465ce5e2d4ca10e6e0098a1ce73"
+dependencies = [
+ "libc",
+ "num-integer",
+ "num-traits",
+ "time 0.1.43",
+ "winapi",
+]
+
+[[package]]
 name = "claytonhickey_me"
 version = "0.1.0"
 dependencies = [
+ "chrono",
  "diesel",
  "dotenv",
  "maud",
  "rocket",
- "serde",
- "serde_json",
+ "rocket_sync_db_pools",
 ]
 
 [[package]]
@@ -139,7 +152,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ffdf8865bac3d9a3bde5bde9088ca431b11f5d37c7a578b8086af77248b76627"
 dependencies = [
  "percent-encoding",
- "time",
+ "time 0.2.27",
  "version_check",
 ]
 
@@ -190,21 +203,22 @@ dependencies = [
 
 [[package]]
 name = "diesel"
-version = "1.4.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bba51ca66f57261fd17cadf8b73e4775cc307d0521d855de3f5de91a8f074e0e"
+version = "2.0.0"
+source = "git+https://github.com/diesel-rs/diesel?rev=72bfb356b8038e993634f095b57e54fdf1cfd8f9#72bfb356b8038e993634f095b57e54fdf1cfd8f9"
 dependencies = [
  "bitflags",
  "byteorder",
+ "chrono",
  "diesel_derives",
+ "itoa",
  "pq-sys",
+ "r2d2",
 ]
 
 [[package]]
 name = "diesel_derives"
-version = "1.4.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "45f5098f628d02a7a0f68ddba586fb61e80edec3bdc1be3b921f4ceec60858d3"
+version = "2.0.0"
+source = "git+https://github.com/diesel-rs/diesel?rev=72bfb356b8038e993634f095b57e54fdf1cfd8f9#72bfb356b8038e993634f095b57e54fdf1cfd8f9"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -552,7 +566,7 @@ dependencies = [
 [[package]]
 name = "maud"
 version = "0.22.2"
-source = "git+https://github.com/clay53/maud?rev=086e6089a3835588f82bec21d610a7027d1628e0#086e6089a3835588f82bec21d610a7027d1628e0"
+source = "git+https://github.com/clay53/maud?branch=mbr/rocket-0.5#b6389753e14fcefb4e55c18f82e2744fd0627833"
 dependencies = [
  "maud_htmlescape",
  "maud_macros",
@@ -562,12 +576,12 @@ dependencies = [
 [[package]]
 name = "maud_htmlescape"
 version = "0.17.0"
-source = "git+https://github.com/clay53/maud?rev=086e6089a3835588f82bec21d610a7027d1628e0#086e6089a3835588f82bec21d610a7027d1628e0"
+source = "git+https://github.com/clay53/maud?branch=mbr/rocket-0.5#b6389753e14fcefb4e55c18f82e2744fd0627833"
 
 [[package]]
 name = "maud_macros"
 version = "0.22.2"
-source = "git+https://github.com/clay53/maud?rev=086e6089a3835588f82bec21d610a7027d1628e0#086e6089a3835588f82bec21d610a7027d1628e0"
+source = "git+https://github.com/clay53/maud?branch=mbr/rocket-0.5#b6389753e14fcefb4e55c18f82e2744fd0627833"
 dependencies = [
  "maud_htmlescape",
  "proc-macro-error",
@@ -638,6 +652,25 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3f6bb902e437b6d86e03cce10a7e2af662292c5dfef23b65899ea3ac9354ad44"
 dependencies = [
  "winapi",
+]
+
+[[package]]
+name = "num-integer"
+version = "0.1.44"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d2cc698a63b549a70bc047073d2949cce27cd1c7b0a4a862d08a8031bc2801db"
+dependencies = [
+ "autocfg",
+ "num-traits",
+]
+
+[[package]]
+name = "num-traits"
+version = "0.2.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9a64b1ec5cda2586e284722486d802acf1f7dbdc623e2bfc57e65ca1cd099290"
+dependencies = [
+ "autocfg",
 ]
 
 [[package]]
@@ -805,6 +838,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "r2d2"
+version = "0.8.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "545c5bc2b880973c9c10e4067418407a0ccaa3091781d1671d46eb35107cb26f"
+dependencies = [
+ "log",
+ "parking_lot",
+ "scheduled-thread-pool",
+]
+
+[[package]]
 name = "rand"
 version = "0.8.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -885,7 +929,7 @@ dependencies = [
 [[package]]
 name = "rocket"
 version = "0.5.0-rc.1"
-source = "git+https://github.com/SergioBenitez/Rocket?tag=v0.5.0-rc.1#c028d63e5ba275927424397fe9d67cfebdc138ec"
+source = "git+https://github.com/clay53/Rocket#ca6355f3fa11cb36a9a48d4ac55255d59df80655"
 dependencies = [
  "async-stream",
  "async-trait",
@@ -910,7 +954,7 @@ dependencies = [
  "serde",
  "state",
  "tempfile",
- "time",
+ "time 0.2.27",
  "tokio",
  "tokio-stream",
  "tokio-util",
@@ -922,7 +966,7 @@ dependencies = [
 [[package]]
 name = "rocket_codegen"
 version = "0.5.0-rc.1"
-source = "git+https://github.com/SergioBenitez/Rocket?tag=v0.5.0-rc.1#c028d63e5ba275927424397fe9d67cfebdc138ec"
+source = "git+https://github.com/clay53/Rocket#ca6355f3fa11cb36a9a48d4ac55255d59df80655"
 dependencies = [
  "devise",
  "glob",
@@ -937,7 +981,7 @@ dependencies = [
 [[package]]
 name = "rocket_http"
 version = "0.5.0-rc.1"
-source = "git+https://github.com/SergioBenitez/Rocket?tag=v0.5.0-rc.1#c028d63e5ba275927424397fe9d67cfebdc138ec"
+source = "git+https://github.com/clay53/Rocket#ca6355f3fa11cb36a9a48d4ac55255d59df80655"
 dependencies = [
  "cookie",
  "either",
@@ -956,9 +1000,31 @@ dependencies = [
  "smallvec",
  "stable-pattern",
  "state",
- "time",
+ "time 0.2.27",
  "tokio",
  "uncased",
+]
+
+[[package]]
+name = "rocket_sync_db_pools"
+version = "0.1.0-rc.1"
+source = "git+https://github.com/clay53/Rocket#ca6355f3fa11cb36a9a48d4ac55255d59df80655"
+dependencies = [
+ "diesel",
+ "r2d2",
+ "rocket",
+ "rocket_sync_db_pools_codegen",
+ "serde",
+ "tokio",
+]
+
+[[package]]
+name = "rocket_sync_db_pools_codegen"
+version = "0.1.0-rc.1"
+source = "git+https://github.com/clay53/Rocket#ca6355f3fa11cb36a9a48d4ac55255d59df80655"
+dependencies = [
+ "devise",
+ "quote",
 ]
 
 [[package]]
@@ -981,6 +1047,15 @@ name = "ryu"
 version = "1.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "71d301d4193d031abdd79ff7e3dd721168a9572ef3fe51a1517aba235bd8f86e"
+
+[[package]]
+name = "scheduled-thread-pool"
+version = "0.2.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dc6f74fd1204073fa02d5d5d68bec8021be4c38690b61264b2fdb48083d0e7d7"
+dependencies = [
+ "parking_lot",
+]
 
 [[package]]
 name = "scoped-tls"
@@ -1181,6 +1256,16 @@ dependencies = [
  "rand",
  "redox_syscall",
  "remove_dir_all",
+ "winapi",
+]
+
+[[package]]
+name = "time"
+version = "0.1.43"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ca8a50ef2360fbd1eeb0ecd46795a87a19024eb4b53c5dc916ca1fd95fe62438"
+dependencies = [
+ "libc",
  "winapi",
 ]
 

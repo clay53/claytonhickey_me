@@ -6,13 +6,19 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-diesel = { version = "1.4.4", features = ["postgres"] }
+chrono = "0.4.19"
+diesel = { version = "2.0.0", features = ["postgres", "chrono"] }
 dotenv = "0.15.0"
 maud = { version = "0.22.2", features = ["rocket"] }
 rocket = "0.5.0-rc.1"
-serde = { version = "1.0.126", features = ["derive"] }
-serde_json = "1.0.64"
+
+[dependencies.rocket_sync_db_pools]
+version = "0.1.0-rc.1"
+default-features = false
+features = ["diesel_postgres_pool"]
 
 [patch.crates-io]
-maud = { git = "https://github.com/clay53/maud", rev = "086e6089a3835588f82bec21d610a7027d1628e0", features = ["rocket"] } # Need to use a patched version because we're using a pre-release of Rocket
-rocket = { git = "https://github.com/SergioBenitez/Rocket", tag = "v0.5.0-rc.1"} # If I remove this line, it doesn't work. It should work, but it doesn't.
+maud = { git = "https://github.com/clay53/maud", branch = "mbr/rocket-0.5", features = ["rocket"] } # Need to use a patched version because we're using a pre-release of Rocket
+rocket = { git = "https://github.com/clay53/Rocket"} # If I remove this line, it doesn't work. It should work, but it doesn't.
+diesel = { git = "https://github.com/diesel-rs/diesel", rev = "72bfb356b8038e993634f095b57e54fdf1cfd8f9", features = ["postgres", "chrono"]} # For generated types.
+rocket_sync_db_pools = { git = "https://github.com/clay53/Rocket", features = ["diesel_postgres_pool"] } # Needs to be compatible with experimental diesel

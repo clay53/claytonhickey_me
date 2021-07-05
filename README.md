@@ -1,0 +1,1 @@
+Requires an unreleased version of diesel_cli: `cargo install diesel_cli --git https://github.com/diesel-rs/diesel --rev "72bfb356b8038e993634f095b57e54fdf1cfd8f9" --no-default-features --features postgres`
