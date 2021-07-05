@@ -10,7 +10,7 @@ chrono = "0.4.19"
 diesel = { version = "2.0.0", features = ["postgres", "chrono"] }
 dotenv = "0.15.0"
 maud = { version = "0.22.2", features = ["rocket"] }
-rocket = "0.5.0-rc.1"
+rocket = {version = "0.5.0-rc.1", features = ["tls"]}
 
 [dependencies.rocket_sync_db_pools]
 version = "0.1.0-rc.1"
@@ -19,6 +19,6 @@ features = ["diesel_postgres_pool"]
 
 [patch.crates-io]
 maud = { git = "https://github.com/clay53/maud", branch = "mbr/rocket-0.5", features = ["rocket"] } # Need to use a patched version because we're using a pre-release of Rocket
-rocket = { git = "https://github.com/clay53/Rocket"} # If I remove this line, it doesn't work. It should work, but it doesn't.
+rocket = { git = "https://github.com/clay53/Rocket", features = ["tls"]} # If I remove this line, it doesn't work. It should work, but it doesn't.
 diesel = { git = "https://github.com/diesel-rs/diesel", rev = "72bfb356b8038e993634f095b57e54fdf1cfd8f9", features = ["postgres", "chrono"]} # For generated types.
 rocket_sync_db_pools = { git = "https://github.com/clay53/Rocket", features = ["diesel_postgres_pool"] } # Needs to be compatible with experimental diesel
