@@ -17,6 +17,14 @@ html, body {
     min-height: 100vh;
 }
 
+a {
+    color: lightblue;
+}
+
+hr {
+    color: white;
+}
+
 #nav {
     background-color: #15222e;
     font-size: xx-large;
@@ -50,6 +58,11 @@ html, body {
 
 #content {
     min-height: 100vh;
+}
+
+#footer hr {
+    width: 60%;
+    margin: 0 auto 0.5rem auto;
 }
 
 .blog-posts-container {
