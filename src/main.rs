@@ -68,6 +68,7 @@ async fn home(config: &State<Config>) -> Markup {
 #[get("/blog")]
 async fn blog(config: &State<Config>, db_conn: DbConn) -> Markup {
     let posts: Vec<(String, String)> = db_conn.run(|c| blog_posts::table
+        .filter(blog_posts::published.is_not_null())
         .select((blog_posts::id, blog_posts::title))
         .order(blog_posts::published.desc())
         .load(c).unwrap()).await;
