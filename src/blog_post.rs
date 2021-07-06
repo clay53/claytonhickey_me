@@ -31,5 +31,6 @@ pub struct BlogPost {
     pub content: String,
     pub contributors: Vec<Contributor>,
     pub published: Option<NaiveDateTime>,
-    pub updated: Option<NaiveDateTime>
+    pub updated: Option<NaiveDateTime>,
+    pub thumbnail: String,
 }

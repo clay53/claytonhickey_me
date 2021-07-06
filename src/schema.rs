@@ -18,5 +18,6 @@ diesel::table! {
         contributors -> Array<Contributor>,
         published -> Nullable<Timestamp>,
         updated -> Nullable<Timestamp>,
+        thumbnail -> Text,
     }
 }
