@@ -67,7 +67,7 @@ fn page<S: AsRef<str>, T: AsRef<str>, U: AsRef<str>>(config: &State<Config>, tit
                 meta name="viewport" content="width=device-width, initial-scale=1";
                 link rel="stylesheet" type="text/css" href="/styles.css";
                 link rel="icon" type="image/ico" href="/favicon.ico";
-                script sync src=(format!("{}{}", "https://www.googletagmanager.com/gtag/js?id=", config.g_analytics_measurement_id));
+                script sync src=(format!("{}{}", "https://www.googletagmanager.com/gtag/js?id=", config.g_analytics_measurement_id)) {}
                 script {r"window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config', '" (config.g_analytics_measurement_id) r"');"}
             }
             body {
