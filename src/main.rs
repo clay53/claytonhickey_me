@@ -71,14 +71,14 @@ fn page<S: AsRef<str>, T: AsRef<str>, U: AsRef<str>>(config: &State<Config>, tit
                 script {r"window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config', '" (config.g_analytics_measurement_id) r"');"}
             }
             body {
-                div id="nav" {
+                nav id="nav" {
                     (nav_element("Home", "/"))
                     (nav_element("Blog", "/blog"))
                 }
-                div id="content" {
+                main id="content" {
                     (content)
                 }
-                div id="footer" {
+                footer id="footer" {
                     hr;
                     span { "Check out the code on " a href="https://github.com/clay53/claytonhickey_me" { "GitHub.com" } }
                 }
