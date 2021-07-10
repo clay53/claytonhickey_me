@@ -2,6 +2,7 @@
 #[macro_use] extern crate rocket;
 #[macro_use] extern crate diesel;
 
+use chrono::NaiveDateTime;
 use diesel::prelude::*;
 use dotenv;
 use maud::{DOCTYPE, html, Markup, PreEscaped};
@@ -44,6 +45,43 @@ async fn styles() -> std::io::Result<NamedFile> {
 async fn files(path: PathBuf) -> Result<NamedFile, Status> {
     let path = Path::new("files/").join(path);
     NamedFile::open(&path).await.map_err(|_| Status::NotFound)
+}
+
+#[get("/sitemap.xml")]
+async fn sitemap(config: &State<Config>, db_conn: DbConn) -> String {
+    let url = |path: String, lastmod: Option<NaiveDateTime>, changefreq: &str, priority: &str| -> Markup {
+        html! {
+            url {
+                loc {(config.domain)(path)}
+                @match lastmod { Some(lastmod) => {lastmod {(lastmod.format("%Y-%m-%d"))}} None => {} }
+                changefreq {(changefreq)}
+                priority {(priority)}
+            }
+        }
+    };
+
+    (html! {
+        (PreEscaped(r#"<?xml version="1.0" encoding="UTF-8"?>"#))
+        urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" {
+            (url("/".to_string(), None, "daily", "1"))
+            (url("/blog".to_string(), None, "daily", "0.9"))
+            @let blog_posts: Vec<(String, Option<NaiveDateTime>, Option<NaiveDateTime>)> = db_conn.run(|c| blog_posts::table
+                .filter(blog_posts::published.is_not_null())
+                .select((blog_posts::id, blog_posts::published, blog_posts::updated))
+            .load(c).unwrap()).await;
+            @for blog_post in blog_posts {
+                (url(
+                    format!("/{}", blog_post.0),
+                    Some(match blog_post.2 {
+                        Some(updated) => updated,
+                        None => blog_post.1.unwrap() // published (known Some because of filter)
+                    }),
+                    "monthly",
+                    "0.8"
+                ))
+            }
+        }
+    }).into_string()
 }
 
 fn page<S: AsRef<str>, T: AsRef<str>, U: AsRef<str>>(config: &State<Config>, title: S, description: T, cannonical_path: U, highlighted_path: Option<&str>, content: Markup) -> Markup {
@@ -96,7 +134,7 @@ async fn home(config: &State<Config>) -> Markup {
 
 #[get("/blog")]
 async fn blog(config: &State<Config>, db_conn: DbConn) -> Markup {
-    let posts: Vec<(String, String, String, Vec<blog_post::Contributor>, Option<chrono::NaiveDateTime>, String)> = db_conn.run(|c| blog_posts::table
+    let posts: Vec<(String, String, String, Vec<blog_post::Contributor>, Option<NaiveDateTime>, String)> = db_conn.run(|c| blog_posts::table
         .filter(blog_posts::published.is_not_null())
         .select((blog_posts::id, blog_posts::title, blog_posts::preview_text, blog_posts::contributors, blog_posts::published, blog_posts::thumbnail))
         .order(blog_posts::published.desc())
@@ -175,6 +213,7 @@ fn rocket() -> _ {
         favicon,
         styles,
         files,
+        sitemap,
         home,
         blog,
         blog_post_page,
