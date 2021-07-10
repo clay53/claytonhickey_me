@@ -101,7 +101,7 @@ fn page<S: AsRef<str>, T: AsRef<str>, U: AsRef<str>>(config: &State<Config>, tit
             head {
                 title {(title.as_ref())}
                 meta name="description" content=(description.as_ref());
-                link rel="cannonical" href=(format!("{}{}", config.domain, cannonical_path.as_ref()));
+                link rel="canonical" href=(format!("{}{}", config.domain, cannonical_path.as_ref()));
                 meta name="viewport" content="width=device-width, initial-scale=1";
                 link rel="stylesheet" type="text/css" href="/styles.css";
                 link rel="icon" type="image/ico" href="/favicon.ico";
