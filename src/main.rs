@@ -71,7 +71,7 @@ async fn sitemap(config: &State<Config>, db_conn: DbConn) -> String {
             .load(c).unwrap()).await;
             @for blog_post in blog_posts {
                 (url(
-                    format!("/{}", blog_post.0),
+                    format!("/blog/{}", blog_post.0),
                     Some(match blog_post.2 {
                         Some(updated) => updated,
                         None => blog_post.1.unwrap() // published (known Some because of filter)
