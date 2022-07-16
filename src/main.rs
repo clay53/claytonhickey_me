@@ -1,89 +1,22 @@
-#![feature(decl_macro)]
-#[macro_use] extern crate rocket;
-#[macro_use] extern crate diesel;
-
 use chrono::NaiveDateTime;
-use diesel::prelude::*;
 use dotenv;
 use maud::{DOCTYPE, html, Markup, PreEscaped};
-use rocket::{
-    http::Status,
-    State,
-    fs::NamedFile,
+use std::{
+    fs,
+    path::{
+        PathBuf,
+        Path,
+    }
 };
-use std::path::{
-    PathBuf,
-    Path,
-};
+
+use claytonhickey_me::{PROJECTS, ABANDONED_PROJECTS, CONTRIBUTIONS};
 
 pub struct Config {
     pub domain: String,
 }
 
-mod schema;
-mod blog_post;
 
-use self::schema::*;
-
-use rocket_sync_db_pools::{diesel as rocket_diesel, database};
-
-#[database("postgres")]
-pub struct DbConn(rocket_diesel::PgConnection);
-
-#[get("/favicon.ico")]
-async fn favicon() -> std::io::Result<NamedFile> {
-    NamedFile::open("favicon.ico").await
-}
-
-#[get("/styles.css")]
-async fn styles() -> std::io::Result<NamedFile> {
-    NamedFile::open("styles.css").await
-}
-
-#[get("/files/<path..>")]
-async fn files(path: PathBuf) -> Result<NamedFile, Status> {
-    let path = Path::new("files/").join(path);
-    NamedFile::open(&path).await.map_err(|_| Status::NotFound)
-}
-
-#[get("/sitemap.xml")]
-async fn sitemap(config: &State<Config>, db_conn: DbConn) -> String {
-    let url = |path: String, lastmod: Option<NaiveDateTime>, changefreq: &str, priority: &str| -> Markup {
-        html! {
-            url {
-                loc {(config.domain)(path)}
-                @match lastmod { Some(lastmod) => {lastmod {(lastmod.format("%Y-%m-%d"))}} None => {} }
-                changefreq {(changefreq)}
-                priority {(priority)}
-            }
-        }
-    };
-
-    (html! {
-        (PreEscaped(r#"<?xml version="1.0" encoding="UTF-8"?>"#))
-        urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" {
-            (url("/".to_string(), None, "daily", "1"))
-            (url("/blog".to_string(), None, "daily", "0.9"))
-            @let blog_posts: Vec<(String, Option<NaiveDateTime>, Option<NaiveDateTime>)> = db_conn.run(|c| blog_posts::table
-                .filter(blog_posts::published.is_not_null())
-                .select((blog_posts::id, blog_posts::published, blog_posts::updated))
-            .load(c).unwrap()).await;
-            @for blog_post in blog_posts {
-                (url(
-                    format!("/blog/{}", blog_post.0),
-                    Some(match blog_post.2 {
-                        Some(updated) => updated,
-                        None => blog_post.1.unwrap() // published (known Some because of filter)
-                    }),
-                    "monthly",
-                    "0.8"
-                ))
-            }
-        }
-    }).into_string()
-}
-
-fn page<S: AsRef<str>, T: AsRef<str>, U: AsRef<str>>(config: &State<Config>, title: S, description: T, cannonical_path: U, highlighted_path: Option<&str>, content: Markup) -> Markup {
+fn page<S: AsRef<str>, T: AsRef<str>, U: AsRef<str>>(config: &Config, title: S, description: T, cannonical_path: U, highlighted_path: Option<&str>, content: Markup) -> Markup {
     let nav_element = |text: &str, path: &str| -> Markup {
         html! {
             div class=(format!("nav-item{}", match highlighted_path {
@@ -108,114 +41,198 @@ fn page<S: AsRef<str>, T: AsRef<str>, U: AsRef<str>>(config: &State<Config>, tit
             body {
                 nav id="nav" {
                     (nav_element("Home", "/"))
-                    (nav_element("Blog", "/blog"))
                 }
                 main id="content" {
                     (content)
                 }
                 footer id="footer" {
                     hr;
-                    span { "Check out the code on " a href="https://github.com/clay53/claytonhickey_me" { "GitHub.com" } }
+                    span { "Check out the code on " a href="https://github.com/ClaytonDoesThings/claytonhickey_me" { "GitHub.com" } }
                 }
             }
         }
     }
 }
 
-#[get("/")]
-async fn home(config: &State<Config>) -> Markup {
-    page(config, "Clayton Hickey", "Clayton Hickey's website and blog", "/", Some("/"), html! {
-        h1 { "Clayton Hickey" }
-    })
-}
-
-#[get("/blog")]
-async fn blog(config: &State<Config>, db_conn: DbConn) -> Markup {
-    let posts: Vec<(String, String, String, Vec<blog_post::Contributor>, Option<NaiveDateTime>, String)> = db_conn.run(|c| blog_posts::table
-        .filter(blog_posts::published.is_not_null())
-        .select((blog_posts::id, blog_posts::title, blog_posts::preview_text, blog_posts::contributors, blog_posts::published, blog_posts::thumbnail))
-        .order(blog_posts::published.desc())
-        .load(c).unwrap()).await;
-    page(config, "Blog Posts | Clayton Hickey", "A list of Clayton Hickey's blog posts", "/blog", Some("/blog"), html! {
-        div id="blog-posts-list" {
-            @for (i, post) in posts.into_iter().enumerate() {
-                @if i != 0 { br; }
-                div class="blog-posts-container" onclick=(format!("location.href=\"{}/blog/{}\"", config.domain, post.0)) {
-                    div class="blog-posts-thumbnail-container" {
-                        img src=(post.5);
-                    }
-                    div class="blog-posts-info-container" {
-                        h2 class="blog-posts-title" {(post.1)}
-                        div class="blog-posts-contributors" {
-                            @for contributor in post.3 {
-                                span class="blog-posts-contributor" { (contributor.position) ": " (contributor.name) }
-                            }
-                        }
-                        p class="blog-posts-preview" { (post.2) }
-                        @match post.4 {
-                            Some(published) => span class="blog-posts-published" {"Published: " (published.to_string())},
-                            None => {}
-                        }
-                    }
-                }
-            }
-        }
-    })
-}
-
-#[get("/blog/<blog_post_id>")]
-async fn blog_post_page(blog_post_id: String, config: &State<Config>, db_conn: DbConn) -> Result<Markup, Status> {
-    let post: blog_post::BlogPost = match db_conn.run(|c| blog_posts::table
-        .find(blog_post_id)
-        .first(c)
-    ).await {
-        Ok(post) => post,
-        Err(_) => return Err(Status::NotFound)
+fn main() {
+    let config = Config {
+        domain: dotenv::var("DOMAIN").expect("failed to get DOMAIN from .env")
     };
-    if post.published.is_some() {
-        Ok(page(config, &post.title, &post.preview_text, format!("/blog/{}", post.id), Some("/blog"), html! {
-            div id="blog-post" {
-                div id="blog-post-heading" {
-                    h1 {(post.title)}
-                    div id="blog-post-contributors" {
-                        @for contributor in post.contributors {
-                            span class="blog-post-contributor" { (contributor.position) ": " (contributor.name) }
-                        }
-                    }
-                    div id="blog-post-dates" {
-                        span id="blog-post-published" { "Published: " (post.published.unwrap().to_string()) }
-                        span id="blog-post-updated" {
-                            "Updated: "
-                            @match post.updated {
-                                Some(updated) => (updated.to_string()),
-                                None => "Never"
-                            }
-                        }
-                    }
-                }
-                div id="blog-post-content" {(PreEscaped(post.content))} // Blog posts are never to be written by non-trusted users. XSS can occur
-            }
-        }))
-    } else {
-        Err(Status::NotFound)
-    }
-}
 
-#[launch]
-fn rocket() -> _ {
-    dotenv::dotenv().ok();
-    rocket::build()
-    .attach(DbConn::fairing())
-    .mount("/", routes![
-        favicon,
-        styles,
-        files,
-        sitemap,
-        home,
-        blog,
-        blog_post_page,
-    ])
-    .manage(Config {
-        domain: dotenv::var("DOMAIN").unwrap(),
-    })
+    let stdin = std::io::stdin();
+    let mut input = String::new();
+
+    // recreate site folder
+
+    println!("This script will delete ./www and recreate it. Is that ok (y/N)?");
+    stdin.read_line(&mut input).unwrap();
+    if !input.trim_end().eq_ignore_ascii_case("y") {
+        return
+    }
+
+    let www_dir = Path::new("www");
+    if www_dir.exists() {
+        for entry in fs::read_dir(www_dir).unwrap() {
+            let entry = entry.unwrap();
+            let file_type = entry.file_type().unwrap();
+            if file_type.is_dir() {
+                fs::remove_dir_all(entry.path()).unwrap();
+            } else {
+                fs::remove_file(entry.path()).unwrap();
+            }
+        }
+    } else {
+        fs::create_dir(www_dir).unwrap();
+    }
+
+    fn subdir<S: AsRef<Path>>(path: &Path, subdir: S) -> PathBuf {
+        let mut new_path = path.to_path_buf();
+        new_path.push(subdir);
+        new_path
+    }
+
+    // clone assets
+
+    fs_extra::dir::copy("./assets", www_dir, &fs_extra::dir::CopyOptions {
+        content_only: true,
+        ..Default::default()
+    }).unwrap();
+
+    // sitemap
+
+    let url = |path: String, lastmod: Option<NaiveDateTime>, changefreq: &str, priority: &str| -> Markup {
+        html! {
+            url {
+                loc {(config.domain)(path)}
+                @match lastmod { Some(lastmod) => {lastmod {(lastmod.format("%Y-%m-%d"))}} None => {} }
+                changefreq {(changefreq)}
+                priority {(priority)}
+            }
+        }
+    };
+
+    fs::write(subdir(www_dir, "sitemap.xml"), html! {
+        (PreEscaped(r#"<?xml version="1.0" encoding="UTF-8"?>"#))
+        urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" {
+            (url("/".to_string(), None, "weekly", "1"))
+        }
+    }.into_string()).unwrap();
+
+    // home
+
+    fs::write(subdir(www_dir, "index.html"), page(&config, "Clayton Hickey", "Clayton Hickey's website and blog", "/", Some("/"), html! {
+        div id="introduction-container" {
+            div {
+                h1 { "Clayton Hickey" }
+                p {
+                    "I'm a 17 year old fullstack web/software developer. Prospective bioengineer. \
+                    Taught myself programming since 2nd grade by just going for it. \
+                    I'm currently working on developing an educational software suite to defeat \
+                    Anki, Quizlet, Kahoot, GimKit, Google Classroom, and Duolingo in one fell swoop \
+                    that runs on all platforms (desktop, web, & mobile) and is federated (not exactly), free, and open source. \
+                    It's being developed with my own gui/software framework, "
+                    a href="https://github.com/clay53/bui_basic" { "BUI Basic" } ". \
+                    The language learning portion of the suite's development is being document on Twitter: "
+                    a href="https://twitter.com/LanguageTutorRS" { "@LanguageTutorRS" } "."
+                }
+            }
+            img src="/images/headshot_square.webp" id="headshot";
+        }
+        
+        h1 { "Experiences" }
+        
+        div {
+            // h3 { "skills" }
+            // div {
+                
+            // }
+            h2 { "Projects" }
+            div class="experience-container" {
+                @for project in PROJECTS {
+                    (project.to_markup())
+                }
+            }
+            h2 { "Open Source Contributions" }
+            div class="experience-container" {
+                @for contribution in CONTRIBUTIONS {
+                    (contribution.to_markup())
+                }
+            }
+            h2 { "Abandoned Projects" }
+            div class="experience-container" {
+                @for unfinished_project in ABANDONED_PROJECTS {
+                    (unfinished_project.to_markup())
+                }
+            }
+        }
+        
+        h1 { "Setup" }
+        div id="setup-container" {
+            div {
+                h2 class="setup-subheader" { "Desktop: custom" }
+                p class="setup-specs" {
+                    "OS: Arch" br;
+                    "WM: LeftWM" br;
+                    "CPU: i7-6700" br;
+                    "GPU: RTX 2060" br;
+                    "RAM: 32GB" br;
+                    "Monitors: 2.8"
+                }
+            }
+            div {
+                h2 class="setup-subheader" { "Laptop: Samsung Chomebook 3" }
+                p class="setup-specs" {
+                    "OS: Arch" br;
+                    "WM: LeftWM" br;
+                    "CPU: Celeron N3060" br;
+                    "RAM: 4GB" br;
+                    "Storage: 128 GB SanDisk Extreme MicroSD XC"
+                }
+            }
+            div {
+                h2 class="setup-subheader" { "Programming Environment" }
+                p class="setup-specs" {
+                    "IDE: VSCode" br;
+                    "Terminal: Alacritty" br;
+                    "Shell: Bash" br;
+                    "RAM: 4GB" br;
+                    "Branch preference: LTS (but probably using nightly)"
+                }
+            }
+            div {
+                h2 class="setup-subheader" { "Personal Server" }
+                p class="setup-specs" {
+                    "Host: Linode" br;
+                    "RAM: 1GB" br;
+                    "CPU: 1 core Xeon E5-2697" br;
+                    "OS: Ubuntu 20.04" br;
+                    "Proxy: Nginx" br;
+                    "Server: Nextcloud"
+                }
+            }
+            div {
+                h2 class="setup-subheader" { "<3 Software Stack" }
+                p class="setup-specs" {
+                    "Main Language: Rust" br;
+                    "GUI Framework: BUI Basic" br;
+                    "Windower: Winit" br;
+                    "Graphics Library: WGPU + BUI" br;
+                    "Android bridge: android-ndk-rs"
+                }
+            }
+            div {
+                h2 class="setup-subheader" { "<3 Web Stack" }
+                p class="setup-specs" {
+                    "Main Language: Rust" br;
+                    "Framework: Rocket.rs" br;
+                    "Templater: Maud" br;
+                    "Database: Postgres (want to replace with my own)" br;
+                    "Database Driver: Diesel"
+                }
+            }
+        }
+
+        // h1 { "Blog" }
+
+    }).into_string()).unwrap();
 }

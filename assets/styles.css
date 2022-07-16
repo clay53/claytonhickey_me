@@ -1,0 +1,138 @@
+/* Colors
+     | Scheme
+Name | Dark Mode
+----------------
+Main | #192735
+Dark | #15222e
+Mid | #182533
+
+*/
+
+html, body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #15222e;
+    color: white;
+    font-size: large;
+    min-height: 100vh;
+}
+
+p {
+    font-size: medium;
+}
+
+a {
+    color: lightblue;
+}
+
+hr {
+    color: white;
+}
+
+#nav {
+    background-color: #15222e;
+    font-size: xx-large;
+    max-width: 130vh;
+    margin: auto;
+}
+
+#nav .nav-item {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #182533;
+}
+
+#nav .nav-item a {
+    color: white;
+    text-decoration: none;
+}
+
+#nav .nav-item-selected {
+    background-color: #192735;
+}
+
+#content, #footer {
+    background-color: #192735;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 0.5rem 1rem;
+    max-width: 130vh;
+}
+
+#content {
+    min-height: 100vh;
+}
+
+#footer {
+    min-height: 30vh;
+    text-align: center;
+}
+
+#footer hr {
+    width: 60%;
+    margin: 0 auto 0.5rem auto;
+}
+
+#introduction-container {
+    margin: 0 auto;
+    max-width: 95vh;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+#introduction-container #headshot {
+    width: 10rem;
+    margin: auto;
+    border-radius: 50%;
+}
+
+h1 {
+    color: lightseagreen;
+}
+
+h2 {
+    color: lightcoral;
+}
+
+.experience-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 0.5rem;
+}
+
+.experience-container h3 {
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+}
+
+.experience-container p {
+    margin: 0.25rem 0 0.25rem 0;
+}
+
+.experience-container .description-container {
+    margin-top: 0.5rem;
+}
+
+.experience-title-links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.experience-title-links .experience-title {
+    color: lightsalmon;
+    text-decoration: none;
+}
+
+.experience-title-links span, .experience-title-links a {
+    padding-right: 1rem;
+}
+
+#setup-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.setup-subheader {
+    font-size: larger;
+}
