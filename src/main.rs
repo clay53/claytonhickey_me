@@ -31,6 +31,7 @@ fn page<S: AsRef<str>, T: AsRef<str>, U: AsRef<str>>(config: &Config, title: S, 
         (DOCTYPE)
         html lang="en" { // Only English is supported as of now
             head {
+                meta charset="UTF-8";
                 title {(title.as_ref())}
                 meta name="description" content=(description.as_ref());
                 link rel="canonical" href=(format!("{}{}", config.domain, cannonical_path.as_ref()));
@@ -122,7 +123,7 @@ fn main() {
 
     // home
 
-    fs::write(subdir(www_dir, "index.html"), page(&config, "Clayton Hickey", "Clayton Hickey's website and blog", "/", Some("/"), html! {
+    fs::write(subdir(www_dir, "index.html"), page(&config, "Clayton Hickey", "Clayton Hickey's website", "/", Some("/"), html! {
         div id="introduction-container" {
             div {
                 h1 { "Clayton Hickey" }
@@ -138,7 +139,7 @@ fn main() {
                     a href="https://twitter.com/LanguageTutorRS" { "@LanguageTutorRS" } "."
                 }
             }
-            img src="/images/headshot_square.webp" id="headshot";
+            img src="/images/headshot_square.webp" id="headshot" alt="Headshot of Clayton Hickey";
         }
         
         h1 { "Experiences" }
