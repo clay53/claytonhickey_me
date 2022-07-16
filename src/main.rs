@@ -48,7 +48,7 @@ fn page<S: AsRef<str>, T: AsRef<str>, U: AsRef<str>>(config: &Config, title: S, 
                 }
                 footer id="footer" {
                     hr;
-                    span { "Check out the code on " a href="https://github.com/ClaytonDoesThings/claytonhickey_me" { "GitHub.com" } }
+                    span { "Check out the code on " a href="https://github.com/clay53/claytonhickey_me" { "GitHub.com" } }
                 }
             }
         }
