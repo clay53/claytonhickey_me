@@ -1,9 +1,5 @@
 /target
 .env
-Rocket.toml
-files/*
-!files/missing_thumbnail.png
-!files/blog_post_res
-files/blog_post_res/*
-!files/blog_post_res/published-test-post
-!files/blog_post_res/unpublished-test-post
+Cargp.lock
+.cargo
+/www

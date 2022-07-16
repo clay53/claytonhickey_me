@@ -135,6 +135,8 @@ pub const PROJECTS: &'static [Experience] = &[
             WebHosting,
             Linode,
             Nginx,
+            DNS,
+            Cloudflare
         ],
         description: &[
             Paragraph(&[

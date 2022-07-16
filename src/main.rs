@@ -64,13 +64,15 @@ fn main() {
 
     // recreate site folder
 
-    println!("This script will delete ./www and recreate it. Is that ok (y/N)?");
+    let www_dir = dotenv::var("WWW_DIR").unwrap_or("./www".to_string());
+
+    println!("This script will delete {} and recreate it. Is that ok (y/N)?", www_dir);
     stdin.read_line(&mut input).unwrap();
     if !input.trim_end().eq_ignore_ascii_case("y") {
         return
     }
-
-    let www_dir = Path::new("www");
+    
+    let www_dir = Path::new(&www_dir);
     if www_dir.exists() {
         for entry in fs::read_dir(www_dir).unwrap() {
             let entry = entry.unwrap();
