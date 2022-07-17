@@ -174,11 +174,11 @@ fn main() {
             }
         }
         
-        h1 { "Setup" }
-        div id="setup-container" {
+        h1 { "Tidbits" }
+        div id="tidbits-container" {
             div {
-                h2 class="setup-subheader" { "Desktop: custom" }
-                p class="setup-specs" {
+                h2 class="tidbit-subheader" { "Desktop: custom" }
+                p class="tidbit-details" {
                     "OS: Arch" br;
                     "WM: LeftWM" br;
                     "CPU: i7-6700" br;
@@ -188,8 +188,8 @@ fn main() {
                 }
             }
             div {
-                h2 class="setup-subheader" { "Laptop: Samsung Chomebook 3" }
-                p class="setup-specs" {
+                h2 class="tidbit-subheader" { "Laptop: Samsung Chomebook 3" }
+                p class="tidbit-details" {
                     "OS: Arch" br;
                     "WM: LeftWM" br;
                     "CPU: Celeron N3060" br;
@@ -198,8 +198,8 @@ fn main() {
                 }
             }
             div {
-                h2 class="setup-subheader" { "Programming Environment" }
-                p class="setup-specs" {
+                h2 class="tidbit-subheader" { "Programming Environment" }
+                p class="tidbit-details" {
                     "IDE: VSCode" br;
                     "Terminal: Alacritty" br;
                     "Shell: Bash" br;
@@ -208,8 +208,8 @@ fn main() {
                 }
             }
             div {
-                h2 class="setup-subheader" { "Personal Server" }
-                p class="setup-specs" {
+                h2 class="tidbit-subheader" { "Personal Server" }
+                p class="tidbit-details" {
                     "Host: Linode" br;
                     "RAM: 1GB" br;
                     "CPU: 1 core Xeon E5-2697" br;
@@ -219,8 +219,8 @@ fn main() {
                 }
             }
             div {
-                h2 class="setup-subheader" { "<3 Software Stack" }
-                p class="setup-specs" {
+                h2 class="tidbit-subheader" { "<3 Software Stack" }
+                p class="tidbit-details" {
                     "Main Language: Rust" br;
                     "GUI Framework: BUI Basic" br;
                     "Windower: Winit" br;
@@ -229,8 +229,8 @@ fn main() {
                 }
             }
             div {
-                h2 class="setup-subheader" { "<3 Web Stack" }
-                p class="setup-specs" {
+                h2 class="tidbit-subheader" { "<3 Web Stack" }
+                p class="tidbit-details" {
                     "Main Language: Rust" br;
                     "Framework: Rocket.rs" br;
                     "Templater: Maud" br;
@@ -239,8 +239,8 @@ fn main() {
                 }
             }
             div {
-                h2 class="setup-subheader" { "HS Clubs" }
-                p class="setup-specs" {
+                h2 class="tidbit-subheader" { "HS Clubs" }
+                p class="tidbit-details" {
                     a href="https://tsaweb.org/teams" { "TEAMS" } ": President" br;
                     a href="https://www.soinc.org/" { "Science Olympiad" } ": President" br;
                     "Esports: Vice President" br;
@@ -250,8 +250,8 @@ fn main() {
                 }
             }
             div {
-                h2 class="setup-subheader" { "Sports" }
-                p class="setup-specs" {
+                h2 class="tidbit-subheader" { "Sports" }
+                p class="tidbit-details" {
                     "Cross Country" br;
                     "Winter/Spring Track" br;
                     "Tennis"

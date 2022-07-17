@@ -10,12 +10,13 @@ pub struct Experience {
     pub skills: &'static [Skills],
     pub description: &'static [DescriptionPart],
     pub links: &'static [Link],
+    pub thumb: Option<Thumb>,
 }
 
 impl Experience {
     pub fn to_markup(&self) -> Markup {
         html! {
-            div {
+            div class="experience" {
                 h3 {
                     div class="experience-title-links" {
                         @match self.title {
@@ -25,6 +26,13 @@ impl Experience {
                         @for link in self.links {
                             a href=(link.destination) { (link.as_str()) }
                         }
+                    }
+                }
+
+                @if let Some(thumb) = &self.thumb {
+                    @match self.title {
+                        Title::Raw(_) => img class="experience-img" src=(thumb.source) alt=(thumb.alt);,
+                        Title::Linked(_, link) => a href=(link) { img class="experience-img" src=(thumb.source) alt=(thumb.alt); },
                     }
                 }
 
@@ -123,4 +131,9 @@ pub enum LinkType {
     FirefoxAddOns,
     RebbleStore,
     PR,
+}
+
+pub struct Thumb {
+    pub source: &'static str,
+    pub alt: &'static str,
 }

@@ -36,7 +36,11 @@ pub const CONTRIBUTIONS: &'static [Experience] = &[
                 ty: LinkType::PR,
                 destination: "https://github.com/InfiniTimeOrg/InfiniTime/pull/926"
             },
-        ]
+        ],
+        thumb: Some(Thumb {
+            source: "/images/experiences/thumbs/infinitime-repeat-timer-option.png",
+            alt: "Showing repeat option selected while playing timer",
+        }),
     },
     Experience {
         title: Title::Linked("Added ability to view comments to LBRY Android app", "https://github.com/lbryio/lbry-android/pull/920"),
@@ -71,7 +75,8 @@ pub const CONTRIBUTIONS: &'static [Experience] = &[
                 ty: LinkType::PR,
                 destination: "https://github.com/lbryio/lbry-android/pull/920"
             }
-        ]
+        ],
+        thumb: None,
     },
     Experience {
         title: Title::Linked("Made it so that one can unpublish and/or delete their own videos from LBRY Android app", "https://github.com/lbryio/lbry-android/pull/1013"),
@@ -97,6 +102,7 @@ pub const CONTRIBUTIONS: &'static [Experience] = &[
                 ty: LinkType::PR,
                 destination: "https://github.com/lbryio/lbry-android/pull/1013"
             }
-        ]
+        ],
+        thumb: None,
     }
 ];

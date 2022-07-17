@@ -38,7 +38,11 @@ pub const PROJECTS: &'static [Experience] = &[
                 ty: LinkType::Download,
                 destination: "https://github.com/clay53/wgpu_game_of_life/releases/"
             }
-        ]
+        ],
+        thumb: Some(Thumb {
+            source: "/images/experiences/thumbs/wgpu_game_of_life.png",
+            alt: "a simple example of Conway's game of life",
+        }),
     },
     Experience {
         title: Title::Linked("BUI Basic", "https://github.com/clay53/bui_basic"),
@@ -63,7 +67,8 @@ pub const PROJECTS: &'static [Experience] = &[
                 ty: LinkType::Code,
                 destination: "https://github.com/clay53/bui_basic"
             }
-        ]
+        ],
+        thumb: None,
     },
     Experience {
         title: Title::Linked("BUI", "https://github.com/clay53/bui"),
@@ -89,7 +94,8 @@ pub const PROJECTS: &'static [Experience] = &[
                 ty: LinkType::Code,
                 destination: "https://github.com/clay53/bui"
             }
-        ]
+        ],
+        thumb: None,
     },
     Experience {
         title: Title::Linked("Micro VSRG", "https://github.com/clay53/micro_vsrg"),
@@ -118,7 +124,8 @@ pub const PROJECTS: &'static [Experience] = &[
                 ty: LinkType::Code,
                 destination: "https://github.com/clay53/micro_vsrg"
             }
-        ]
+        ],
+        thumb: None,
     },
     Experience {
         title: Title::Linked("ClaytonHickey.me", "https://claytonhickey.me"),
@@ -152,7 +159,8 @@ pub const PROJECTS: &'static [Experience] = &[
                 ty: LinkType::Live,
                 destination: "https://claytonhickey.me"
             }
-        ]
+        ],
+        thumb: None,
     },
     Experience {
         title: Title::Linked("ClaytonDoesThings.xyz", "https://claytondoesthings.xyz"),
@@ -199,6 +207,7 @@ pub const PROJECTS: &'static [Experience] = &[
                 destination: "https://claytondoesthings.xyz"
             }
         ],
+        thumb: None,
     },
     Experience {
         title: Title::Linked("CarAI", "https://claytondoesthings.xyz/games/carai/web"),
@@ -240,7 +249,11 @@ pub const PROJECTS: &'static [Experience] = &[
                 ty: LinkType::Showcase,
                 destination: "https://youtu.be/jjhNab0bJgQ"
             }
-        ]
+        ],
+        thumb: Some(Thumb {
+            source: "/images/experiences/thumbs/carai.png",
+            alt: "the car AI making a turn towards the exit",
+        }),
     },
     Experience {
         title: Title::Linked("Sound Galaxy", "https://github.com/clay53/sound_galaxy/releases"),
@@ -285,7 +298,11 @@ pub const PROJECTS: &'static [Experience] = &[
                 ty: LinkType::Showcase,
                 destination: "https://www.youtube.com/watch?v=kzUnaH4M824"
             }
-        ]
+        ],
+        thumb: Some(Thumb {
+            source: "/images/experiences/thumbs/sound_galaxy.png",
+            alt: "Crab Rave visualized with Sound Galaxy as colored circles flowing downward",
+        }),
     },
     Experience {
         title: Title::Linked("Meet With Pong", "https://meet-with-pong.clay53.repl.co/w/index.html"),
@@ -325,7 +342,11 @@ pub const PROJECTS: &'static [Experience] = &[
                 ty: LinkType::Live,
                 destination: "https://meet-with-pong.clay53.repl.co/w/index.html"
             }
-        ]
+        ],
+        thumb: Some(Thumb {
+            source: "/images/experiences/thumbs/meet-with-pong.png",
+            alt: "Clayton playing png against Bob. Revealed names and Bob's favorite programming language."
+        }),
     },
     Experience {
         title: Title::Raw("osu!keypad"),
@@ -358,10 +379,14 @@ pub const PROJECTS: &'static [Experience] = &[
                 ty: LinkType::Code,
                 destination: "https://github.com/clay53/Osu-Keypad"
             }
-        ]
+        ],
+        thumb: Some(Thumb {
+            source: "/images/experiences/thumbs/osu!keypad.webp",
+            alt: "Picture of the 2 key keypad 3D printed in red filament with kalih box brown key switches."
+        }),
     },
     Experience {
-        title: Title::Linked("Symbol Translator", "https://claytondoesthings.xyz/software/symbol-translator"),
+        title: Title::Linked("Symbol Translator", "https://claytondoesthings.xyz/software/symbol-translator/web"),
         started: None,
         completed: Some(NaiveDate::from_ymd(2019, 6, 4)),
         last_updated: Some(NaiveDate::from_ymd(2019, 7, 19)),
@@ -384,12 +409,16 @@ pub const PROJECTS: &'static [Experience] = &[
             },
             Link {
                 ty: LinkType::Live,
-                destination: "https://claytondoesthings.xyz/software/symbol-translator"
+                destination: "https://claytondoesthings.xyz/software/symbol-translator/web"
             }
-        ]
+        ],
+        thumb: Some(Thumb {
+            source: "/images/experiences/thumbs/symbol-translator.png",
+            alt: "Decoded \"hello\" from BirbText",
+        }),
     },
     Experience {
-        title: Title::Linked("Russian Roulette", "https://claytondoesthings.xyz/games/russian-roulette"),
+        title: Title::Linked("Russian Roulette", "https://claytondoesthings.xyz/games/russian-roulette/web"),
         started: None,
         completed: Some(NaiveDate::from_ymd(2018, 4, 1)),
         last_updated: None,
@@ -414,9 +443,13 @@ pub const PROJECTS: &'static [Experience] = &[
             },
             Link {
                 ty: LinkType::Live,
-                destination: "https://claytondoesthings.xyz/games/russian-roulette"
+                destination: "https://claytondoesthings.xyz/games/russian-roulette/web"
             }
-        ]
+        ],
+        thumb: Some(Thumb {
+            source: "/images/experiences/thumbs/russian-roulette.png",
+            alt: "Losing Russian Roulette"
+        }),
     },
     Experience {
         title: Title::Linked("PebbleXCTimer", "https://github.com/ClaytonDoesThings/PebbleXCTimer"),
@@ -447,7 +480,11 @@ pub const PROJECTS: &'static [Experience] = &[
                 ty: LinkType::RebbleStore,
                 destination: "https://apps.rebble.io/en_US/application/62cdbbd1f0886b0009c74042"
             }
-        ]
+        ],
+        thumb: Some(Thumb {
+            source: "/images/experiences/thumbs/pebbleXCTimer.png",
+            alt: "Screenshot showing time and interval",
+        }),
     },
     Experience {
         title: Title::Linked("Legitimate Images From Images", "https://claytondoesthings.xyz/software/legitimate-images-made-from-images"),
@@ -475,7 +512,11 @@ pub const PROJECTS: &'static [Experience] = &[
                 ty: LinkType::Live,
                 destination: "https://claytondoesthings.xyz/software/legitimate-images-made-from-images"
             }
-        ]
+        ],
+        thumb: Some(Thumb {
+           source: "/images/experiences/thumbs/legitimate-images-from-images.webp",
+           alt: "Jord GT made from Captain Sparklez thumbnails",
+        }),
     },
     Experience {
         title: Title::Linked("MultiKahoot", "https://MultiKahoot.claytonhickey.repl.co/"),
@@ -496,7 +537,10 @@ pub const PROJECTS: &'static [Experience] = &[
                 Text("Allows a single player to control multiple Kahoot \"users\" from an \
                 entirely separate website. Also allows keyboard controls without the use of \
                 external hotkey software so that one can answer faster on a Chromebook.")
-            ])
+            ]),
+            Paragraph(&[
+                Text("Does not work for now due to changes in Kahoot's API")
+            ]),
         ],
         links: &[
             Link {
@@ -507,7 +551,8 @@ pub const PROJECTS: &'static [Experience] = &[
                 ty: LinkType::Live,
                 destination: "https://MultiKahoot.claytonhickey.repl.co/"
             }
-        ]
+        ],
+        thumb: None,
     },
     Experience {
         title: Title::Linked("GivingDuo", "https://github.com/clay53/GivingDuo"),
@@ -548,7 +593,11 @@ pub const PROJECTS: &'static [Experience] = &[
                 ty: LinkType::Download,
                 destination: "https://github.com/clay53/GivingDuo/releases"
             }
-        ]
+        ],
+        thumb: Some(Thumb {
+            source: "/images/experiences/thumbs/givingduo.jpg",
+            alt: "Example of giving multiple lingots."
+        }),
     },
     Experience {
         title: Title::Linked("Live Stream Music Player", "https://github.com/ClaytonDoesThings/Live-Stream-Music-Player"),
@@ -576,7 +625,8 @@ pub const PROJECTS: &'static [Experience] = &[
                 ty: LinkType::Code,
                 destination: "https://github.com/ClaytonDoesThings/Live-Stream-Music-Player"
             }
-        ]
+        ],
+        thumb: None,
     },
 ];
 
@@ -617,6 +667,7 @@ pub const ABANDONED_PROJECTS: &'static [Experience] = &[
                 ty: LinkType::Code,
                 destination: "https://github.com/clay53/from_anarchy"
             }
-        ]
+        ],
+        thumb: None,
     }
 ];
