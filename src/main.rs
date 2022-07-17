@@ -9,7 +9,7 @@ use std::{
     }
 };
 
-use claytonhickey_me::{PROJECTS, ABANDONED_PROJECTS, CONTRIBUTIONS};
+use claytonhickey_me::{PROJECTS, ABANDONED_PROJECTS, CONTRIBUTIONS, SOCIALS};
 
 pub struct Config {
     pub domain: String,
@@ -49,6 +49,11 @@ fn page<S: AsRef<str>, T: AsRef<str>, U: AsRef<str>>(config: &Config, title: S, 
                 footer id="footer" {
                     hr;
                     span { "Check out the code on " a href="https://github.com/clay53/claytonhickey_me" { "GitHub.com" } }
+                    div id="footer-social-media" {
+                        @for social in SOCIALS {
+                            a href=(social.link) title=(social.handle) { img src=(social.white_icon) alt=(social.platform); }
+                        }
+                    }
                 }
             }
         }
@@ -231,6 +236,25 @@ fn main() {
                     "Templater: Maud" br;
                     "Database: Postgres (want to replace with my own)" br;
                     "Database Driver: Diesel"
+                }
+            }
+            div {
+                h2 class="setup-subheader" { "HS Clubs" }
+                p class="setup-specs" {
+                    a href="https://tsaweb.org/teams" { "TEAMS" } ": President" br;
+                    a href="https://www.soinc.org/" { "Science Olympiad" } ": President" br;
+                    "Esports: Vice President" br;
+                    "GMSGA: Historian" br;
+                    a href="https://tsaweb.org/" { "TSA" } br;
+                    "Spanish Club"
+                }
+            }
+            div {
+                h2 class="setup-subheader" { "Sports" }
+                p class="setup-specs" {
+                    "Cross Country" br;
+                    "Winter/Spring Track" br;
+                    "Tennis"
                 }
             }
         }
