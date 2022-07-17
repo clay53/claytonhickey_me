@@ -89,6 +89,7 @@ pub enum Title {
 pub enum DescriptionPart {
     Paragraph(&'static [DescriptionPart]),
     Text(&'static str),
+    DLink((&'static str, &'static str))
 }
 
 pub fn description_parts_to_markup(parts: &[DescriptionPart]) -> Markup {
@@ -96,7 +97,8 @@ pub fn description_parts_to_markup(parts: &[DescriptionPart]) -> Markup {
         @for part in parts {
             @match part {
                 DescriptionPart::Paragraph(parts) => p { (description_parts_to_markup(parts)) },
-                DescriptionPart::Text(text) => (text)
+                DescriptionPart::Text(text) => (text),
+                DescriptionPart::DLink((text, href)) => a href=(href) { (text) },
             }
         }
     }
