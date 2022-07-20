@@ -159,3 +159,9 @@ h2 {
 .tidbit-subheader {
     font-size: larger;
 }
+
+@media(max-width: 45rem) {
+    #introduction-container, #tidbits-container, .experience-container {
+        grid-template-columns: 1fr;
+    }
+}
