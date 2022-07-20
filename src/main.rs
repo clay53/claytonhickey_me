@@ -42,6 +42,7 @@ fn page<S: AsRef<str>, T: AsRef<str>, U: AsRef<str>>(config: &Config, title: S, 
             body {
                 nav id="nav" {
                     (nav_element("Home", "/"))
+                    (nav_element("Services", "/services"))
                 }
                 main id="content" {
                     (content)
@@ -128,138 +129,201 @@ fn main() {
 
     // home
 
-    fs::write(subdir(www_dir, "index.html"), page(&config, "Clayton Hickey", "Clayton Hickey's website", "/", Some("/"), html! {
-        div id="introduction-container" {
+    fs::write(subdir(www_dir, "index.html"), page(
+        &config,
+        "Clayton Hickey",
+        "Clayton Hickey's website",
+        "/",
+        Some("/"),
+        html! {
+            section id="introduction" {}
+            div id="introduction-container" {
+                div {
+                    h1 { "Clayton Hickey" }
+                    p {
+                        "I'm a 17 year old fullstack web/software developer. Prospective bioengineer and computer engineer. \
+                        Taught myself programming since 2nd grade by just going for it. \
+                        I'm currently working on developing an educational software suite to compete with \
+                        Anki, Quizlet, Kahoot, GimKit, Google Classroom, and Duolingo that runs on all \
+                        platforms (desktop, web, & mobile) and is federated (not exactly but it's the same spirit), \
+                        free, and open source. It's being developed with my own gui/software framework, "
+                        a href="https://github.com/clay53/bui_basic" { "BUI Basic" } ". \
+                        The language learning portion of the suite's development is being document on Twitter: "
+                        a href="https://twitter.com/LanguageTutorRS" { "@LanguageTutorRS" } "."
+                    }
+                }
+                img src="/images/headshot_square.webp" id="headshot" alt="Headshot of Clayton Hickey";
+            }
+            
+            section id="experiences" {}
+            h1 { "Experiences" }
             div {
-                h1 { "Clayton Hickey" }
-                p {
-                    "I'm a 17 year old fullstack web/software developer. Prospective bioengineer. \
-                    Taught myself programming since 2nd grade by just going for it. \
-                    I'm currently working on developing an educational software suite to defeat \
-                    Anki, Quizlet, Kahoot, GimKit, Google Classroom, and Duolingo in one fell swoop \
-                    that runs on all platforms (desktop, web, & mobile) and is federated (not exactly), free, and open source. \
-                    It's being developed with my own gui/software framework, "
-                    a href="https://github.com/clay53/bui_basic" { "BUI Basic" } ". \
-                    The language learning portion of the suite's development is being document on Twitter: "
-                    a href="https://twitter.com/LanguageTutorRS" { "@LanguageTutorRS" } "."
+                // h3 { "skills" }
+                // div {
+                    
+                // }
+                h2 { "Projects" }
+                div class="experience-container" {
+                    @for project in PROJECTS {
+                        (project.to_markup())
+                    }
+                }
+                h2 { "Open Source Contributions" }
+                div class="experience-container" {
+                    @for contribution in CONTRIBUTIONS {
+                        (contribution.to_markup())
+                    }
+                }
+                h2 { "Abandoned Projects" }
+                div class="experience-container" {
+                    @for unfinished_project in ABANDONED_PROJECTS {
+                        (unfinished_project.to_markup())
+                    }
                 }
             }
-            img src="/images/headshot_square.webp" id="headshot" alt="Headshot of Clayton Hickey";
-        }
-        
-        h1 { "Experiences" }
-        
-        div {
-            // h3 { "skills" }
-            // div {
-                
-            // }
-            h2 { "Projects" }
-            div class="experience-container" {
-                @for project in PROJECTS {
-                    (project.to_markup())
+            
+            section id="tidbits" {}
+            h1 { "Tidbits" }
+            div id="tidbits-container" {
+                div {
+                    h2 class="tidbit-subheader" { "Desktop: custom" }
+                    p class="tidbit-details" {
+                        "OS: Arch" br;
+                        "WM: LeftWM" br;
+                        "CPU: i7-6700" br;
+                        "GPU: RTX 2060" br;
+                        "RAM: 32GB" br;
+                        "Monitors: 2.8"
+                    }
+                }
+                div {
+                    h2 class="tidbit-subheader" { "Laptop: Samsung Chomebook 3" }
+                    p class="tidbit-details" {
+                        "OS: Arch" br;
+                        "WM: LeftWM" br;
+                        "CPU: Celeron N3060" br;
+                        "RAM: 4GB" br;
+                        "Storage: 128 GB SanDisk Extreme MicroSD XC"
+                    }
+                }
+                div {
+                    h2 class="tidbit-subheader" { "Programming Environment" }
+                    p class="tidbit-details" {
+                        "IDE: VSCode" br;
+                        "Terminal: Alacritty" br;
+                        "Shell: Bash" br;
+                        "RAM: 4GB" br;
+                        "Branch preference: LTS (but probably using nightly)"
+                    }
+                }
+                div {
+                    h2 class="tidbit-subheader" { "Personal Server" }
+                    p class="tidbit-details" {
+                        "Host: Linode" br;
+                        "RAM: 1GB" br;
+                        "CPU: 1 core Xeon E5-2697" br;
+                        "OS: Ubuntu 20.04" br;
+                        "Proxy: Nginx" br;
+                        "Server: Nextcloud"
+                    }
+                }
+                div {
+                    h2 class="tidbit-subheader" { "<3 Software Stack" }
+                    p class="tidbit-details" {
+                        "Main Language: Rust" br;
+                        "GUI Framework: BUI Basic" br;
+                        "Windower: Winit" br;
+                        "Graphics Library: WGPU + BUI" br;
+                        "Android bridge: android-ndk-rs"
+                    }
+                }
+                div {
+                    h2 class="tidbit-subheader" { "<3 Web Stack" }
+                    p class="tidbit-details" {
+                        "Main Language: Rust" br;
+                        "Framework: Rocket.rs" br;
+                        "Templater: Maud" br;
+                        "Database: Postgres (want to replace with my own)" br;
+                        "Database Driver: Diesel"
+                    }
+                }
+                div {
+                    h2 class="tidbit-subheader" { "HS Clubs" }
+                    p class="tidbit-details" {
+                        a href="https://tsaweb.org/teams" { "TEAMS" } ": President" br;
+                        a href="https://www.soinc.org/" { "Science Olympiad" } ": President" br;
+                        "Esports: Vice President" br;
+                        "GMSGA: Historian" br;
+                        a href="https://tsaweb.org/" { "TSA" } br;
+                        "Spanish Club"
+                    }
+                }
+                div {
+                    h2 class="tidbit-subheader" { "Sports" }
+                    p class="tidbit-details" {
+                        "Cross Country" br;
+                        "Winter/Spring Track" br;
+                        "Tennis"
+                    }
                 }
             }
-            h2 { "Open Source Contributions" }
-            div class="experience-container" {
-                @for contribution in CONTRIBUTIONS {
-                    (contribution.to_markup())
-                }
-            }
-            h2 { "Abandoned Projects" }
-            div class="experience-container" {
-                @for unfinished_project in ABANDONED_PROJECTS {
-                    (unfinished_project.to_markup())
-                }
-            }
-        }
-        
-        h1 { "Tidbits" }
-        div id="tidbits-container" {
-            div {
-                h2 class="tidbit-subheader" { "Desktop: custom" }
-                p class="tidbit-details" {
-                    "OS: Arch" br;
-                    "WM: LeftWM" br;
-                    "CPU: i7-6700" br;
-                    "GPU: RTX 2060" br;
-                    "RAM: 32GB" br;
-                    "Monitors: 2.8"
-                }
-            }
-            div {
-                h2 class="tidbit-subheader" { "Laptop: Samsung Chomebook 3" }
-                p class="tidbit-details" {
-                    "OS: Arch" br;
-                    "WM: LeftWM" br;
-                    "CPU: Celeron N3060" br;
-                    "RAM: 4GB" br;
-                    "Storage: 128 GB SanDisk Extreme MicroSD XC"
-                }
-            }
-            div {
-                h2 class="tidbit-subheader" { "Programming Environment" }
-                p class="tidbit-details" {
-                    "IDE: VSCode" br;
-                    "Terminal: Alacritty" br;
-                    "Shell: Bash" br;
-                    "RAM: 4GB" br;
-                    "Branch preference: LTS (but probably using nightly)"
-                }
-            }
-            div {
-                h2 class="tidbit-subheader" { "Personal Server" }
-                p class="tidbit-details" {
-                    "Host: Linode" br;
-                    "RAM: 1GB" br;
-                    "CPU: 1 core Xeon E5-2697" br;
-                    "OS: Ubuntu 20.04" br;
-                    "Proxy: Nginx" br;
-                    "Server: Nextcloud"
-                }
-            }
-            div {
-                h2 class="tidbit-subheader" { "<3 Software Stack" }
-                p class="tidbit-details" {
-                    "Main Language: Rust" br;
-                    "GUI Framework: BUI Basic" br;
-                    "Windower: Winit" br;
-                    "Graphics Library: WGPU + BUI" br;
-                    "Android bridge: android-ndk-rs"
-                }
-            }
-            div {
-                h2 class="tidbit-subheader" { "<3 Web Stack" }
-                p class="tidbit-details" {
-                    "Main Language: Rust" br;
-                    "Framework: Rocket.rs" br;
-                    "Templater: Maud" br;
-                    "Database: Postgres (want to replace with my own)" br;
-                    "Database Driver: Diesel"
-                }
-            }
-            div {
-                h2 class="tidbit-subheader" { "HS Clubs" }
-                p class="tidbit-details" {
-                    a href="https://tsaweb.org/teams" { "TEAMS" } ": President" br;
-                    a href="https://www.soinc.org/" { "Science Olympiad" } ": President" br;
-                    "Esports: Vice President" br;
-                    "GMSGA: Historian" br;
-                    a href="https://tsaweb.org/" { "TSA" } br;
-                    "Spanish Club"
-                }
-            }
-            div {
-                h2 class="tidbit-subheader" { "Sports" }
-                p class="tidbit-details" {
-                    "Cross Country" br;
-                    "Winter/Spring Track" br;
-                    "Tennis"
-                }
-            }
-        }
+        }).into_string()
+    ).unwrap();
 
-        // h1 { "Blog" }
+    // services
 
-    }).into_string()).unwrap();
+    let services_dir = subdir(www_dir, "services");
+
+    fs::create_dir(&services_dir).unwrap();
+    fs::write(subdir(services_dir.as_path(), "index.html"),page(
+        &config,
+        "Services - Clayton Hickey",
+        "Services offered by Clayton Hickey.",
+        "/services",
+        Some("/services"),
+        html! {
+            h1 { "Services" }
+
+            section id="contact" {}
+            h2 { "Contact" }
+            p {
+                "even if you want something not listed on this page, feel free to contact me."
+            }
+            address {
+                "mail: " a href="mailto:clayton@claytondoesthings.xyz" { "clayton@claytondoesthings.xyz" } br;
+                "phone (Google Voice): " a href="tel:+14842589302" { "+1 (484) 258-9302" } br;
+                "Discord: ClaytonDoesThings#4119" br;
+                "Twitter DM: " a href="https://twitter.com/ClaytonsThings" { "https://twitter.com/ClaytonsThings" } br;
+                "Snapchat, Instagram, etc. are fine if I know you"
+            }
+
+            section id="contract-programming" {}
+            h2 { "Contract/commission Programming" }
+            p {
+                "I will program something for you be it a feature for something you're already creating, fixing a bug, or \
+                even a whole application. I cannot take all jobs because I do have limited time and I cannot determine a rate \
+                until I know what I'm creating so " a href="#contact" { "contact me" } "."
+            }
+
+            section id="in-person-tutoring" {}
+            h2 { "In-person Tutoring" }
+            p {
+                "If you're nearby, I am available to do in-person tutoring. Otherwise, "
+                a href="#online-tutoring" { "online tutoring"} " is available. Currently, over the summer, I'm free most of the time. \
+                During the school year, I will most likely not be able to tutor during the weekdays save for a studyhall. Weekends \
+                are usually ok after like 10am."
+            }
+
+            section id="online-tutoring" {}
+            h2 { "Online Tutoring" }
+            p {
+                "While I much prefer " a href="#in-person-tutoring" { "in-person tutoring" } ", online tutoring may be \
+                much more convenient for some/most people. Rates for online tutoring will be slightly less because of gas. \
+                I prefer to use " a href="https://discord.com" { "Discord" } " for online tutoring but most applications \
+                including Zoom are fine. For more information on tutoring, please refer to the "
+                a href="#in-person-tutoring" { "in-person tutoring" } " section. To talk about online tutoring, "
+                a href="#contact" { "contact me" } "."
+            }
+        }).into_string()
+    ).unwrap()
 }

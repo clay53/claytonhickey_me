@@ -13,6 +13,12 @@ pub const SOCIALS: &'static [Social] = &[
         link: "https://twitter.com/ClaytonsThings"
     },
     Social {
+        platform: "Mail",
+        handle: "clayton@claytondoesthings.xyz",
+        white_icon: "/images/socials/white_icon/mail.svg",
+        link: "mailto:clayton@claytondoesthings.xyz"
+    },
+    Social {
         platform: "YouTube",
         handle: "Clayton Does Things",
         white_icon: "/images/socials/white_icon/youtube.png",
