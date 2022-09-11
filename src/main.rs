@@ -43,6 +43,7 @@ fn page<S: AsRef<str>, T: AsRef<str>, U: AsRef<str>>(config: &Config, title: S, 
                 nav id="nav" {
                     (nav_element("Home", "/"))
                     (nav_element("Services", "/services"))
+                    (nav_element("Notes", "/notes"))
                 }
                 main id="content" {
                     (content)
@@ -125,6 +126,7 @@ fn main() {
         urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" {
             (url("/".to_string(), None, "weekly", "1"))
             (url("/services".to_string(), None, "weekly", "1"))
+            (url("/notes".to_string(), None, "weekly", "1"))
         }
     }.into_string()).unwrap();
 
@@ -326,5 +328,26 @@ fn main() {
                 a href="#contact" { "contact me" } "."
             }
         }).into_string()
-    ).unwrap()
+    ).unwrap();
+
+    // notes
+
+    let notes_dir = subdir(www_dir, "notes");
+
+    fs::create_dir(&notes_dir).unwrap();
+    fs::write(subdir(notes_dir.as_path(), "index.html"),page(
+        &config,
+        "Notes - Clayton Hickey",
+        "Notes offered by Clayton Hickey.",
+        "/notes",
+        Some("/notes"),
+        html! {
+            h1 { "Notes" }
+            section id="ap-chemistry" {}
+            h2 { "AP Chemistry" }
+            a href="https://nextcloud.claytondoesthings.xyz/index.php/s/tteKW8N7p3w3wAD" { "Element Tutor (Linux v0.0.1)" } " "  a href="https://nextcloud.claytondoesthings.xyz/index.php/s/qydeH3QTSbfRZnS" { "Element Tutor (Windows v0.0.1)" } " - CLI tool to learn the elements. VERY early development - will completely change and you may have to manually resync progress."
+            br;
+            a href="https://nextcloud.claytondoesthings.xyz/index.php/s/3pB7q5XgaqxZ7y5" { "Anki Deck (2022-09-11.0)" }
+        }).into_string()
+    ).unwrap();
 }
