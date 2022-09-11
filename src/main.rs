@@ -200,7 +200,7 @@ fn main() {
                     h2 class="tidbit-subheader" { "Laptop: Samsung Chomebook 3" }
                     p class="tidbit-details" {
                         "OS: Arch" br;
-                        "WM: LeftWM" br;
+                        "WM: Sway" br;
                         "CPU: Celeron N3060" br;
                         "RAM: 4GB" br;
                         "Storage: 128 GB SanDisk Extreme MicroSD XC"

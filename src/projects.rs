@@ -14,6 +14,7 @@ pub const PROJECTS: &'static [Experience] = &[
         completed: Some(NaiveDate::from_ymd(2022, 7, 13)),
         last_updated: None,
         skills: &[
+            Rust,
             BUI,
             BUIBasic,
             WGPU,
@@ -50,6 +51,7 @@ pub const PROJECTS: &'static [Experience] = &[
         completed: None,
         last_updated: Some(NaiveDate::from_ymd(2022, 7, 14)),
         skills: &[
+            Rust,
             BUI,
             GUIFrameworkDesign,
             CrossPlatformDesktopMobileWeb,
@@ -76,6 +78,7 @@ pub const PROJECTS: &'static [Experience] = &[
         completed: None,
         last_updated: Some(NaiveDate::from_ymd(2022, 7, 14)),
         skills: &[
+            Rust,
             WGPU,
             WGSL,
             RenderShaders,
