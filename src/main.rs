@@ -343,6 +343,12 @@ fn main() {
         Some("/notes"),
         html! {
             h1 { "Notes" }
+            section id="ap-calculus" {}
+            h2 { "AP Calculus" }
+            a href="https://nextcloud.claytondoesthings.xyz/index.php/s/Eb5QaB5K5zJ7HdY" { "Basic Derivates Anki Deck (2022-09-11)" } br;
+            a href="https://nextcloud.claytondoesthings.xyz/index.php/s/jj7E6NyHsj4QXmW" { "Basic Integrals Anki Deck (2022-09-11)" } br;
+            a href="https://nextcloud.claytondoesthings.xyz/index.php/s/HJZJBDS4ZfXRbjB" { "Trig Identities Anki Deck (2022-09-11)" } br;
+            a href="https://nextcloud.claytondoesthings.xyz/index.php/s/oC4xCFo7fmmycAR" { "Summation Formulas Anki Deck (2022-09-11)" } br;
             section id="ap-chemistry" {}
             h2 { "AP Chemistry" }
             a href="https://nextcloud.claytondoesthings.xyz/index.php/s/tteKW8N7p3w3wAD" { "Element Tutor (Linux v0.0.1)" } " "  a href="https://nextcloud.claytondoesthings.xyz/index.php/s/qydeH3QTSbfRZnS" { "Element Tutor (Windows v0.0.1)" } " - CLI tool to learn the elements. VERY early development - will completely change and you may have to manually resync progress."
