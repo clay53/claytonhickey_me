@@ -144,8 +144,9 @@ fn main() {
                 div {
                     h1 { "Clayton Hickey" }
                     p {
-                        "I'm a 17 year old fullstack web/software developer. Prospective bioengineer and computer engineer. \
-                        Taught myself programming since 2nd grade by just going for it. \
+                        "I'm a 17 year old self-taught fullstack web/software developer. Prospective bioengineer \
+                        and computer/software engineer. \
+                        I taught myself programming since 2nd grade by just going for it. \
                         I'm currently working on developing an educational software suite to compete with \
                         Anki, Quizlet, Kahoot, GimKit, Google Classroom, and Duolingo that runs on all \
                         platforms (desktop, web, & mobile) and is federated (not exactly but it's the same spirit), \
