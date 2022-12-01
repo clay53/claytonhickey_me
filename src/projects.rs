@@ -126,9 +126,16 @@ pub const PROJECTS: &'static [Experience] = &[
             Link {
                 ty: LinkType::Code,
                 destination: "https://github.com/clay53/micro_vsrg"
-            }
+            },
+            Link {
+                ty: LinkType::Showcase,
+                destination: "/videos/experiences/micro-vsrg.mp4"
+            },
         ],
-        thumb: None,
+        thumb: Some(Thumb {
+            source: "/images/experiences/thumbs/micro-vsrg.webp",
+            alt: "Students playing Micro VSRG with RC robots"
+        }),
     },
     Experience {
         title: Title::Linked("ClaytonHickey.me", "https://claytonhickey.me"),
@@ -487,6 +494,33 @@ pub const PROJECTS: &'static [Experience] = &[
         thumb: Some(Thumb {
             source: "/images/experiences/thumbs/pebbleXCTimer.png",
             alt: "Screenshot showing time and interval",
+        }),
+    },
+    Experience {
+        title: Title::Linked("Legitimate Images From Images 2", "https://github.com/clay53/images_from_images2"),
+        started: Some(NaiveDate::from_ymd(2022, 7, 22)),
+        completed: None,
+        last_updated: Some(NaiveDate::from_ymd(2022, 8, 17)),
+        skills: &[
+            WGPU,
+            Rust,
+            CLI,
+        ],
+        description: &[
+            Paragraph(&[
+                Text("Makes images from images using the GPU so it's much faster. \
+                Will update so that it also works in the web and desktop without CLI."),
+            ]),
+        ],
+        links: &[
+            Link {
+                ty: LinkType::Code,
+                destination: "https://github.com/clay53/images_from_images2"
+            },
+        ],
+        thumb: Some(Thumb {
+            source: "/images/experiences/thumbs/legitimate-images-from-images.webp",
+            alt: "Cat made from dogs",
         }),
     },
     Experience {

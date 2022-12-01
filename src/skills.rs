@@ -96,6 +96,7 @@ pub enum Skills {
     CrossPlatformDesktopMobileWeb,
     ComputeShaders,
     StaticSites,
+    CLI,
 }
 
 impl Skills {
@@ -199,6 +200,7 @@ impl Skills {
             CrossPlatformDesktopMobileWeb => "cross-platform (mobile, desktop, web)",
             ComputeShaders => "compute shaders",
             StaticSites => "static sites",
+            CLI => "CLI",
         }
     }
 }

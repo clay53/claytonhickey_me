@@ -144,12 +144,12 @@ fn main() {
                 div {
                     h1 { "Clayton Hickey" }
                     p {
-                        "I'm a 17 year old self-taught fullstack web/software developer. Prospective bioengineer \
-                        and computer/software engineer. \
-                        I taught myself programming since 2nd grade by just going for it. \
+                        "I'm a 18 year old self-taught fullstack web/software developer. Prospective bioengineer \
+                        and software engineer. \
+                        I have have been teaching myself programming since 2nd grade by just going for it. \
                         I'm currently working on developing an educational software suite to compete with \
                         Anki, Quizlet, Kahoot, GimKit, Google Classroom, and Duolingo that runs on all \
-                        platforms (desktop, web, & mobile) and is federated (not exactly but it's the same spirit), \
+                        platforms (desktop, web, & mobile) and is federated (similar to Mastodon), \
                         free, and open source. It's being developed with my own gui/software framework, "
                         a href="https://github.com/clay53/bui_basic" { "BUI Basic" } ". \
                         The language learning portion of the suite's development is being document on Twitter: "
@@ -162,10 +162,6 @@ fn main() {
             section id="experiences" {}
             h1 { "Experiences" }
             div {
-                // h3 { "skills" }
-                // div {
-                    
-                // }
                 h2 { "Projects" }
                 div class="experience-container" {
                     @for project in PROJECTS {
@@ -192,7 +188,7 @@ fn main() {
                 div {
                     h2 class="tidbit-subheader" { "Desktop: custom" }
                     p class="tidbit-details" {
-                        "OS: Arch" br;
+                        "OS: Arch Linux" br;
                         "WM: LeftWM" br;
                         "CPU: i7-6700" br;
                         "GPU: RTX 2060" br;
@@ -203,11 +199,11 @@ fn main() {
                 div {
                     h2 class="tidbit-subheader" { "Laptop: Samsung Chomebook 3" }
                     p class="tidbit-details" {
-                        "OS: Arch" br;
+                        "OS: Arch Linux" br;
                         "WM: Sway" br;
-                        "CPU: Celeron N3060" br;
-                        "RAM: 4GB" br;
-                        "Storage: 128 GB SanDisk Extreme MicroSD XC"
+                        "CPU: 12 Gen Intel i5-1240P0" br;
+                        "RAM: 16GB" br;
+                        "Brand: Framework"
                     }
                 }
                 div {
@@ -216,8 +212,7 @@ fn main() {
                         "IDE: VSCode" br;
                         "Terminal: Alacritty" br;
                         "Shell: Bash" br;
-                        "RAM: 4GB" br;
-                        "Branch preference: LTS (but probably using nightly)"
+                        "Release channel prefrence: nightly (LTS if has desired features)"
                     }
                 }
                 div {
@@ -254,11 +249,11 @@ fn main() {
                 div {
                     h2 class="tidbit-subheader" { "HS Clubs" }
                     p class="tidbit-details" {
+                        a href="https://tsaweb.org/" { "TSA" } ": President" br;
                         a href="https://tsaweb.org/teams" { "TEAMS" } ": President" br;
                         a href="https://www.soinc.org/" { "Science Olympiad" } ": President" br;
                         "Esports: Vice President" br;
                         "GMSGA: Historian" br;
-                        a href="https://tsaweb.org/" { "TSA" } br;
                         "Spanish Club"
                     }
                 }
