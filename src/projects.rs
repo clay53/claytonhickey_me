@@ -173,6 +173,38 @@ pub const PROJECTS: &'static [Experience] = &[
         thumb: None,
     },
     Experience {
+        title: Title::Linked("Word Search Solver OCR", "https://claytondoesthings.xyz/software/word-search-cheats-ocr/web"),
+        started: None,
+        completed: Some(NaiveDate::from_ymd(2019, 2, 1)),
+        last_updated: None,
+        skills: &[
+            Websites,
+            WebApps,
+            Algorithms,
+            OCR,
+            JavaScript,
+            P5JS,
+            HTML,
+            CSS,
+        ],
+        description: &[
+            Paragraph(&[
+                Text("A tool to solve word searching using OCR which allows users to upload pictures of word searches\
+                so they can solve them quickly. Developed because I am very bad at word searches."),
+            ]),
+        ],
+        links: &[
+            Link {
+                ty: LinkType::Live,
+                destination: "https://claytondoesthings.xyz/software/word-search-cheats-ocr/web",
+            },
+        ],
+        thumb: Some(Thumb {
+            source: "/images/experiences/thumbs/word-search-cheats-ocr.png",
+            alt: "screenshot of a word search solved with Word Search Cheats",
+        }),
+    },
+    Experience {
         title: Title::Linked("ClaytonDoesThings.xyz", "https://claytondoesthings.xyz"),
         started: None,
         completed: None,
@@ -339,7 +371,7 @@ pub const PROJECTS: &'static [Experience] = &[
             Paragraph(&[
                 Text("A real-time multiplayer pong clone made for a Repl.it competition. \
                 Instead of just playing to a score, winning a point reveals information about the other \
-                player (that they submit) so that they can get to know eachother a bit. Physics calculations \
+                player (that they submit) so that they can get to know each other a bit. Physics calculations \
                 are done server-side to prevent cheating. Optional singleplayer is available.")
             ])
         ],
@@ -537,7 +569,7 @@ pub const PROJECTS: &'static [Experience] = &[
         ],
         description: &[
             Paragraph(&[
-                Text("I made a program that takes a bunch of images and forms them into another images by color matching.")
+                Text("I made a program that takes a bunch of images and forms them into another image by color matching.")
             ])
         ],
         links: &[

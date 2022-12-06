@@ -97,6 +97,8 @@ pub enum Skills {
     ComputeShaders,
     StaticSites,
     CLI,
+    Algorithms,
+    OCR,
 }
 
 impl Skills {
@@ -201,6 +203,8 @@ impl Skills {
             ComputeShaders => "compute shaders",
             StaticSites => "static sites",
             CLI => "CLI",
+            Algorithms => "algorithms",
+            OCR => "OCR"
         }
     }
 }

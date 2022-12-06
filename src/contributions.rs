@@ -59,14 +59,14 @@ pub const CONTRIBUTIONS: &'static [Experience] = &[
                 Text("Comments on the LBRY website were already present but they were not available on the Android app. \
                 I like to read comments so I decided I should add them to the Android app so I analyzed how their website \
                 (ReactJS) was able to get comments from the LBRY REST backend server and adapted a similar technique to \
-                make comments available on Android app."),
+                make comments available on the Android app."),
             ]),
             Paragraph(&[
                 Text("Note: I only included the first page of comments in my PR because I didn't see a way with their \
                 API to ensure that the comments were kept in sync (if a comment was added or removed before a user \
                 would scroll, comments may be missing duplicated on the user's screen) without fetching all the pages at once \
                 (defeating the purpose of pagination of saving memory and bandwidth). \
-                I thought they were going to do add something to their API or something but after my PR, \
+                I thought they were going to add something to their API or something but after my PR, \
                 they just went with the latter solution and fetched all the pages at once.")
             ])
         ],
