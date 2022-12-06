@@ -152,7 +152,7 @@ fn main() {
                         platforms (desktop, web, & mobile) and is federated (similar to Mastodon), \
                         free, and open source. It's being developed with my own gui/software framework, "
                         a href="https://github.com/clay53/bui_basic" { "BUI Basic" } ". \
-                        The language learning portion of the suite's development is being document on Twitter: "
+                        The language learning portion of the suite's development is being documented on Twitter: "
                         a href="https://twitter.com/LanguageTutorRS" { "@LanguageTutorRS" } "."
                     }
                 }

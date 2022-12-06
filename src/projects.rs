@@ -497,7 +497,7 @@ pub const PROJECTS: &'static [Experience] = &[
         }),
     },
     Experience {
-        title: Title::Linked("Legitimate Images From Images 2", "https://github.com/clay53/images_from_images2"),
+        title: Title::Linked("Images From Images 2", "https://github.com/clay53/images_from_images2"),
         started: Some(NaiveDate::from_ymd(2022, 7, 22)),
         completed: None,
         last_updated: Some(NaiveDate::from_ymd(2022, 8, 17)),
