@@ -64,7 +64,7 @@ pub const CONTRIBUTIONS: &'static [Experience] = &[
             Paragraph(&[
                 Text("Note: I only included the first page of comments in my PR because I didn't see a way with their \
                 API to ensure that the comments were kept in sync (if a comment was added or removed before a user \
-                would scroll, comments may be missing duplicated on the user's screen) without fetching all the pages at once \
+                would scroll, comments may be missing or duplicated on the user's screen) without fetching all the pages at once \
                 (defeating the purpose of pagination of saving memory and bandwidth). \
                 I thought they were going to add something to their API or something but after my PR, \
                 they just went with the latter solution and fetched all the pages at once.")

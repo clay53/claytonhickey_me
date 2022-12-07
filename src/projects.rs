@@ -141,7 +141,7 @@ pub const PROJECTS: &'static [Experience] = &[
         title: Title::Linked("ClaytonHickey.me", "https://claytonhickey.me"),
         started: Some(NaiveDate::from_ymd(2021, 7, 5)),
         completed: Some(NaiveDate::from_ymd(2021, 7, 5)),
-        last_updated: Some(NaiveDate::from_ymd(2022, 7, 15)),
+        last_updated: Some(NaiveDate::from_ymd(2022, 12, 6)),
         skills: &[
             Websites,
             Rust,
@@ -189,7 +189,7 @@ pub const PROJECTS: &'static [Experience] = &[
         ],
         description: &[
             Paragraph(&[
-                Text("A tool to solve word searching using OCR which allows users to upload pictures of word searches\
+                Text("A tool to solve word searching using OCR which allows users to upload pictures of word searches \
                 so they can solve them quickly. Developed because I am very bad at word searches."),
             ]),
         ],
