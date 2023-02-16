@@ -3,3 +3,6 @@
 Cargp.lock
 .cargo
 /www
+.gitignore
+.vscode/
+.history

@@ -197,9 +197,9 @@ fn main() {
                     }
                 }
                 div {
-                    h2 class="tidbit-subheader" { "Laptop: Samsung Chomebook 3" }
+                    h2 class="tidbit-subheader" { "Laptop: Framework" }
                     p class="tidbit-details" {
-                        "OS: Arch Linux" br;
+                        "OS: NixOS" br;
                         "WM: Sway" br;
                         "CPU: 12 Gen Intel i5-1240P0" br;
                         "RAM: 16GB" br;
