@@ -146,7 +146,7 @@ fn main() {
                     p {
                         "I'm a 18 year old self-taught fullstack web/software developer. Prospective bioengineer \
                         and software engineer. \
-                        I have have been teaching myself programming since 2nd grade by just going for it. \
+                        I have been teaching myself programming since 2nd grade by just going for it. \
                         I'm currently working on developing an educational software suite to compete with \
                         Anki, Quizlet, Kahoot, GimKit, Google Classroom, and Duolingo that runs on all \
                         platforms (desktop, web, & mobile) and is federated (similar to Mastodon), \

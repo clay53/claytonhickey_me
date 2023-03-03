@@ -460,40 +460,6 @@ pub const PROJECTS: &'static [Experience] = &[
         }),
     },
     Experience {
-        title: Title::Linked("Russian Roulette", "https://claytondoesthings.xyz/games/russian-roulette/web"),
-        started: None,
-        completed: Some(NaiveDate::from_ymd(2018, 4, 1)),
-        last_updated: None,
-        skills: &[
-            JavaScript,
-            HTML,
-            P5JS,
-            P5Sound,
-            WebApps,
-            GameDevelopment,
-        ],
-        description: &[
-            Paragraph(&[
-                Text("Made a Russian Roulette game against my friend to see who could do it better, \
-                he didn't finish but I had fun making it anyway.")
-            ])
-        ],
-        links: &[
-            Link {
-                ty: LinkType::Code,
-                destination: "https://replit.com/@ClaytonHickey/p5js-russian-roulette"
-            },
-            Link {
-                ty: LinkType::Live,
-                destination: "https://claytondoesthings.xyz/games/russian-roulette/web"
-            }
-        ],
-        thumb: Some(Thumb {
-            source: "/images/experiences/thumbs/russian-roulette.png",
-            alt: "Losing Russian Roulette"
-        }),
-    },
-    Experience {
         title: Title::Linked("PebbleXCTimer", "https://github.com/ClaytonDoesThings/PebbleXCTimer"),
         started: None,
         completed: Some(NaiveDate::from_ymd(2018, 8, 20)),
