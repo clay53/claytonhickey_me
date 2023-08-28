@@ -1,12 +1,9 @@
-{
-    #rust_overlay = import (builtins.fetchTarball "https://github.com/oxalica/rust-overlay/archive/master.tar.gz");
-    pkgs ? import <nixpkgs> {
+let
+    pkgs = import <nixpkgs> {
         overlays = [
             (import (fetchTarball "https://github.com/oxalica/rust-overlay/archive/master.tar.gz"))
         ];
-    },
-}:
-let
+    };
     rustPlatform = pkgs.makeRustPlatform {
         cargo = pkgs.rust-bin.nightly."2023-03-15".minimal;
         rustc = pkgs.rust-bin.nightly."2023-03-15".minimal;
