@@ -1,8 +1,10 @@
 { pkgs ? import <nixpkgs> {} }:
-pkgs.mkShell rec {
+pkgs.mkShell {
     buildInputs = with pkgs; [
-        rustup
-        cargo
+        webfs
+        nodePackages.typescript-language-server
+        nodePackages.vscode-css-languageserver-bin
+        nodePackages.vscode-json-languageserver-bin
+        nodePackages.vscode-html-languageserver-bin
     ];
-    HISTFILE = toString ./.history;
 }

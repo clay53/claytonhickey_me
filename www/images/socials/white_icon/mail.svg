@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="152.39999mm"
+   height="90.042999mm"
+   viewBox="0 0 152.39999 90.043001"
+   version="1.1"
+   id="svg10"
+   sodipodi:docname="mail.svg"
+   inkscape:export-filename="mail.svg"
+   inkscape:export-xdpi="1200"
+   inkscape:export-ydpi="1200"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs14" />
+  <sodipodi:namedview
+     id="namedview12"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.478113"
+     inkscape:cx="207.35898"
+     inkscape:cy="239.49454"
+     inkscape:window-width="2552"
+     inkscape:window-height="1405"
+     inkscape:window-x="1923"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Sketch001">
+    <inkscape:grid
+       type="xygrid"
+       id="grid429"
+       originx="0"
+       originy="-3.0079643e-14" />
+  </sodipodi:namedview>
+  <g
+     id="Sketch001"
+     transform="matrix(1,0,0,-1,2.413,105.918)"
+     style="fill:#ffffff;stroke:none">
+    <path
+       id="Sketch001_w0000"
+       d="m -2.413,82.54365 76.2,-19.6469 76.2,19.6469 V 28.575 c 0,-7.014016 -5.68598,-12.7 -12.7,-12.7 h -127 c -7.0140163,0 -12.7,5.685984 -12.7,12.7"
+       stroke="#000000"
+       stroke-width="0.35 px"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.35;stroke-miterlimit:4;stroke-dasharray:none"
+       sodipodi:nodetypes="cccsssc" />
+    <title
+       id="title3">b'Sketch001'</title>
+  </g>
+  <g
+     id="Sketch002"
+     transform="matrix(1,0,0,-1,2.413,107.188)"
+     style="fill:#ffffff;stroke:none">
+    <path
+       id="Sketch002_w0000"
+       d="m 10.287,107.188 c -7.0140163,0 -12.7,-5.68598 -12.7,-12.7 v -6.35635 l 76.2,-19.6469 76.2,19.6469 V 94.488 c 0,7.01402 -5.68598,12.7 -12.7,12.7 h -127"
+       stroke="#000000"
+       stroke-width="0.35 px"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.35;stroke-miterlimit:4;stroke-dasharray:none"
+       sodipodi:nodetypes="cscccssc" />
+    <title
+       id="title7">b'Sketch002'</title>
+  </g>
+</svg>

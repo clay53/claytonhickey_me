@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Clayton Hickey</title>
+        <meta name="description" content="Clayton Hickey's website">
+        <link rel="canonical" href="https://claytonhickey.me/">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="/common.css">
+        <link rel="icon" type="image/ico" href="/favicon.ico">
+        <script src="/stuff.js"></script>
+        <script src="/cardViewer.js"></script>
+    </head>
+    <body>
+        <!-- <nav id="nav">
+            <div class="nav-item nav-item-selected">
+                <a href="/">Home</a>
+            </div>
+            <div class="nav-item">
+                <a href="/services">Services</a>
+            </div>
+            <div class="nav-item">
+                <a href="/notes">Notes</a>
+                </div> --!>
+        </nav>
+        <main id="content">
+            <section id="introduction"></section>
+            <div id="introduction-container">
+                <div>
+                    <h1>Clayton Hickey</h1>
+                    <p>I am currently working at GameSense Sports working as a fullstack web/mobile/deployment/software engineer.
+                       For them, I have developed a web-based video editor using React, Rust, Actix, FFMpeg, PHP, Laravel, Auth0, and AWS used to create
+                       pitch recognition training videos used by MLB teams based on the research and direction of Dr. Peter Fadde.
+                       I'm currently studying Bioengineering and Computer Science at the University of Pennsylvania.  
+                       I have been teaching myself programming since 2nd grade by doing projects I was interested in. 
+                       I'm currently working on developing an educational software suite to compete with Anki, Quizlet, Kahoot, 
+                       GimKit, Google Classroom, and Duolingo that runs on all platforms (desktop, web, &amp; mobile) 
+                       and is federated-like (similar to Mastodon), free, and open source.
+                       The language learning portion of the suite's development is being documented on 𝕏: 
+                       <a href="https://twitter.com/tutor_engine">@tutor_engine</a>.
+                    </p>
+                </div>
+                <img src="/images/headshot.jpg" id="headshot" alt="Headshot of Clayton Hickey">
+            </div>
+            <section id="experiences"></section>
+            <h1>Experiences</h1>
+            <div>
+                <h2>Projects</h2>
+                <card-viewer card-set="projects"></card-viewer>
+                <h2>Open Source Contributions</h2>
+                <card-viewer card-set="open-source"></card-viewer>
+                <h2>Abandoned Projects</h2>
+                <card-viewer card-set="abandoned-projects"></card-viewer>
+            </div>
+            <section id="tidbits"></section>
+            <h1>Tidbits</h1>
+            <div id="tidbits-container">
+                <div>
+                    <h2 class="tidbit-subheader">Desktop: custom</h2>
+                    <p class="tidbit-details">
+                        OS: Arch Linux
+                        <br>WM: LeftWM
+                        <br>CPU: i7-6700
+                        <br>GPU: RTX 2060
+                        <br>RAM: 32GB
+                        <br>Monitors: 2
+                    </p>
+                </div>
+                <div>
+                    <h2 class="tidbit-subheader">Laptop: Framework 13</h2>
+                    <p class="tidbit-details">
+                        OS: NixOS
+                        <br>WM: Sway
+                        <br>CPU: 12 Gen Intel i5-1240P0
+                        <br>RAM: 64GB
+                    </p>
+                </div>
+                <div>
+                    <h2 class="tidbit-subheader">Programming Environment</h2>
+                    <p class="tidbit-details">
+                        IDE: NeoVim
+                        <br>Terminal: Alacritty
+                        <br>Shell: Bash
+                        <br>Release channel prefrence: nightly (LTS if has desired features)
+                    </p>
+                </div>
+                <div>
+                    <h2 class="tidbit-subheader">Personal Server</h2>
+                    <p class="tidbit-details">
+                        Host: Linode
+                        <br>RAM: 2GB
+                        <br>CPU: 1 core Xeon E5-2697
+                        <br>OS: NixOS
+                        <br>Proxy: Nginx
+                        <br>Server: Nextcloud
+                    </p>
+                </div>
+                <div>
+                    <h2 class="tidbit-subheader">&lt;3 Software Stack</h2>
+                    <p class="tidbit-details">
+                        Main Language: Rust
+                        <br>GUI Framework: egui
+                    </p>
+                </div>
+                <div>
+                    <h2 class="tidbit-subheader">&lt;3 Web Stack</h2>
+                    <p class="tidbit-details">
+                        Main Language: Rust
+                        <br>Framework: Axum
+                        <br>Client: Raw HTML/CSS/JS w/ Web Components
+                        <br>Database: Postgres
+                    </p>
+                </div>
+                <div>
+                    <h2 class="tidbit-subheader">HS Clubs</h2>
+                    <p class="tidbit-details">
+                        <a href="https://tsaweb.org/">TSA</a>: President
+                        <br><a href="https://tsaweb.org/teams">TEAMS</a>: President
+                        <br><a href="https://www.soinc.org/">Science Olympiad</a>: President
+                        <br>Esports: Vice President
+                        <br>GMSGA: Historian
+                        <br>Spanish Club</p>
+                </div>
+                <div>
+                    <h2 class="tidbit-subheader">Sports</h2>
+                    <p class="tidbit-details">
+                        Cross Country
+                        <br>Winter/Spring Track
+                        <br>Tennis</p>
+                </div>
+            </div>
+        </main>
+        <footer id="footer">
+            <hr>
+            <span>Check out the code on <a href="https://github.com/clay53/claytonhickey_me">GitHub.com</a></span>
+            <div id="footer-social-media">
+                <a href="https://twitter.com/ClaytonsThings" title="@ClaytonsThings"><img src="/images/socials/white_icon/twitter.svg" alt="Twitter"></a>
+                <a href="mailto:clayton@claytondoesthings.xyz" title="clayton@claytondoesthings.xyz"><img src="/images/socials/white_icon/mail.svg" alt="Mail"></a>
+                <a href="https://youtube.com/ClaytonDoesThings" title="Clayton Does Things"><img src="/images/socials/white_icon/youtube.png" alt="YouTube"></a>
+                <a href="https://discord.gg/nSGT8BJ" title="Clayton Does Things"><img src="/images/socials/white_icon/discord.svg" alt="Discord"></a>
+                <a href="https://www.patreon.com/ClaytonDoesThings" title="ClaytonDoesThings"><img src="/images/socials/white_icon/patreon.png" alt="Patreon"></a>
+            </div>
+        </footer>
+    </body>
+</html>
