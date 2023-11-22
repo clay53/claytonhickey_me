@@ -34,6 +34,10 @@ class CardViewer extends HTMLElement {
             IDMAP.publishUnpublishLBRYAndroid,
         ] : cardSetAttribute === "abandoned-projects" ? [
             IDMAP.fromAnarchy,
+        ] : cardSetAttribute === "blog-posts" ? [
+            IDMAP.howBailAlgorithmsShouldBeUsed,
+            IDMAP.aTheoreticalAlgorithmForDecidingBail,
+            IDMAP.recommendationAlgorithmsAndEthics
         ] : []
 
         const dateFormatter = new Intl.DateTimeFormat(undefined, {
@@ -65,7 +69,7 @@ class CardViewer extends HTMLElement {
 
                 for (const link of thing.links) {
                     const linkElm = document.createElement("a");
-                    linkElm.href = linkElm.href;
+                    linkElm.href = link.href;
                     linkElm.innerText = link.text;
                     thingTitleLinks.appendChild(linkElm);
                 }
@@ -80,9 +84,9 @@ class CardViewer extends HTMLElement {
                 img.setAttribute("src", thing.thumb.source);
                 img.setAttribute("alt", thing.thumb.alt);
 
-                if (thing.links > 0) {
+                if (thing.links?.length > 0) {
                     const imgLink = document.createElement("a");
-                    imgLink.href = thing.links[0];
+                    imgLink.href = thing.links[0].href;
                     imgLink.appendChild(img);
                     thingContainer.appendChild(imgLink);
                 } else {
@@ -106,7 +110,7 @@ class CardViewer extends HTMLElement {
                 thingContainer.appendChild(dates);
             }
 
-            if (thing.skills.length > 0) {
+            if (thing.skills?.length > 0) {
                 const skills = document.createElement("p");
                 skills.innerText = `skills: ${SKILLTONAMEMAP[thing.skills[0]]}`;
                 for (let i = 1; i < thing.skills.length; i++) {

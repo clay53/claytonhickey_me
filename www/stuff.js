@@ -124,6 +124,10 @@ const IDMAP = {
     Nix: 122,
     WebComponents: 123,
     claytonHickeyMeWC: 124,
+    recommendationAlgorithmsAndEthics: 125,
+    aTheoreticalAlgorithmForDecidingBail: 126,
+    howBailAlgorithmsShouldBeUsed: 127,
+    ClaytonHickey: 128,
 };
 
 const SKILLTONAMEMAP = {
@@ -876,7 +880,7 @@ const IDTOCARD = {
         ],
         thumb: {
             source: "/images/experiences/thumbs/infinitime-repeat-timer-option.png",
-            href: "Showing repeat option selected while playing timer",
+            alt: "Showing repeat option selected while playing timer",
         }
     },
     [IDMAP.addedComentsLBRYAndroid]: {
@@ -959,5 +963,62 @@ const IDTOCARD = {
                 text: "Code",
             },
         ],
+    },
+    [IDMAP.recommendationAlgorithmsAndEthics]: {
+        title: "Recommendation Algorithms And Ethics",
+        published: new Date(2021, 7, 9),
+        authors: [
+            IDMAP.ClaytonHickey
+        ],
+        description: `<p>A not-very-short not-very-source-heavy dive into recommendation algorithms and the ethical questions 
+        surrounding them. Written for Tech Roulette 2021, P4M1 - Justice Matrix</p>`,
+        links: [
+            {
+                href: "/blog/recommendation-algorithms-and-ethics",
+                text: "Read",
+            }
+        ],
+        thumb: {
+            source: "/blog/recommendation-algorithms-and-ethics/youtube-handing-viewer-burning-baby.png",
+            alt: "YouTube logo handing viewer a burning baby"
+        }
+    },
+    [IDMAP.aTheoreticalAlgorithmForDecidingBail]: {
+        title: "A Theoretical Algorithm For Deciding Bail",
+        published: new Date(2021, 7, 10),
+        authors: [
+            IDMAP.ClaytonHickey
+        ],
+        description: `<p>A quick look into creating a computer algorithm for deciding bail for someone awaiting trial. 
+        Written for Tech Roulette 2021, P4M2 - Justice Matrix</p>`,
+        links: [
+            {
+                href: "/blog/a-theoretical-algorithm-for-deciding-bail",
+                text: "Read",
+            }
+        ],
+        thumb: {
+            source: "/blog/a-theoretical-algorithm-for-deciding-bail/computer-holding-freedom-random.png",
+            text: "Your freedom will cost 100 million dollars"
+        }
+    },
+    [IDMAP.howBailAlgorithmsShouldBeUsed]: {
+        title: "How Should Bail Algorithms Be Used",
+        published: new Date(2021, 7, 10),
+        authors: [
+            IDMAP.ClaytonHickey
+        ],
+        description: `<p>Should bail algorithms be used today or in the future? Here's my stance. 
+        Written for Tech Roulette 2021, P4M3 - Justice Matrix</p>`,
+        links: [
+            {
+                href: "/blog/how-should-bail-algorithms-be-used",
+                text: "Read",
+            }
+        ],
+        thumb: {
+            source: "/blog/how-should-bail-algorithms-be-used/judge-handing-computer-an-L.png",
+            text: "A judge handing a computer an L"
+        }
     },
 };

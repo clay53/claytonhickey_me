@@ -1,1 +1,1 @@
-`webfsd -F -p 8000`
+`webfsd -F -p 8000 -f index.html`
