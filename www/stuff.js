@@ -986,7 +986,7 @@ const IDTOCARD = {
     [IDMAP.aTheoreticalAlgorithmForDecidingBail]: {
         title: "A Theoretical Algorithm For Deciding Bail",
         published: new Date(2021, 7, 10),
-        last_updated: new Data(2023, 11, 22),
+        last_updated: new Date(2023, 11, 22),
         authors: [
             IDMAP.ClaytonHickey
         ],

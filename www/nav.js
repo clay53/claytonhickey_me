@@ -59,6 +59,11 @@ class MyNav extends HTMLElement {
             div.appendChild(a);
             nav.appendChild(div);
         }
+        nav.innerHTML += `
+            <div class="nav-item">
+                <a href="https://nextcloud.claytondoesthings.xyz/apps/listman/subscribe/9pEvpBK8" target="_blank">Mailing List</a>
+            </div>
+        `;
         shadow.appendChild(nav);
     }
 }
