@@ -15,11 +15,12 @@
         <my-nav type="blog"></my-nav>
         <main id="content">
             <h1><u>A Theoretical Algorithm for Deciding Bail</u></h1>
+            <p>Published: 2021-07-10; Updated: 2023-11-22; Authors: Clayton Hickey</p>
             <p>
                 This article is written for the second module of 
-                <a href="https://techroulette.xyz/" target="_blank">Tech Roulette</a>
-                 2021, Justice Matrix - Project 4. As stated in the module description, 
-                 bail is decided by a judge based on the risk of them escaping, crime alleged, 
+                <a href="https://techroulette.xyz/" target="_blank">Tech Roulette</a> 
+                2021, Justice Matrix - Project 4. As stated in the module description, 
+                bail is decided by a judge based on the risk of them escaping, crime alleged, 
                 and the "dangerousness" of them to others/community. 
                 The goal in this article is going to be to assign values to go over how to assign values to each of 
                 those points and how to put them together into a final cash value. 
@@ -84,15 +85,7 @@
                 is about maximum damage per year. 
                 We can ignore any cases where bail would be denied due to the crimes alleged. 
                 I think a decent way to base this off of is potential_years_sentenced*estimated_damage_done_in_crimes_alleged*estimated_crazy_level. 
-                This leaves one value for me to approximate here: estimated_crazy_level. 
-                Essentially, this value is supposed to represent the number of damages a person would do in a year if put at 
-                maximum stress due to mental issues/disorders. 
-                To calculate this, a similar process would be done like weighing crimes alleged where a table of mental 
-                disorders and their associated crazy-ness value is created 
-                and the defendant's disorders are simply added up for the final value except for this, they're not added to 0, 
-                they're added to a base number that would have to be determined to account for those without mental disorders. 
-                All values would likely be determined by statistical analysis which may introduce biases 
-                (update: This method of calculation doesn't sit right with me and I think it's actually illegal so...). 
+                This section has been removed because it sucked (deleted 2023-11-22, but I never liked it).
                 However, with this, we get our value for estimated_amount_of_damages_per_year_free.
             </p>
             <h2>Putting it together</h2>
