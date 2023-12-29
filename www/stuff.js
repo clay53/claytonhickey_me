@@ -128,6 +128,7 @@ const IDMAP = {
     aTheoreticalAlgorithmForDecidingBail: 126,
     howBailAlgorithmsShouldBeUsed: 127,
     ClaytonHickey: 128,
+    myFirstSemesterAsAUPennStudent: 129,
 };
 
 const SKILLTONAMEMAP = {
@@ -1000,7 +1001,7 @@ const IDTOCARD = {
         ],
         thumb: {
             source: "/blog/a-theoretical-algorithm-for-deciding-bail/computer-holding-freedom-random.png",
-            text: "Your freedom will cost 100 million dollars"
+            alt: "Your freedom will cost 100 million dollars"
         }
     },
     [IDMAP.howBailAlgorithmsShouldBeUsed]: {
@@ -1019,7 +1020,25 @@ const IDTOCARD = {
         ],
         thumb: {
             source: "/blog/how-should-bail-algorithms-be-used/judge-handing-computer-an-L.png",
-            text: "A judge handing a computer an L"
+            alt: "A judge handing a computer an L"
         }
     },
+    [IDMAP.myFirstSemesterAsAUPennStudent]: {
+        title: "My first semester as a UPenn student",
+        published: new Date(2023, 12, 29),
+        authors: [
+            IDMAP.ClaytonHickey
+        ],
+        description: `<p>A description of my semester year as a student at the University of Pennsylvania (UPenn)</p>`,
+        links: [
+            {
+                href: "/blog/my-first-semester-as-a-upenn-student",
+                text: "Read",
+            }
+        ],
+        thumb: {
+            source: "/images/misc/dubois_college_house.jpg",
+            alt: "W.E.B. Dubois College House",
+        }
+    }
 };

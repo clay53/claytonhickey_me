@@ -37,7 +37,8 @@ class CardViewer extends HTMLElement {
         ] : cardSetAttribute === "blog-posts" ? [
             IDMAP.howBailAlgorithmsShouldBeUsed,
             IDMAP.aTheoreticalAlgorithmForDecidingBail,
-            IDMAP.recommendationAlgorithmsAndEthics
+            IDMAP.recommendationAlgorithmsAndEthics,
+            IDMAP.myFirstSemesterAsAUPennStudent,
         ] : []
 
         const dateFormatter = new Intl.DateTimeFormat(undefined, {
