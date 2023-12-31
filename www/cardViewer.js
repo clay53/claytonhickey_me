@@ -35,10 +35,10 @@ class CardViewer extends HTMLElement {
         ] : cardSetAttribute === "abandoned-projects" ? [
             IDMAP.fromAnarchy,
         ] : cardSetAttribute === "blog-posts" ? [
+            IDMAP.myFirstSemesterAsAUPennStudent,
             IDMAP.howBailAlgorithmsShouldBeUsed,
             IDMAP.aTheoreticalAlgorithmForDecidingBail,
             IDMAP.recommendationAlgorithmsAndEthics,
-            IDMAP.myFirstSemesterAsAUPennStudent,
         ] : []
 
         const dateFormatter = new Intl.DateTimeFormat(undefined, {
