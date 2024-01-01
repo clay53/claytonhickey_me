@@ -239,8 +239,8 @@ const SKILLTONAMEMAP = {
 const IDTOCARD = {
     [IDMAP.wgpuGameOfLife]: {
         title: "WGPU Game of Life",
-        started: new Date(2022, 7, 13),
-        completed: new Date(2022, 7, 13),
+        started: new Date(2022, 6, 13),
+        completed: new Date(2022, 6, 13),
         last_updated: null,
         skills: [
             IDMAP.Rust,
@@ -272,9 +272,9 @@ const IDTOCARD = {
     },
     [IDMAP.buiBasic]: {
         title: "BUI Basic",
-        started: new Date(2022, 2, 22),
+        started: new Date(2022, 1, 22),
         completed: null,
-        last_updated: new Date(2023, 5),
+        last_updated: new Date(2023, 4),
         skills: [
             IDMAP.Rust,
             IDMAP.BUI,
@@ -297,9 +297,9 @@ const IDTOCARD = {
     },
     [IDMAP.bui]: {
         title: "BUI",
-        started: new Date(2021, 8, 13),
+        started: new Date(2021, 7, 13),
         completed: null,
-        last_updated: new Date(2023, 5),
+        last_updated: new Date(2023, 4),
         skills: [
             IDMAP.Rust,
             IDMAP.WGPU,
@@ -320,8 +320,8 @@ const IDTOCARD = {
     },
     [IDMAP.microVSRG]: {
         title: "Micro VSRG",
-        started: new Date(2021, 11, 12),
-        completed: new Date(2021, 11, 28),
+        started: new Date(2021, 10, 12),
+        completed: new Date(2021, 10, 28),
         last_updated: null,
         skills: [
             IDMAP.Rust,
@@ -354,9 +354,9 @@ const IDTOCARD = {
     },
     [IDMAP.claytonHickeyMe]: {
         title: "claytonhickey.me (old)",
-        started: new Date(2021, 7, 5),
-        completed: new Date(2021, 7, 5),
-        last_updated: new Date(2023, 8, 28),
+        started: new Date(2021, 6, 5),
+        completed: new Date(2021, 6, 5),
+        last_updated: new Date(2023, 7, 28),
         skills: [
             IDMAP.Websites,
             IDMAP.Rust,
@@ -383,7 +383,7 @@ const IDTOCARD = {
     [IDMAP.wordSearchSolverOCR]: {
         title: "Word Search Solver OCR",
         started: null,
-        completed: new Date(2019, 2, 1),
+        completed: new Date(2019, 1, 1),
         last_updated: null,
         skills: [
             IDMAP.Websites,
@@ -412,7 +412,7 @@ const IDTOCARD = {
         title: "ClaytonDoesThings.xyz",
         started: null,
         completed: null,
-        last_updated: new Date(2021, 12, 28),
+        last_updated: new Date(2021, 11, 28),
         skills: [
             IDMAP.Rust,
             IDMAP.RocketRs,
@@ -454,8 +454,8 @@ const IDTOCARD = {
     },
     [IDMAP.carAI]: {
         title: "CarAI",
-        started: new Date(2019, 4, 7),
-        completed: new Date(2019, 4, 7),
+        started: new Date(2019, 3, 7),
+        completed: new Date(2019, 3, 7),
         last_updated: null,
         skills: [
             IDMAP.UnityEngine,
@@ -497,8 +497,8 @@ const IDTOCARD = {
     },
     [IDMAP.soundGalaxy]: {
         title: "Sound Galaxy",
-        started: new Date(2021, 11, 28),
-        completed: new Date(2021, 11, 28),
+        started: new Date(2021, 10, 28),
+        completed: new Date(2021, 10, 28),
         last_updated: null,
         skills: [
             IDMAP.Rust,
@@ -542,7 +542,7 @@ const IDTOCARD = {
     [IDMAP.meetWithPong]: {
         title: "Meet With Pong",
         started: null,
-        completed: new Date(2020, 1, 21),
+        completed: new Date(2020, 0, 21),
         last_updated: null,
         skills: [
             IDMAP.JavaScript,
@@ -583,7 +583,7 @@ const IDTOCARD = {
     [IDMAP.osuKeypad]: {
         title: "osu!keypad",
         started: null,
-        completed: new Date(2020, 7, 22),
+        completed: new Date(2020, 6, 22),
         last_updated: null,
         skills: [
             IDMAP.OpenSCAD,
@@ -617,8 +617,8 @@ const IDTOCARD = {
     [IDMAP.symbolTranslator]: {
         title: "Symbol Translator",
         started: null,
-        completed: new Date(2019, 6, 4),
-        last_updated: new Date(2019, 7, 19),
+        completed: new Date(2019, 5, 4),
+        last_updated: new Date(2019, 6, 19),
         skills: [
             IDMAP.WebApps,
             IDMAP.JavaScript,
@@ -646,7 +646,7 @@ const IDTOCARD = {
     [IDMAP.pebbleXCTimer]: {
         title: "PebbleXCTimer",
         started: null,
-        completed: new Date(2018, 8, 20),
+        completed: new Date(2018, 7, 20),
         last_updated: null,
         skills: [
             IDMAP.C,
@@ -677,9 +677,9 @@ const IDTOCARD = {
     },
     [IDMAP.imagesFromImages2]: {
         title: "Images From Images 2",
-        started: new Date(2022, 7, 22),
+        started: new Date(2022, 6, 22),
         completed: null,
-        last_updated: new Date(2022, 8, 17),
+        last_updated: new Date(2022, 7, 17),
         skills: [
             IDMAP.WGPU,
             IDMAP.Rust,
@@ -702,7 +702,7 @@ const IDTOCARD = {
     [IDMAP.legitimateImagesFromImages]: {
         title: "Legitimate Images From Images",
         started: null,
-        completed: new Date(2018, 5, 26),
+        completed: new Date(2018, 4, 26),
         last_updated: null,
         skills: [
             IDMAP.JavaScript,
@@ -730,7 +730,7 @@ const IDTOCARD = {
     [IDMAP.multiKahoot]: {
         title: "MultiKahoot",
         started: null,
-        completed: new Date(2019, 10, 9),
+        completed: new Date(2019, 9, 9),
         last_updated: null,
         skills: [
             IDMAP.JavaScript,
@@ -760,8 +760,8 @@ const IDTOCARD = {
     },
     [IDMAP.givingDuo]: {
         title: "GivingDuo",
-        started: new Date(2020, 8, 12),
-        completed: new Date(2020, 8, 30),
+        started: new Date(2020, 7, 12),
+        completed: new Date(2020, 7, 30),
         last_updated: null,
         skills: [
             IDMAP.ReverseEngineeringAPI,
@@ -800,8 +800,8 @@ const IDTOCARD = {
     },
     [IDMAP.liveStreamMusicPlayer]: {
         title: "Live Stream Music Player",
-        started: new Date(2018, 3, 30),
-        completed: new Date(2018, 4, 3),
+        started: new Date(2018, 2, 30),
+        completed: new Date(2018, 3, 3),
         last_updated: null,
         skills: [
             IDMAP.Python,
@@ -826,8 +826,8 @@ const IDTOCARD = {
     },
     [IDMAP.fromAnarchy]: {
         title: "From Anarchy",
-        started: new Date(2021, 7, 20),
-        last_updated: new Date(2021, 7, 23),
+        started: new Date(2021, 6, 20),
+        last_updated: new Date(2021, 6, 23),
         skills: [
             IDMAP.VRAppDevelopment,
             IDMAP.OpenXR,
@@ -857,9 +857,9 @@ const IDTOCARD = {
     },
     [IDMAP.repeatOptionInfinitime]: {
         title: "Added repeat option to timer for Infinitime (open source watch firmware)",
-        started: new Date(2022, 1, 9),
-        completed: new Date(2022, 1, 9),
-        last_updated: new Date(2022, 2, 8),
+        started: new Date(2022, 0, 9),
+        completed: new Date(2022, 0, 9),
+        last_updated: new Date(2022, 1, 8),
         skills: [
             IDMAP.CPP,
             IDMAP.FirmwareDevelopment,
@@ -886,8 +886,8 @@ const IDTOCARD = {
     },
     [IDMAP.addedComentsLBRYAndroid]: {
         title: "Added ability to view comments to LBRY Android app",
-        started: new Date(2020, 5, 28),
-        completed: new Date(2020, 5, 29),
+        started: new Date(2020, 4, 28),
+        completed: new Date(2020, 4, 29),
         skills: [
             IDMAP.AndroidNative,
             IDMAP.AndroidLayoutsViews,
@@ -915,8 +915,8 @@ const IDTOCARD = {
     },
     [IDMAP.publishUnpublishLBRYAndroid]: {
         title: "Made it so that one can unpublish and/or delete their own videos from LBRY Android app",
-        started: new Date(2020, 10, 2),
-        completed: new Date(2020, 10, 2),
+        started: new Date(2020, 9, 2),
+        completed: new Date(2020, 9, 2),
         skills: [
             IDMAP.AndroidNative,
             IDMAP.AndroidLayoutsViews,
@@ -937,8 +937,8 @@ const IDTOCARD = {
     },
     [IDMAP.claytonHickeyMeWC]: {
         title: "claytonhickey.me",
-        started: new Date(2023, 11, 15),
-        completed: new Date(2023, 11, 16),
+        started: new Date(2023, 10, 15),
+        completed: new Date(2023, 10, 16),
         skills: [
             IDMAP.Websites,
             IDMAP.JavaScript,
@@ -967,7 +967,7 @@ const IDTOCARD = {
     },
     [IDMAP.recommendationAlgorithmsAndEthics]: {
         title: "Recommendation Algorithms And Ethics",
-        published: new Date(2021, 7, 9),
+        published: new Date(2021, 6, 9),
         authors: [
             IDMAP.ClaytonHickey
         ],
@@ -986,8 +986,8 @@ const IDTOCARD = {
     },
     [IDMAP.aTheoreticalAlgorithmForDecidingBail]: {
         title: "A Theoretical Algorithm For Deciding Bail",
-        published: new Date(2021, 7, 10),
-        last_updated: new Date(2023, 11, 22),
+        published: new Date(2021, 6, 10),
+        last_updated: new Date(2023, 10, 22),
         authors: [
             IDMAP.ClaytonHickey
         ],
@@ -1006,7 +1006,7 @@ const IDTOCARD = {
     },
     [IDMAP.howBailAlgorithmsShouldBeUsed]: {
         title: "How Should Bail Algorithms Be Used",
-        published: new Date(2021, 7, 10),
+        published: new Date(2021, 6, 10),
         authors: [
             IDMAP.ClaytonHickey
         ],
@@ -1025,7 +1025,7 @@ const IDTOCARD = {
     },
     [IDMAP.myFirstSemesterAsAUPennStudent]: {
         title: "My first semester as a UPenn student",
-        published: new Date(2023, 12, 29),
+        published: new Date(2023, 11, 29),
         authors: [
             IDMAP.ClaytonHickey
         ],
