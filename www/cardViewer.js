@@ -105,6 +105,10 @@ class CardViewer extends HTMLElement {
                 datesText += `${datesText.length > 0 ? "; " : ""}Updated: ${dateFormatter.format(thing.updated)}`;
             }
 
+            if (thing.published) {
+                datesText += `${datesText.length > 0 ? "; " : ""}Published: ${dateFormatter.format(thing.published)}`;
+            }
+
             if (datesText.length > 0) {
                 const dates = document.createElement("p");
                 dates.innerText = datesText;
