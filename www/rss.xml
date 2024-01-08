@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Clayton Hickey's Blog</title>
+        <link>https://claytonhickey.me/blog</link>
+        <description>The latest blog posts by Clayton Hickey</description>
+        <language>en-us</language>
+        <copyright>Unless otherwise specified, all rights reserved to Clayton Hickey</copyright>
+        <webMaster>clayton@claytondoesthings.xyz</webMaster>
+        <docs>https://www.rssboard.org/rss-specification</docs>
+        <generator>manual</generator>
+        <item>
+            <title>My first semester as a UPenn student</title>
+            <link>https://claytonhickey.me/blog/my-first-semester-as-a-upenn-student</link>
+            <description>A description of my semester year as a student at the University of Pennsylvania (UPenn)</description>
+            <pubDate>Fri, 29 Dec 2023 12:00:00 EST</pubDate>
+        </item>
+        <item>
+            <title>How Bail Algorithms Should Be Used</title>
+            <link>https://claytonhickey.me/blog/how-should-bail-algorithms-be-used</link>
+            <description>Should bail algorithms be used today or in the future? Here's my stance. Written for Tech Roulette 2021, P4M3 - Justice Matrix</description>
+            <pubDate>Sat, 10 Jul 2021 12:00:00 EST</pubDate>
+        </item>
+        <item>
+            <title>A Theoretical Algorithm For Deciding Bail</title>
+            <link>https://claytonhickey.me/blog/how-should-bail-algorithms-be-used</link>
+            <description>A quick look into creating a computer algorithm for deciding bail for someone awaiting trial. Written for Tech Roulette 2021, P4M2 - Justice Matrix</description>
+            <pubDate>Sat, 10 Jul 2021 11:00:00 EST</pubDate>
+        </item>
+        <item>
+            <title>Recommendation Algorithms And Ethics</title>
+            <link>https://claytonhickey.me/blog/recommendation-algorithms-and-ethics</link>
+            <description>A not-very-short not-very-source-heavy dive into recommendation algorithms and the ethical questions surrounding them. Written for Tech Roulette 2021, P4M1 - Justice Matrix</description>
+            <pubDate>Sat, 09 Jul 2021 12:00:00 EST</pubDate>
+        </item>
+    </channel>
+</rss>
