@@ -3,7 +3,7 @@ let
 in
 pkgs.stdenv.mkDerivation {
     pname = "claytonhickeyme";
-    version = "wc2";
+    version = "wc3";
     src = ./.;
 
     buildPhase = ''
