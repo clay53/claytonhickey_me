@@ -15,28 +15,28 @@
             <link>https://claytonhickey.me/blog/my-first-semester-as-a-upenn-student</link>
             <description>A description of my semester year as a student at the University of Pennsylvania (UPenn)</description>
             <pubDate>Fri, 29 Dec 2023 12:00:00 EST</pubDate>
-            <guid>129</guid>
+            <guid isPermaLink="false">129</guid>
         </item>
         <item>
             <title>How Bail Algorithms Should Be Used</title>
             <link>https://claytonhickey.me/blog/how-should-bail-algorithms-be-used</link>
             <description>Should bail algorithms be used today or in the future? Here's my stance. Written for Tech Roulette 2021, P4M3 - Justice Matrix</description>
             <pubDate>Sat, 10 Jul 2021 12:00:00 EST</pubDate>
-            <guid>127</guid>
+            <guid isPermaLink="false">127</guid>
         </item>
         <item>
             <title>A Theoretical Algorithm For Deciding Bail</title>
             <link>https://claytonhickey.me/blog/how-should-bail-algorithms-be-used</link>
             <description>A quick look into creating a computer algorithm for deciding bail for someone awaiting trial. Written for Tech Roulette 2021, P4M2 - Justice Matrix</description>
             <pubDate>Sat, 10 Jul 2021 11:00:00 EST</pubDate>
-            <guid>126</guid>
+            <guid isPermaLink="false">126</guid>
         </item>
         <item>
             <title>Recommendation Algorithms And Ethics</title>
             <link>https://claytonhickey.me/blog/recommendation-algorithms-and-ethics</link>
             <description>A not-very-short not-very-source-heavy dive into recommendation algorithms and the ethical questions surrounding them. Written for Tech Roulette 2021, P4M1 - Justice Matrix</description>
             <pubDate>Fri, 09 Jul 2021 12:00:00 EST</pubDate>
-            <guid>125</guid>
+            <guid isPermaLink="false">125</guid>
         </item>
     </channel>
 </rss>
