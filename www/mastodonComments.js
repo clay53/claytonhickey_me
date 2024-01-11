@@ -63,7 +63,7 @@ class MastodonComments extends HTMLElement {
                 }).catch(e => container.innerText += `Failed to parse comments response: ${e}`);
             }).catch(e => container.innerText += `Failed send comments request: ${e}`);
         } else {
-            container.innerText = "Comments have not yet been set up for this post.";
+            container.innerHTML = "<h2>Comments have not yet been set up for this post</h2>";
         }
 
         shadow.appendChild(container);
