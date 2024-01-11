@@ -403,6 +403,10 @@ news = pkgs.fetchNextcloudApp {
             <p>
             For Christmas last year, I asked for a <a target="_BLANK" href="https://www.pine64.org/pinephonepro/">Pinephone Pro</a> with the note that it was a completely unreasonable purchase for me to make myself because it was worse than the phone I already had in almost every way and was double the price. Surprisingly, I still received it. Oddly, iirc, it came pre-installed with Sailfish OS, a closed-source Linux distro. To be fair, it did however, have more things working out of the box than NixOS. I may work on improving NixOS support so I can use the phone (lacking GPS, camera, and MMS), but I don't know what I'm doing in that space.
             </p>
+            <h2>Checking the time with Pine Time</h2>
+            <p>
+            I use a <a target="_BLANK" href="https://www.pine64.org/pinetime/">Pine Time</a> watch as my main watch. It's pretty good, but not really featureful. I'm really disappointed that it does not currently support displaying Japanese text. However, my Pebble Time has been having trouble, so I'm sticking with it for now.
+            </p>
             <h2>Code editing with NeoVim</h2>
             <p>
             I'm not that against using <a target="_BLANK" href="https://vscodium.com/">VSCodium</a>, but it stopped working for a bit about a 8 months ago. So, since I was watching <a target="_BLANK" href="https://www.youtube.com/c/theprimeagen">The Primeagen</a> at the time, I switched to <a target="_BLANK" href="https://neovim.io/">NeoVim</a> and haven't looked back. I store my Neovim config within my NixOS config, which is a little scuffed tbh but it works.
@@ -755,7 +759,7 @@ customElements.define("mastodon-comments", MastodonComments);</textarea>
             <p>
             While I do have my email on a custom domain, I still use Google to receive and send emails with it. I would prefer not to rely on Google for my email, but I have not yet had the energy to actually switch. Now that my Linode server uses NixOS, it may be easier to just slap yet another service on it (I think it may also be a Nextcloud app).
             </p>
-            <mastodon-comments></mastodon-comments>
+            <mastodon-comments post-url="https://cdt.social/@clayton/111736390933029700"></mastodon-comments>
         </main>
     </body>
 </html>
