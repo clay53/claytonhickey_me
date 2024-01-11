@@ -1,1 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>http://localhost:8000/</loc><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>http://localhost:8000/services</loc><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>http://localhost:8000/notes</loc><changefreq>weekly</changefreq><priority>1</priority></url></urlset>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://claytonhickey.me</loc>
+        <changefreq>weekly</changefreq>
+        <priority>1</priority>
+    </url>
+    <url>
+        <loc>https://claytonhickey.me/blog</loc>
+        <changefreq>weekly</changefreq>
+        <priority>1</priority>
+    </url>
+    <url>
+        <loc>https://claytonhickey.me/blog</loc>
+        <changefreq>weekly</changefreq>
+        <priority>1</priority>
+    </url>
+    <url>
+        <loc>https://claytonhickey.me/blog</loc>
+        <changefreq>weekly</changefreq>
+        <priority>1</priority>
+    </url>
+    <url>
+        <loc>https://claytonhickey.me/blog/recommendation-algorithms-and-ethics</loc>
+        <changefreq>yearly</changefreq>
+        <priority>2</priority>
+    </url>
+    <url>
+        <loc>https://claytonhickey.me/blog/a-theoretical-algorithm-for-deciding-bail</loc>
+        <changefreq>yearly</changefreq>
+        <priority>2</priority>
+    </url>
+    <url>
+        <loc>https://claytonhickey.me/blog/how-should-bail-algorithms-be-used</loc>
+        <changefreq>yearly</changefreq>
+        <priority>2</priority>
+    </url>
+    <url>
+        <loc>https://claytonhickey.me/blog/my-first-semester-as-a-upenn-student</loc>
+        <changefreq>yearly</changefreq>
+        <priority>2</priority>
+    </url>
+</urlset>
