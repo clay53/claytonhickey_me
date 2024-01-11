@@ -35,6 +35,7 @@ class CardViewer extends HTMLElement {
         ] : cardSetAttribute === "abandoned-projects" ? [
             IDMAP.fromAnarchy,
         ] : cardSetAttribute === "blog-posts" ? [
+            IDMAP.myUserControlFocusedStack,
             IDMAP.myFirstSemesterAsAUPennStudent,
             IDMAP.howBailAlgorithmsShouldBeUsed,
             IDMAP.aTheoreticalAlgorithmForDecidingBail,

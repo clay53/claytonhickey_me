@@ -129,6 +129,7 @@ const IDMAP = {
     howBailAlgorithmsShouldBeUsed: 127,
     ClaytonHickey: 128,
     myFirstSemesterAsAUPennStudent: 129,
+    myUserControlFocusedStack: 130,
 };
 
 const SKILLTONAMEMAP = {
@@ -1039,6 +1040,24 @@ const IDTOCARD = {
         thumb: {
             source: "/images/misc/dubois_college_house.jpg",
             alt: "W.E.B. Dubois College House",
+        }
+    },
+    [IDMAP.myUserControlFocusedStack]: {
+        title: "My User-Control-Focused Stack",
+        published: new Date(2024, 1, 11),
+        authors: [
+            IDMAP.ClaytonHickey
+        ],
+        description: `<p>How I use various systems like RSS, Mastodon/Activity Pub, Linode, Nextcloud, and Nix to increase my computational independence.</p>`,
+        links: [
+            {
+                href: "/blog/my-user-control-focused-stack",
+                text: "Read",
+            }
+        ],
+        thumb: {
+            source: "/blog/my-user-control-focused-stack/thumb.png",
+            alt: "Various logos including RSS, Mastodon, Nextcloud, Linode, Nix, Vaultwarden",
         }
     }
 };

@@ -30,4 +30,9 @@
         <changefreq>yearly</changefreq>
         <priority>0.9</priority>
     </url>
+    <url>
+        <loc>https://claytonhickey.me/blog/my-user-control-focused-stack</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.9</priority>
+    </url>
 </urlset>

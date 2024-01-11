@@ -11,6 +11,13 @@
         <generator>manual</generator>
         <atom:link href="https://claytonhickey.me/rss.xml" rel="self" type="application/rss+xml" />
         <item>
+            <title>My User-Control-Focused Stack</title>
+            <link>https://claytonhickey.me/blog/my-user-control-focused-stack</link>
+            <description>How I use various systems like RSS, Mastodon/Activity Pub, Linode, Nextcloud, and Nix to increase my computational independence.</description>
+            <pubDate>Thu, 11 Jan 2024 03:30:00 EST</pubDate>
+            <guid>https://claytonhickey.me/blog/my-user-control-focused-stack</guid>
+        </item>
+        <item>
             <title>My first semester as a UPenn student</title>
             <link>https://claytonhickey.me/blog/my-first-semester-as-a-upenn-student</link>
             <description>A description of my semester year as a student at the University of Pennsylvania (UPenn)</description>
