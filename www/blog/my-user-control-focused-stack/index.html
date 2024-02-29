@@ -21,7 +21,7 @@
             </p>
             <h2>Server Hosting with Linode</h2>
             <p>
-            Unfortunately, the ISP at my house blocks hosting from ports <code>80</code> and <code>433</code>, so I use <a target="_BLANK" href="https://www.linode.com/">Linode</a>. I tried to use <a target="_BLANK" href="https://aws.amazon.com/">AWS</a>, but as a minor at the time of trying, it was too annoying to create an account. Linode is very straightforward which I like. If you want a server, you create a Linode, basically just a cloud-connected computer on the internet. The connection is barebones enough that you can probably install whatever operating system you want. Personally, I run NixOS. On a single Linode, I host nearly everything web-connected thing I use.
+            Unfortunately, the ISP at my house blocks hosting from ports <code>80</code> and <code>433</code>, so I use <a target="_BLANK" href="https://www.linode.com/">Linode</a>. I tried to use <a target="_BLANK" href="https://aws.amazon.com/">AWS</a>, but as a minor at the time of trying, it was too annoying to create an account. Linode is very straightforward which I like. If you want a server, you create a Linode, basically just a cloud-connected computer on the internet. The connection is barebones enough that you can probably install whatever operating system you want. Personally, I run NixOS. On a single Linode, I host nearly every web-connected thing I use.
             </p>
             <i>If you also want to install NixOS on your Linode server, they have a tutorial: <a href="https://www.linode.com/docs/guides/install-nixos-on-linode/" target="_BLANK">https://www.linode.com/docs/guides/install-nixos-on-linode</a></i></p>
             <p>
@@ -33,7 +33,7 @@
             </figure>
             <h2>Operating System/System Manager: NixOS</h2>
             <p>
-            I use <a href="https://nixos.org/" target="_BLANK">NixOS</a> as my main operating system for both personal and server use. NixOS is cool because it allows you to define all the sys-admin type stuff about your system in a single configuration file. While I more often hear the reproducability - the ability to copy over to another system or easilily - which is cool, especicially if you're doing a serverless/sharded service, what I find most useful is the locality of it. The single config file, in one place, I find, significantly reduces the congnitive load compared trying to keep many disparate config files and programs in line with each other in an distro like Arch or Ubuntu. This makes it easier to set it, leave it, and come back. Instead of struggling to figure out how to sign into the Mastodon user or something, all you have to do is search for "mastodon" in the configuration file and possibly check the Mastodon section of the docs/wiki for config options.
+            I use <a href="https://nixos.org/" target="_BLANK">NixOS</a> as my main operating system for both personal and server use. NixOS is cool because it allows you to define all the sys-admin type stuff about your system in a single configuration file. While I more often hear the reproducibility - the ability to copy over to another system or easilily - which is cool, especially if you're doing a serverless/sharded service, what I find most useful is the locality of it. The single config file, in one place, I find, significantly reduces the cognitive load compared trying to keep many disparate config files and programs in line with each other in an distro like Arch or Ubuntu. This makes it easier to set it, leave it, and come back. Instead of struggling to figure out how to sign into the Mastodon user or something, all you have to do is search for "mastodon" in the configuration file and possibly check the Mastodon section of the docs/wiki for config options.
             </p>
             <figure>
                 <figcaption>Config for my NixOS server</figcaption>
@@ -264,7 +264,7 @@ in
                 <li>a custom (depracted) project hosting website</li>
                 <li>a website for my girlfriend and I to store pictures and videos</li>
                 <li>a Minecraft server</li>
-                <li>a dedeciated website for my language learning app</li>
+                <li>a dedicated website for my language learning app</li>
                 <li>and a Vaultwarden/Bitwarden all reverse proxied through NGINX with automatic HTTPS certificate renewal through ACME.</li>
             </ul>
             <h2>File Storage/Backup with Nextcloud</h2>
@@ -658,7 +658,7 @@ pkgs.mkShell {
             After learning about them in <a target="_BLANK" href="https://www.youtube.com/watch?v=1vF6puwX3bE">"WebComponents Will Outlive Your JavaScript Framework | Prime Reacts"</a> by <a target="_BLANK" href="https://www.youtube.com/@ThePrimeTimeagen">The Primeagen</a>, who was reading <a target="_BLANK" href="https://jakelazaroff.com/words/web-components-will-outlive-your-javascript-framework/">"Web Components Will Outlive Your JavaScript Framework"</a> by Jake Lazaroff, I put Web Components in the back of my mind.
             </p>
             <p>
-            Previously, I created this site with a specialized static site generator I made in Rust. Unfortunately, it kind of sucked and I hated working with it. So, when I wanted to update my protfolio (what the homepage of this site is), I decided I would switch to Web Components. Now, I am much happier with the development and actually updating this site again. While it is slower than it was when I generated it with Rust, I decided I didn't care and justified by decision by recalling the Free Software Foundation saying that a website's JavaScript should be readable (which it is because this site isn't compiled at all). That argument doesn't make any sense because before, the website didn't have any JavaScript, but oh well. If I were to make it better, I think the only thing that would make me happier would be to make it with the programming language I'm "developing".
+            Previously, I created this site with a specialized static site generator I made in Rust. Unfortunately, it kind of sucked and I hated working with it. So, when I wanted to update my portfolio (what the homepage of this site is), I decided I would switch to Web Components. Now, I am much happier with the development and actually updating this site again. While it is slower than it was when I generated it with Rust, I decided I didn't care and justified by decision by recalling the Free Software Foundation saying that a website's JavaScript should be readable (which it is because this site isn't compiled at all). That argument doesn't make any sense because before, the website didn't have any JavaScript, but oh well. If I were to make it better, I think the only thing that would make me happier would be to make it with the programming language I'm "developing".
             </p>
             <p>
             Anyway, I'll show the MastodonComments component for this site, which I learned how to create from <a target="_BLANK" href="https://blog.thms.uk/2023/02/mastodon-comments">https://blog.thms.uk/2023/02/mastodon-comments</a>, as an example:
