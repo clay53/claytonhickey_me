@@ -9,6 +9,11 @@ const PAGES = [
         href: "/blog",
         type: "blog",
     },
+    {
+        title: "More Nodes",
+        href: "/more-nodes",
+        type: "more-nodes",
+    },
 ];
 
 class MyNav extends HTMLElement {
