@@ -11,6 +11,12 @@
         <generator>manual</generator>
         <atom:link href="https://claytonhickey.me/rss.xml" rel="self" type="application/rss+xml" />
         <item>
+            <link>https://claytonhickey.me/more-nodes</link>
+            <description>I created a new page to link to other people's things</description>
+            <pubDate>Thur, 29 Feb 2024 00:32::00 EST</pubDate>
+            <guid>https://claytonhickey.me/more-nodes</guid>
+        </item>
+        <item>
             <title>My User-Control-Focused Stack</title>
             <link>https://claytonhickey.me/blog/my-user-control-focused-stack</link>
             <description>How I use various systems like RSS, Mastodon/Activity Pub, Linode, Nextcloud, and Nix to increase my computational independence.</description>
