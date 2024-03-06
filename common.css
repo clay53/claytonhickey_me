@@ -33,7 +33,7 @@ hr {
     max-width: 70rem;
 }
 
-#content, #footer {
+#content, footer {
     background-color: #192735;
     margin: 0 auto;
     box-sizing: border-box;
@@ -44,24 +44,24 @@ hr {
     min-height: 100vh;
 }
 
-#footer {
+footer {
     min-height: 30vh;
     text-align: center;
 }
 
-#footer hr {
+footer hr {
     width: 60%;
     margin: 0 auto 0.5rem auto;
 }
 
-#introduction-container {
+#introduction {
     margin: 0 auto;
     max-width: 50rem;
     display: grid;
     grid-template-columns: 3fr 1fr;
 }
 
-#introduction-container #headshot {
+#introduction #headshot {
     width: 10rem;
     margin: auto;
     border-radius: 50%;

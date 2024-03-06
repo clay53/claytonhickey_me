@@ -1,0 +1,5 @@
+(executable
+ (public_name claytonhickeyme)
+ (name main)
+ (libraries claytonhickeyme))
+(env (dev (flags (:standard -warn-error -A))))
