@@ -223,7 +223,7 @@ let build_tidbit header details =
         html_element_string "p" [("class", PString "tidbit-details")] (List ((
             begin match details with
                 | [] -> []
-                | first :: tl -> first :: (List.fold_left (fun acc x -> html_br :: x :: acc) [] tl)
+                | first :: tl -> first :: (List.fold_right (fun x acc -> html_br :: x :: acc) tl [])
             end
         ), false))
     ], false))
