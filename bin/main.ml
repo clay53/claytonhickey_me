@@ -254,12 +254,11 @@ write_string_to_file "www/index.html" (build_page
         html_section "tidbits" "Tidbits" 1 [
             html_div [("id", PString "tidbits-container")] [
                 build_tidbit "Desktop: custom" [
-                    "OS: Arch Linux";
-                    "WM: LeftWM";
+                    "OS: Windows 10";
                     "CPU: i7-6700";
                     "GPU: RTX 2060";
                     "RAM: 32GB";
-                    "Monitors: 2"
+                    "Monitors: 1 to 1.5 (average 1.25)"
                 ];
                 build_tidbit "Laptop: Framework 13" [
                     "OS: NixOS";
@@ -271,7 +270,7 @@ write_string_to_file "www/index.html" (build_page
                     "IDE: NeoVim";
                     "Terminal: Alacritty";
                     "Shell: Bash";
-                    "Release channel prefrence: nightly (LTS if has desired features)"
+                    "Release channel prefrence: LTS"
                 ];
                 build_tidbit "Personal Server" [
                     "Host: Linode";
@@ -282,13 +281,13 @@ write_string_to_file "www/index.html" (build_page
                     "Server: Nextcloud"
                 ];
                 build_tidbit "&lt;3 Software Stack" [
-                    "Main Language: Rust";
-                    "GUI Framework: egui"
+                    "Backend: Rust";
+                    "GUI Framework: Flutter"
                 ];
                 build_tidbit "&lt;3 Web Stack" [
                     "Main Language: Rust";
                     "Framework: Axum";
-                    "Client: Raw HTML/CSS/JS w/ Web Components";
+                    "Client: static HTML/CSS/JS generated from OCaml";
                     "Database: Postgres"
                 ];
                 build_tidbit "HS Clubs" [
@@ -300,7 +299,8 @@ write_string_to_file "www/index.html" (build_page
                 ];
                 build_tidbit "Sports" [
                     "Cross Country";
-                    "Winter/Spring Track"
+                    "Winter/Spring Track";
+                    "Tennis";
                 ];
             ]
         ];
