@@ -109,6 +109,21 @@ module Date =
         type date = int * int * int * int * int * int * string
         let new_date year month day hour minute second timezone : date = (year, month, day, hour, minute, second, timezone)
         let new_date_est year month day hour minute second : date = new_date year month day hour minute second "EST"
+        let compare (a:date) (b:date) =
+            let rec chain_comparisons l1 l2 =
+                begin match (l1, l2) with
+                    | ([], []) -> 0
+                    | (h1 :: t1, h2 :: t2) ->
+                        begin match Int.compare h1 h2 with
+                            | 0 -> chain_comparisons t1 t2
+                            | r -> r
+                        end
+                    | _ -> failwith "different lengths"
+                end
+            in
+            let (year1, month1, day1, hour1, minute1, second1, _) = a in
+            let (year2, month2, day2, hour2, minute2, second2, _) = b in
+            chain_comparisons [year1; month1; day1; hour1; minute1; second1] [year2; month2; day2; hour2; minute2; second2]
         let as_rss_date date =
             let (year, month, day, hour, minute, second, timezone) = date in
             let weekday_number = (
@@ -192,7 +207,7 @@ let copy_file src dest = write_bytes_to_file dest (read_file_to_bytes src);;
 
 let rec copy_fs src dest =
     if Sys.is_directory src then (
-        Sys.mkdir dest 777;
+        Sys.mkdir dest 0o777;
         (Array.iter (fun n -> copy_fs (src ^ "/" ^ n) (dest ^ "/" ^ n))) (Sys.readdir src);)
     else
         copy_file src dest
@@ -208,7 +223,7 @@ if Sys.file_exists "www" then
     rmrf "www"
 ;;
 
-Sys.mkdir "www" 777
+Sys.mkdir "www" 0o777
 ;;
 
 let sitemap_entries = Buffer.create 1000;;
@@ -318,7 +333,7 @@ let add_rss_item title description canonical_path date html_content =
     );
 ;;
 
-Sys.mkdir "www/blog" 777
+Sys.mkdir "www/blog" 0o777
 ;;
 
 let blog_post_cards = Buffer.create 1000;;
@@ -337,9 +352,9 @@ let add_blog_post_card title description canonical_path pub_date thumb_path thum
     ]);
 ;;
 
-let add_blog_post_raw title description html_content canonical_path date thumb_path thumb_alt assets mastodon_thread =
+let add_blog_post_raw title description html_content rss_content canonical_path date thumb_path thumb_alt assets mastodon_thread =
     let fs_path = "www/" ^ canonical_path in
-    Sys.mkdir fs_path 777;
+    Sys.mkdir fs_path 0o777;
     let full_html = build_page
         (title ^ " - Clayton Hickey")
         description
@@ -359,15 +374,16 @@ let add_blog_post_raw title description html_content canonical_path date thumb_p
         full_html
     ;
     List.iter (fun (n, b) -> write_bytes_to_file (fs_path ^ "/" ^ n) b) assets;
-    add_rss_item title description canonical_path date html_content;
+    add_rss_item title description canonical_path date rss_content;
     add_blog_post_card title description canonical_path date thumb_path thumb_alt;
     add_sitemap_entry canonical_path "yearly" "0.9";
 ;;
 
-let add_blog_post title description html_content folder_name date thumb_path thumb_alt assets mastodon_thread = add_blog_post_raw
+let add_blog_post title description html_content rss_content folder_name date thumb_path thumb_alt assets mastodon_thread = add_blog_post_raw
     title
     description
     html_content
+    rss_content
     ("blog/" ^ folder_name)
     date
     thumb_path
@@ -383,10 +399,58 @@ let add_blog_post_from_folder title description date folder_name thumb_path thum
         (fun n -> (n, read_file_to_bytes (folder_name ^ "/" ^ n)))
         asset_filenames
     in
-    add_blog_post title description html folder_name date thumb_path thumb_alt assets mastodon_thread
+    add_blog_post title description html html folder_name date thumb_path thumb_alt assets mastodon_thread
 ;;
 
 let add_blog_post_from_folder_thumb_contained title description date folder_name thumb_filename thumb_alt mastodon_thread = add_blog_post_from_folder title description date folder_name ("blog/" ^ folder_name ^ "/" ^ thumb_filename) thumb_alt mastodon_thread;;
+
+let parsed_obsidian_posts = List.stable_sort
+    (fun a b ->
+        let (_, _, _, _, _, _, _, _, _, date1, _) = a in
+        let (_, _, _, _, _, _, _, _, _, date2, _) = b in
+        -(Date.compare date1 date2)
+    )
+    (List.map (fun n ->
+        let ic = open_in ("blogs-v1/" ^ n ^ "/index.html") in
+        let title = Option.get (In_channel.input_line ic) in
+        let description = Option.get (In_channel.input_line ic) in
+        let thumb_path = Option.get (In_channel.input_line ic) in
+        let thumb_alt = Option.get (In_channel.input_line ic) in
+        let date_string = In_channel.input_line ic in
+        let pub_date =
+            begin match date_string with
+                | None -> failwith ("missing date string in " ^ n)
+                | Some s ->
+                    begin match String.split_on_char '-' s with
+                        | [year; month; day; hour; minute; second] ->
+                            Date.new_date_est (int_of_string year) (int_of_string month) (int_of_string day) (int_of_string hour) (int_of_string minute) (int_of_string second)
+                        | _ -> failwith ("malformed date on " ^ n)
+                    end
+            end
+        in
+        let edit_date_string = Option.get (In_channel.input_line ic) in
+        let mastodon_thread_string = Option.get (In_channel.input_line ic) in
+        let html = In_channel.input_all ic in
+        let assets = List.map
+            (fun n2 -> (n2, read_file_to_bytes ("blogs-v1/" ^ n ^ "/" ^ n2)))
+            (List.filter (fun n2 -> not (String.equal n2 "index.html")) (Array.to_list (Sys.readdir ("blogs-v1/" ^ n))))
+        in
+        (title, description, n, thumb_path, thumb_alt, None, html, html, assets, pub_date, None)
+    ) (Array.to_list (Sys.readdir "blogs-v1")))
+;;
+
+List.iter (fun (title, description, folder_name, thumb_path, thumb_alt, mastodon_thread, html_content, rss_content, assets, pub_date, _) -> add_blog_post
+    title
+    description
+    html_content
+    rss_content
+    folder_name
+    pub_date
+    thumb_path
+    thumb_alt
+    assets
+    mastodon_thread
+) parsed_obsidian_posts;;
 
 add_blog_post_from_folder_thumb_contained "My User-Control-Focused Stack" "How I use various systems like RSS, Mastodon/Activity Pub, Linode, Nextcloud, and Nix to increase my computational independence." (Date.new_date_est 2024 2 11 0 32 0) "my-user-control-focused-stack" "thumb.png" "Various logos including RSS, Mastodon, Nextcloud, Linode, Nix, Vaultwarden" (Some "https://cdt.social/@clayton/111736390933029700");;
 
@@ -413,7 +477,7 @@ write_string_to_file "www/blog/index.html" (
 
 add_sitemap_entry "blog" "weekly" "1";;
 
-Sys.mkdir "www/more-nodes" 777;;
+Sys.mkdir "www/more-nodes" 0o777;;
 
 write_string_to_file "www/more-nodes/index.html" (
     build_page

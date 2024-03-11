@@ -6,5 +6,8 @@ pkgs.mkShell {
         nodePackages.vscode-css-languageserver-bin
         nodePackages.vscode-json-languageserver-bin
         nodePackages.vscode-html-languageserver-bin
+        ocamlPackages.ocaml-lsp
+        dune_3
+        ocaml
     ];
 }
