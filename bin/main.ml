@@ -430,12 +430,13 @@ let parsed_obsidian_posts = List.stable_sort
         in
         let edit_date_string = Option.get (In_channel.input_line ic) in
         let mastodon_thread_string = Option.get (In_channel.input_line ic) in
+        let mastodon_thread = if String.length mastodon_thread_string = 0 then None else Some mastodon_thread_string in
         let html = In_channel.input_all ic in
         let assets = List.map
             (fun n2 -> (n2, read_file_to_bytes ("blogs-v1/" ^ n ^ "/" ^ n2)))
             (List.filter (fun n2 -> not (String.equal n2 "index.html")) (Array.to_list (Sys.readdir ("blogs-v1/" ^ n))))
         in
-        (title, description, n, thumb_path, thumb_alt, None, html, html, assets, pub_date, None)
+        (title, description, n, thumb_path, thumb_alt, mastodon_thread, html, html, assets, pub_date, None)
     ) (Array.to_list (Sys.readdir "blogs-v1")))
 ;;
 
