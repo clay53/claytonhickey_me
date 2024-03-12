@@ -59,6 +59,18 @@ let html_br = "<br>";;
 
 let html_div props content = html_element_string "div" props (List (content, false));;
 
+let meta_og types content =
+    html_element_string
+        "meta"
+        [
+            (
+                "property",
+                PString ("og:" ^ (String.concat ":" types))
+            );
+            ("content", PString content)
+        ]
+        SelfClosing
+
 let footer = html_element_string "footer" [] (List ([
     "<hr>";
     "Check out the code on ";
@@ -78,7 +90,7 @@ type page_nav_type =
     | MoreNodes
 ;;
 
-let build_page title description canonical_path nav_type content =
+let build_page title description canonical_path nav_type og_image_path content =
     "<!DOCTYPE html>"
     ^ html_element_string "html" [] (List ([], true))
     ^ html_element_string "head" [] (List ([
@@ -89,6 +101,14 @@ let build_page title description canonical_path nav_type content =
         meta_string "viewport" "width=device-width, initial-scale=1";
         meta_link_string "stylesheet" (Some "text/css") "/common.css";
         meta_link_string "icon" (Some "image/ico") "/favicon.ico";
+        meta_og ["title"] title;
+        meta_og ["type"] "website";
+        meta_og ["description"] description;
+        meta_og ["url"] ("https://claytonhickey.me/" ^ canonical_path);
+        meta_og ["image"] begin match og_image_path with
+            | None -> "https://claytonhickey.me/images/headshot.jpg"
+            | Some path -> "https://claytonhickey.me/" ^ path
+        end;
         script_import_string "/nav.js";
     ], false))
     ^ html_element_string "body" [] (List ([
@@ -294,6 +314,7 @@ write_string_to_file "www/index.html" (build_page
     "Clayton Hickey's Website"
     ""
     Home
+    None
     [
         script_import_string "/stuff.js";
         script_import_string "/cardViewer.js";
@@ -346,8 +367,7 @@ write_string_to_file "www/index.html" (build_page
                     "GUI Framework: Flutter"
                 ];
                 build_tidbit "&lt;3 Web Stack" [
-                    "Main Language: Rust";
-                    "Framework: Axum";
+                    "Backend: Rust w/ Axum";
                     "Client: static HTML/CSS/JS generated from OCaml";
                     "Database: Postgres"
                 ];
@@ -406,6 +426,7 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
         description
         canonical_path
         Blog
+        (Some thumb_path)
         (html_content :: script_import_string "/mastodonComments.js" :: begin match mastodon_thread with
             | None -> [
                 html_element_string "mastodon-comments" [] (List ([], false))
@@ -519,6 +540,7 @@ write_string_to_file "www/blog/index.html" (
         "Clayton Hickey's blog"
         "blog"
         Blog
+        None
         [html_div [("class", PString "experience-container")] [Buffer.contents blog_post_cards]]
 );;
 
@@ -532,6 +554,7 @@ write_string_to_file "www/more-nodes/index.html" (
         "This page is for if the internet dies and AI takes over. If you want more human-controlled nodes (websites/blogs), then this is the page for you."
         "more-nodes"
         MoreNodes
+        None
         [read_file_to_string "more-nodes.html"]
 );;
 
