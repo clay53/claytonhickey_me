@@ -108,7 +108,7 @@ module Date =
     struct
         type date = int * int * int * int * int * int * string
         let new_date year month day hour minute second timezone : date = (year, month, day, hour, minute, second, timezone)
-        let new_date_est year month day hour minute second : date = new_date year month day hour minute second "EST"
+        let new_date_et year month day hour minute second : date = new_date year month day hour minute second "ET"
         let compare (a:date) (b:date) =
             let rec chain_comparisons l1 l2 =
                 begin match (l1, l2) with
@@ -124,10 +124,8 @@ module Date =
             let (year1, month1, day1, hour1, minute1, second1, _) = a in
             let (year2, month2, day2, hour2, minute2, second2, _) = b in
             chain_comparisons [year1; month1; day1; hour1; minute1; second1] [year2; month2; day2; hour2; minute2; second2]
-        let as_rss_date date =
-            let (year, month, day, hour, minute, second, timezone) = date in
-            let weekday_number = (
-                ((1+5*((year-1) mod 4)+4*((year-1) mod 100)+6*((year-1) mod 400)) mod 7)
+        let weekday_number (year, month, day, _hour, _minute, _second, _timezone) =
+                (((1+5*((year-1) mod 4)+4*((year-1) mod 100)+6*((year-1) mod 400)) mod 7)
                 + begin match month with
                     | 1 -> 0
                     | 2 -> 3
@@ -144,7 +142,55 @@ module Date =
                     | _ -> failwith ("invalid month " ^ string_of_int month)
                 end
                 + day
-            ) mod 7 in
+            ) mod 7
+        let et_is_edt date =
+            let (year, month, _day, _hour, _minute, _second, timezone) = date in
+            if not (String.equal timezone "ET") then failwith "timzone is not ET";
+            if month < 3 then
+                false
+            else if month = 3 then
+                let first_march_weekday = weekday_number (new_date_et year month 1 0 0 0) in
+                let second_sunday_day =
+                    if first_march_weekday <= 1 then
+                        1+1-first_march_weekday+7
+                    else
+                        1+8-first_march_weekday+7
+                in
+                let comparison = compare date (new_date_et year month second_sunday_day 3 0 0) in
+                if comparison >= 0 then
+                    true
+                else
+                    false
+            else if month > 3 && month < 11 then
+                true
+            else if month = 11 then
+                let first_nov_weekday = weekday_number (new_date_et year month 1 0 0 0) in
+                let first_sunday_day =
+                    if first_nov_weekday <= 1 then
+                        1+1-first_nov_weekday
+                    else
+                        1+8-first_nov_weekday
+                in
+                let early_comparison = compare date (new_date_et year month first_sunday_day 1 0 0) in
+                if early_comparison < 0 then
+                    true
+                else if early_comparison = 0 || (
+                    let late_comparison = compare date (new_date_et year month first_sunday_day 2 0 0) in
+                    late_comparison <= 0) then
+                    failwith "Can't convert ET into EDT or EST stably between 1 and 2am on the first sunday of November"
+                else
+                    false
+            else
+                false
+        let as_rss_date date =
+            let (year, month, day, hour, minute, second, og_timezone) = date in
+            let timezone =
+                begin match og_timezone with
+                    | "ET" -> if et_is_edt date then "EDT" else "EST"
+                    | _ -> og_timezone
+                end
+            in
+            let weekday_number = weekday_number date in
             let weekday_string = begin match weekday_number with
                 | 2 -> "Mon"
                 | 3 -> "Tue"
@@ -423,7 +469,7 @@ let parsed_obsidian_posts = List.stable_sort
                 | Some s ->
                     begin match String.split_on_char '-' s with
                         | [year; month; day; hour; minute; second] ->
-                            Date.new_date_est (int_of_string year) (int_of_string month) (int_of_string day) (int_of_string hour) (int_of_string minute) (int_of_string second)
+                            Date.new_date_et (int_of_string year) (int_of_string month) (int_of_string day) (int_of_string hour) (int_of_string minute) (int_of_string second)
                         | _ -> failwith ("malformed date on " ^ n)
                     end
             end
@@ -453,15 +499,15 @@ List.iter (fun (title, description, folder_name, thumb_path, thumb_alt, mastodon
     mastodon_thread
 ) parsed_obsidian_posts;;
 
-add_blog_post_from_folder_thumb_contained "My User-Control-Focused Stack" "How I use various systems like RSS, Mastodon/Activity Pub, Linode, Nextcloud, and Nix to increase my computational independence." (Date.new_date_est 2024 2 11 0 32 0) "my-user-control-focused-stack" "thumb.png" "Various logos including RSS, Mastodon, Nextcloud, Linode, Nix, Vaultwarden" (Some "https://cdt.social/@clayton/111736390933029700");;
+add_blog_post_from_folder_thumb_contained "My User-Control-Focused Stack" "How I use various systems like RSS, Mastodon/Activity Pub, Linode, Nextcloud, and Nix to increase my computational independence." (Date.new_date_et 2024 2 11 0 32 0) "my-user-control-focused-stack" "thumb.png" "Various logos including RSS, Mastodon, Nextcloud, Linode, Nix, Vaultwarden" (Some "https://cdt.social/@clayton/111736390933029700");;
 
-add_blog_post_from_folder "My first semester as a UPenn student" "A description of my semester year as a student at the University of Pennsylvania (UPenn)" (Date.new_date_est 2023 12 29 3 30 0) "my-first-semester-as-a-upenn-student" "images/misc/dubois_college_house.jpg" "W.E.B. Dubois College House" (Some "https://cdt.social/@clayton/111678480314790286");;
+add_blog_post_from_folder "My first semester as a UPenn student" "A description of my semester year as a student at the University of Pennsylvania (UPenn)" (Date.new_date_et 2023 12 29 3 30 0) "my-first-semester-as-a-upenn-student" "images/misc/dubois_college_house.jpg" "W.E.B. Dubois College House" (Some "https://cdt.social/@clayton/111678480314790286");;
 
-add_blog_post_from_folder_thumb_contained "How Should Bail Algorithms Be Used" "Should bail algorithms be used today or in the future? Here's my stance. Written for Tech Roulette 2021, P4M3 - Justice Matrix" (Date.new_date_est 2021 7 10 0 0 0) "how-should-bail-algorithms-be-used" "judge-handing-computer-an-L.png" "A judge handing a computer an L" (Some "https://cdt.social/@clayton/111678731664758658");;
+add_blog_post_from_folder_thumb_contained "How Should Bail Algorithms Be Used" "Should bail algorithms be used today or in the future? Here's my stance. Written for Tech Roulette 2021, P4M3 - Justice Matrix" (Date.new_date_et 2021 7 10 0 0 0) "how-should-bail-algorithms-be-used" "judge-handing-computer-an-L.png" "A judge handing a computer an L" (Some "https://cdt.social/@clayton/111678731664758658");;
 
-add_blog_post_from_folder_thumb_contained "A Theoretical Algorithm for Deciding Bail" "A quick look into creating a computer algorithm for deciding bail for someone awaiting trial. Written for Tech Roulette 2021, P4M2 - Justice Matrix" (Date.new_date_est 2021 7 10 0 0 0) "a-theoretical-algorithm-for-deciding-bail" "computer-holding-freedom-random.png" "Your freedom will cost 100 million dollars" (Some "https://cdt.social/@clayton/111678742369126381");;
+add_blog_post_from_folder_thumb_contained "A Theoretical Algorithm for Deciding Bail" "A quick look into creating a computer algorithm for deciding bail for someone awaiting trial. Written for Tech Roulette 2021, P4M2 - Justice Matrix" (Date.new_date_et 2021 7 10 0 0 0) "a-theoretical-algorithm-for-deciding-bail" "computer-holding-freedom-random.png" "Your freedom will cost 100 million dollars" (Some "https://cdt.social/@clayton/111678742369126381");;
 
-add_blog_post_from_folder_thumb_contained "Recommendation Algorithms and Ethics" "A not-very-short not-very-source-heavy dive into recommendation algorithms and the ethical questions surrounding them. Written for Tech Roulette 2021, P4M1 - Justice Matrix" (Date.new_date_est 2021 7 9 0 0 0) "recommendation-algorithms-and-ethics" "youtube-handing-viewer-burning-baby.png" "YouTube logo handing viewer a burning baby" (Some "https://cdt.social/@clayton/111678761831022044");;
+add_blog_post_from_folder_thumb_contained "Recommendation Algorithms and Ethics" "A not-very-short not-very-source-heavy dive into recommendation algorithms and the ethical questions surrounding them. Written for Tech Roulette 2021, P4M1 - Justice Matrix" (Date.new_date_et 2021 7 9 0 0 0) "recommendation-algorithms-and-ethics" "youtube-handing-viewer-burning-baby.png" "YouTube logo handing viewer a burning baby" (Some "https://cdt.social/@clayton/111678761831022044");;
 
 write_string_to_file "www/rss.xml" (
     "<?xml version=\"1.0\" encoding=\"UTF-8\"?><rss version=\"2.0\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\" xmlns:atom=\"http://www.w3.org/2005/Atom\"><channel><title>Clayton Hickey's Blog</title><link>https://claytonhickey.me/blog</link><description>The latest blog posts by Clayton Hickey</description><language>en-us</language><copyright>Unless otherwise specified, all rights reserved to Clayton Hickey</copyright><webMaster>clayton@claytondoesthings.xyz (Clayton Hickey)</webMaster><docs>https://www.rssboard.org/rss-specification</docs><generator>Custom OCaml</generator><atom:link href=\"https://claytonhickey.me/rss.xml\" rel=\"self\" type=\"application/rss+xml\"/>" ^ Buffer.contents rss_items ^ "</channel></rss>"
