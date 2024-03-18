@@ -128,8 +128,11 @@ let card_viewer_elem card_set = html_element_string "card-viewer" [("card-set", 
 module Date =
     struct
         type date = int * int * int * int * int * int * string
+
         let new_date year month day hour minute second timezone : date = (year, month, day, hour, minute, second, timezone)
+        
         let new_date_et year month day hour minute second : date = new_date year month day hour minute second "ET"
+
         let compare (a:date) (b:date) =
             let rec chain_comparisons l1 l2 =
                 begin match (l1, l2) with
@@ -145,6 +148,29 @@ module Date =
             let (year1, month1, day1, hour1, minute1, second1, _) = a in
             let (year2, month2, day2, hour2, minute2, second2, _) = b in
             chain_comparisons [year1; month1; day1; hour1; minute1; second1] [year2; month2; day2; hour2; minute2; second2]
+
+        let year ((y,_,_,_,_,_,_):date) = y
+
+        let month ((_,m,_,_,_,_,_):date) = m
+
+        let day ((_,_,d,_,_,_,_):date) = d
+
+        let en_month_from_int m =
+            begin match m with
+                | 1 -> "January"
+                | 2 -> "February"
+                | 3 -> "March"
+                | 4 -> "April"
+                | 5 -> "May"
+                | 6 -> "June"
+                | 7 -> "July"
+                | 8 -> "August"
+                | 9 -> "September"
+                | 10 -> "October"
+                | 11 -> "November"
+                | 12 -> "December"
+                | _ -> failwith ("Invalid month int: " ^ string_of_int m)
+            end
         let weekday_number (year, month, day, _hour, _minute, _second, _timezone) =
                 (((1+5*((year-1) mod 4)+4*((year-1) mod 100)+6*((year-1) mod 400)) mod 7)
                 + begin match month with
@@ -164,6 +190,7 @@ module Date =
                 end
                 + day
             ) mod 7
+
         let et_is_edt date =
             let (year, month, _day, _hour, _minute, _second, timezone) = date in
             if not (String.equal timezone "ET") then failwith "timzone is not ET";
@@ -203,6 +230,7 @@ module Date =
                     false
             else
                 false
+
         let as_rss_date date =
             let (year, month, day, hour, minute, second, og_timezone) = date in
             let timezone =
@@ -428,14 +456,18 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
         canonical_path
         Blog
         (Some thumb_path)
-        (html_content :: script_import_string "/mastodonComments.js" :: begin match mastodon_thread with
-            | None -> [
-                html_element_string "mastodon-comments" [] (List ([], false))
-            ]
-            | Some thread_url -> [
-                html_element_string "mastodon-comments" [("post-url", PString thread_url)] (List ([], false))
-            ]
-        end)
+        (html_content :: [
+            html_div [] [
+                html_p ["MLA citation:"];
+                let href = "https://claytonhickey.me/" ^ canonical_path in
+                html_p ["Hickey, C. L. (" ^ string_of_int (Date.year date) ^ ", " ^ Date.en_month_from_int (Date.month date) ^ " " ^ string_of_int (Date.day date) ^ "). <i>" ^ title ^ "</i>. Clayton Hickey. " ^ html_a href false [href] ^ "."];
+            ];
+            script_import_string "/mastodonComments.js";
+            begin match mastodon_thread with
+                | None -> html_element_string "mastodon-comments" [] (List ([], false))
+                | Some thread_url -> html_element_string "mastodon-comments" [("post-url", PString thread_url)] (List ([], false))
+            end;
+        ])
     in
     write_string_to_file
         (fs_path ^ "/index.html") 
