@@ -461,10 +461,10 @@ let add_blog_post title description html_content rss_content folder_name date th
 ;;
 
 let add_blog_post_from_folder title description date folder_name thumb_path thumb_alt mastodon_thread =
-    let html = read_file_to_string (folder_name ^ "/index.html") in
-    let asset_filenames = List.filter (fun f -> not (String.equal f "index.html")) (Array.to_list (Sys.readdir folder_name)) in
+    let html = read_file_to_string ("blogs-v0/" ^ folder_name ^ "/index.html") in
+    let asset_filenames = List.filter (fun f -> not (String.equal f "index.html")) (Array.to_list (Sys.readdir ("blogs-v0/" ^ folder_name))) in
     let assets = List.map
-        (fun n -> (n, read_file_to_bytes (folder_name ^ "/" ^ n)))
+        (fun n -> (n, read_file_to_bytes ("blogs-v0/" ^ folder_name ^ "/" ^ n)))
         asset_filenames
     in
     add_blog_post title description html html folder_name date thumb_path thumb_alt assets mastodon_thread
