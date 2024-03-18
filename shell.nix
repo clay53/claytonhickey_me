@@ -9,5 +9,6 @@ pkgs.mkShell {
         ocamlPackages.ocaml-lsp
         dune_3
         ocaml
+        inotify-tools
     ];
 }
