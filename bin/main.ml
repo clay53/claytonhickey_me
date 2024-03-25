@@ -109,6 +109,14 @@ let build_page title description canonical_path nav_type og_image_path content =
             | None -> "https://claytonhickey.me/images/headshot.jpg"
             | Some path -> "https://claytonhickey.me/" ^ path
         end;
+        meta_string "twitter:card" "summary";
+        meta_string "twitter:site" "@ClaytonsThings";
+        meta_string "twitter:title" title;
+        meta_string "twitter:description" description;
+        meta_string "twitter:image" begin match og_image_path with
+            | None -> "https://claytonhickey.me/images/headshot.jpg"
+            | Some path -> "https://claytonhickey.me/" ^ path
+        end;
         html_element_string "link" [("rel", PString "alternate"); ("type", PString "application/rss+xml"); ("title", PString "Clayton Hickey's Blog"); ("href", PString "/rss.xml")] SelfClosing;
         script_import_string "/nav.js";
     ], false))
