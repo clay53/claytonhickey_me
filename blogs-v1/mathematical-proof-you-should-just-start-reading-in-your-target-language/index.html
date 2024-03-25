@@ -1,0 +1,190 @@
+Mathematical Proof: You Should Just Start Reading in Your Target Language
+For Christmas 2 years ago, I received every light novel of Re:Zero in Japanese, but I still can't read them fluently because I am still not good at Japanese. So, in this blog post, I create a model to demonstrate the rapid progress one would make by just starting to read in one's target language.
+blog/mathematical-proof-you-should-just-start-reading-in-your-target-language/Re:Zero-recognition-graph.webp
+A graph of the predicted recognition chance of Re:Zero Volume 1 showing word recognition rapidly increasing at the beginning and leveling off at around 80-90% after reading 20% of the book and sentence recognition increasing slowly, with some acceleration towards the end, to about 20%.
+2024-03-25-17-36-40
+
+
+<script id="MathJax-script" src="/scripts/mathjax/tex-mml-chtml.js"></script>
+<h1>Mathematical Proof: You Should Just Start Reading in Your Target Language</h1>
+<p>The goal is to find a function to approximate the ease of reading as a function as progress through a book with the assumption that nothing is known at the beginning of reading.</p>
+<p>To create a model to simulate one's mind when reading a book, let's first set up some variables.</p>
+<p>\[\text{Let }n=\text{the number of unique words in the book}\]</p>
+<p>\[\text{Let }L=\text{the total number of words in the book}\]</p>
+<p>We will consider the list of unique words in the book to be ordered from most frequent to least frequent and numbered 1 to \(n\)</p>
+<p>\[\text{Let }p(w)\text{ be a function that gets the frequency of the \(w\)th word in the list}\]</p>
+<p>According <a href="https://en.wikipedia.org/wiki/Zipf%27s_law" target="_BLANK">Zipf's Law</a>, the frequency of each word will be equal to \(p(w)=\frac{f_1}{w}\) where \(f_1\) is the frequency of the most frequent word (\(w=1\)).</p>
+<p>The sum of the frequencies of the words, \(\sum_{w=1}^{n}p(w)\), will be equal to \(100\%\) simply because the chance of a given word being any word in the list of all possible words is \(100\%\).</p>
+<p>Therefore, to find \(f_1\) so that we can fully define \(p(w)\), we need to find what value of \(f_1\) will make the equality \(\sum_{w=1}^{n}p(w)=\sum_{w=1}^{n}\frac{f_1}{w}=100\%\) true.
+\[\sum_{w=1}^{n}\frac{f_1}{w}=100\%\]
+is equivalent to
+\[f_1*\sum_{w=1}^{n}\frac{1}{w}=100*\frac{1}{100}\]
+because multiplying each term of the sum by \(f_1\) is the same as multiplying the whole sum by \(f_1\) and \(\%=\frac{1}{100}\) by definition. Simplifying the right side and then dividing each side by \(\sum_{w=1}^{n}\frac{1}{w}\) to isolate \(f_1\) then yields:
+\[f_1=\frac{1}{\sum_{w=1}^{n}\frac{1}{w}}\]
+This cannot be simplified any further because \(\sum_{w=1}^{n}\frac{1}{w}\) is the partial sum of the <a href="https://en.wikipedia.org/wiki/Harmonic_series_(mathematics)#Partial_sums" target="_BLANK">harmonic series</a> which does not have a simpler solution, but you can use a calculator to calculate it. It can also be approximated by \(\frac{1}{ln(n)}\) (a slight overestimate).</p>
+<p>Continuing expanding on the model:</p>
+<p>\[\text{Let }r=\text{ the chance of learning a word after seeing it}\]</p>
+<p>\[\text{Let }k(w,i)=\text{the probability of remembering the \(w\)th most frequent word after reading \(i\) words}\]
+by the opposite:
+\[k(w,i)=100\%-\text{the probability of not remembering the \(w\)th most frequent word after reading \(i\) words}\]
+from \(i\) repeated independent events (not really independent, but it's only a slight underestimate):
+\[k(w,i)=100\%-(\text{the probability of not learning the \(w\)th most frequent word after reading a word})^i\]
+by the opposite:
+\[k(w,i)=100\%-(100\%-\text{the probability of learning the \(w\)th most frequent word after reading a word})^i\]
+\[k(w,i)=100\%-(100\%-\text{the probability of reading the \(w\)th most frequent word}*\text{the probability of learning a word after seeing it})^i\]
+\[k(w,i)=100\%-(100\%-p(w)*r)^i\]
+converting from percents \(100\%=1\):
+\[k(w,i)=1-(1-p(w)*r)^i\]
+This completes the definition of \(k(w,i)\) because \(r\) is a variable we manually manipulate, \(p(w)\) is already defined, and \(w\) and \(i\) are inputs.</p>
+<p>\[\text{Let }e_w(i)=\text{the probability of remembering the \(i\)th word read}\]
+\[\text{Let }e_w(i)=\text{the sum of the probabilities of remembering each word after reading \(i\) words weighted by the probability of seeing each word}\]
+\[e_w(i)=\sum_{w=1}^{n}(\text{the probability of remembering the \(w\)th most frequent word}*\text{the probability of seeing the \(w\)th most frequent word})\]
+\[e_w(i)=\sum_{w=1}^{n}(k(w,i)*p(w))\]
+This completes the definition of \(y(i)\).</p>
+<p>\[\text{Let }a=\text{the average sentence length}\]</p>
+<p>\[\text{Let }e_s(i)=\text{the probability of remembering all the words in the next sentence after reading \(i\) words}\]
+\[e_s(i)=\text{the probability of remembering the next \(a\) words}\]
+by repeated \(a\) repeated independent events (not really independent, but it's only a slight overestimate)
+\[e_s(i)=\prod_{x=i}^{x+a-1}\text{the probability of remembering the \(x\)th word}\]
+\[e_s(i)=\prod_{x=i}^{x+a-1}e_w(x)\]
+</p>
+<p>\[\text{Let }E_w(t)=\text{the chance of remembering the next word after reading \(t\) percent of the book}\]
+\[E_w(t)=e_w(\text{how many words read after reading \(t\) percent of the book})\]
+\[E_w(t)=e_w(\text{the number of words in the book}*\text{the percent of words read})\]
+\[E_w(t)=e_w(L*t)\]</p>
+<p>\[\text{Let }E_s(t)=\text{the chance of remembering the next sentence after reading \(t\) percent of the book}\]
+\[E_s(t)=e_s(\text{how many words read after reading \(t\) percent of the book})\]
+\[E_w(t)=e_s(\text{the number of words in the book}*\text{the percent of words read})\]
+\[E_w(t)=e_s(L*t)\]</p>
+<p>This completes the model as we have found a few functions \((e_w(i), e_s(i), E_w(t), E_s(t))\) to estimate the ease of reading as a function of progress. Below is an implementation of the model you can manipulate (note: not all the input variables will be used depending on the calculation).</p>
+<script>
+    function calculate_f_1() {
+        let harmonicSum = 0;
+        for (let w = 1; w <= calculator_n.valueAsNumber; w++) {
+            harmonicSum += 1/w;
+        }
+        return 1/harmonicSum;
+    }
+
+    function calculate_p(f_1, w) {
+        return f_1/w;
+    }
+
+    function calculate_k(f_1, i, w) {
+        return 1-(1-calculate_p(f_1, w)*calculator_r.valueAsNumber/100)**i;
+    }
+
+    function calculate_e_w(f_1, i) {
+        let e_w = 0;
+        for (let w = 1; w <= calculator_n.valueAsNumber; w++) {
+            let p = calculate_p(f_1, w);
+            e_w += (1-(1-p*calculator_r.valueAsNumber/100)**i)*p;
+        }
+        return e_w;
+    }
+
+    function calculate_e_s(f_1, i) {
+        let e_s = 1;
+        for (let x = i; x <= i+calculator_a.valueAsNumber-1; x++) {
+            e_s *= calculate_e_w(f_1, x);
+        }
+        return e_s;
+    }
+
+    function calculate_i() {
+        return Math.floor(calculator_L.valueAsNumber*calculator_t.valueAsNumber/100);
+    }
+
+    function calculateModel(e) {
+        if (calculator_action.value === "find E_w") {
+            calculation_output.innerText = `\\(E_w(t)=${calculate_e_w(calculate_f_1(), calculate_i())*100}\\%\\)`;
+            MathJax.typeset();
+        }  else if (calculator_action.value === "solve E_w") {
+            let e_w = calculator_E_w.valueAsNumber/100;
+            let f_1 = calculate_f_1();
+            let max_e_w = calculate_e_w(f_1, calculator_L.valueAsNumber);
+            if (max_e_w < e_w) {
+                calculation_output.innerText = `Target value is greater than the max, ${max_e_w*100}%`;
+                return false;
+            }
+            let delta = max_e_w;
+            let t = 0.5;
+            let min = 0;
+            let max = 1;
+            while (Math.abs(delta) >= 0.001 && max-min > 0.001) {
+                t = (min+max)/2;
+                console.log(`testing t=${t}`);
+                delta = e_w-calculate_e_w(f_1, Math.floor(calculator_L.valueAsNumber*t));
+                if (delta > 0) {
+                    min = t;
+                } else if (delta < 0) {
+                    max = t;
+                } else {
+                    break;
+                }
+            }
+            calculation_output.innerText = `\\(t=${t*100}\\%\\)`;
+            MathJax.typeset();
+        } else if (calculator_action.value === "find E_s") {
+            calculation_output.innerText = `\\(E_s(t)=${calculate_e_s(calculate_f_1(), calculate_i())*100}\\%\\)`;
+            MathJax.typeset();
+        } else if (calculator_action.value === "solve E_s") {
+            let e_s = calculator_E_s.valueAsNumber/100;
+            let f_1 = calculate_f_1();
+            let max_e_s = calculate_e_s(f_1, calculator_L.valueAsNumber);
+            if (max_e_s < e_s) {
+                calculation_output.innerText = `Target value is greater than the max, ${max_e_s*100}%`;
+                return false;
+            }
+            let delta = max_e_s;
+            let t = 0.5;
+            let min = 0;
+            let max = 1;
+            while (Math.abs(delta) >= 0.001 && max-min > 0.001) {
+                t = (min+max)/2;
+                console.log(`testing t=${t}`);
+                delta = e_s-calculate_e_s(f_1, Math.floor(calculator_L.valueAsNumber*t));
+                if (delta > 0) {
+                    min = t;
+                } else if (delta < 0) {
+                    max = t;
+                } else {
+                    break;
+                }
+            }
+            calculation_output.innerText = `\\(t=${t*100}\\%\\)`;
+            MathJax.typeset();
+        }
+
+        return false;
+    }
+    
+    document.addEventListener("DOMContentLoaded", () => calculateModel())
+</script>
+<form onsubmit="return calculateModel()">
+    <select name="action" id="calculator_action">
+        <option value="find E_w">Find \(E_w(t)\), the chance of remembering the next word after reading \(t\) percent of the book</option>
+        <option selected value="solve E_w">Solve \(E_w(t)\), the chance of remembering the next word after reading \(t\) percent of the book, for \(t\)</option>
+        <option value="find E_s">Find \(E_s(t)\), the chance of remembering the next sentence after reading \(t\) percent of the book</option>
+        <option value="solve E_s">Solve \(E_s(t)\), the chance of remembering the next sentence after reading \(t\) percent of the book, for \(t\)</option>
+    </select>
+    <br><label for="n">\(n\), number of unique words</label>
+    <input name="n" id="calculator_n" type="number" min="1" step="1" value="7519">
+    <br><label for="L">\(L\), length of the book</label>
+    <input name="L" id="calculator_L" type="number" min="1" step="1" value="52997">
+    <br><label for="r">\(r\), chance of remembering (a percent)</label>
+    <input name="r" id="calculator_r" type="number" min="0" max="100" value="50">
+    <br><label for="a">\(a\), average sentence length</label>
+    <input name="a" id="calculator_a" type="number" min="1" step="1" value="20">
+    <br><label for="t">\(t\), percent of book read</label>
+    <input name="t" id="calculator_t" type="number" min="0" max="100" value="0">
+    <br><label for="E_w">\(E_w(t)\), chance of remembering the next word after reading \(t\) percent of the book</label>
+    <input name="E_w" id="calculator_E_w" type="number" min="0" max="100" value="50">
+    <br><label for="E_s">\(E_s(t)\), chance of remembering the next sentence after reading \(t\) percent of the book</label>
+    <input name="E_s" id="calculator_E_s" type="number" min="0" max="100" value="10">
+    <br><input type="submit" value="Calculate">
+    <p id="calculation_output">Output</p>
+</form>
+<p>Based on the model, for me to have a 50% of remembering the next word when reading the first volume of Re:Zero, which as 7519 unique words and 52997 words total (according jpdb.io: <a href="https://jpdb.io/novel/1611/re-zero-starting-life-in-another-world" target="_BLANK">https://jpdb.io/novel/1611/re-zero-starting-life-in-another-world</a>), assuming I knew 0 Japanese before reading and that I had a 50% chance of learning a word each time I saw it (probably assisted by Anki), I would only have to read about 1.27% of the book (or about 4 pages) to have about a 50% chance knowing the next word, which is much less than I thought.</p>
+<figure><img src="/blog/mathematical-proof-you-should-just-start-reading-in-your-target-language/Re:Zero-recognition-graph.webp"><figcaption>A graph of the predicted recognition chance of Re:Zero Volume 1 showing word recognition rapidly increasing at the beginning and leveling off at around 80-90% after reading 20% of the book and sentence recognition increasing slowly, with some acceleration towards the end, to about 20%.</figcaption></figure>
+<p>By using <a href="https://github.com/themoeway/yomitan" target="_BLANK">Yomitan</a> for reading on the web, <a href="https://takoboto.jp/" target="_BLANK">Takoboto</a> for dictionary lookup on mobile (and creating Anki cards), and Google's Japanese handwriting OCR, I have reduced the friction of looking up new words a lot. So, that combined with the promising predictions has made pushing through reading difficult material a lot more encouraging.</p>

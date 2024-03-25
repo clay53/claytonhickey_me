@@ -606,3 +606,4 @@ copy_file "mastodonComments.js" "www/mastodonComments.js";;
 
 copy_fs "images" "www/images";;
 copy_fs "videos" "www/videos";;
+copy_fs "scripts" "www/scripts";;
