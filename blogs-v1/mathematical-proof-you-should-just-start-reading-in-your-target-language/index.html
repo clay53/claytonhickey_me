@@ -43,10 +43,10 @@ https://cdt.social/@clayton/112158503466908943
 <p>This completes the definition of \(y(i)\).</p>
 <p>Let \(a=\)the average sentence length</p>
 <p>Let \(e_s(i)=\)the probability of remembering all the words in the next sentence after reading \(i\) words</p>
-<p>\(e_s(i)=\)the probability of remembering the next \(a\) words</p>
-<p>by repeated \(a\) repeated independent events (not really independent, but it's only a slight overestimate):</p>
-<p>\(e_s(i)=\prod_{x=i}^{x+a-1}\)the probability of remembering the \(x\)th word</p>
-<p>\(e_s(i)=\prod_{x=i}^{x+a-1}e_w(x)\)</p>
+<p>\(e_s(i)=\)the probability of remembering the next \(a\) words after reading \(i\) words</p>
+<p>by repeated \(a\) repeated independent events (assuming nothing was learned from the next \(a\) words):</p>
+<p>\(e_s(i)=(\)the probability of remembering a word after reading \(i\) words\()^a\)</p>
+<p>\(e_s(i)=(e_w(i))^a\)</p>
 <p>Let \(E_w(t)=\)the chance of remembering the next word after reading \(t\) percent of the book</p>
 <p>\(E_w(t)=e_w(\)how many words read after reading \(t\) percent of the book\()\)</p>
 <p>\(E_w(t)=e_w(\)the number of words in the book\(*\)the percent of words read\()\)</p>
@@ -83,11 +83,7 @@ https://cdt.social/@clayton/112158503466908943
     }
 
     function calculate_e_s(f_1, i) {
-        let e_s = 1;
-        for (let x = i; x <= i+calculator_a.valueAsNumber-1; x++) {
-            e_s *= calculate_e_w(f_1, x);
-        }
-        return e_s;
+        return (calculate_e_w(f_1, i))**(calculator_a.valueAsNumber);
     }
 
     function calculate_i() {
