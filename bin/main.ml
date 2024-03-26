@@ -441,7 +441,7 @@ Sys.mkdir "www/blog" 0o777
 
 let blog_post_cards = Buffer.create 1000;;
 
-let add_blog_post_card title description canonical_path pub_date thumb_path thumb_alt =
+let add_blog_post_card title description canonical_path pub_date edit_date thumb_path thumb_alt =
     Buffer.add_string blog_post_cards (html_div [("class", PString "experience")] [
         html_header 3 [
             html_div [("class", PString "experience-title-links")] [
@@ -450,12 +450,12 @@ let add_blog_post_card title description canonical_path pub_date thumb_path thum
             ]
         ];
         html_a ("/" ^ canonical_path) false [html_img ("/" ^ thumb_path) thumb_alt [("class", PString "experience-img")]];
-        html_p [Date.as_rss_date pub_date];
+        html_p (("Published: " ^ Date.as_rss_date pub_date) :: begin match edit_date with | None -> [] | Some d -> ["<br>Edited: " ^ Date.as_rss_date d] end);
         html_p [description];
     ]);
 ;;
 
-let add_blog_post_raw title description html_content rss_content canonical_path date thumb_path thumb_alt assets mastodon_thread =
+let add_blog_post_raw title description html_content rss_content canonical_path date edit_date thumb_path thumb_alt assets mastodon_thread =
     let fs_path = "www/" ^ canonical_path in
     Sys.mkdir fs_path 0o777;
     let full_html = build_page
@@ -483,17 +483,18 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
     ;
     List.iter (fun (n, b) -> write_bytes_to_file (fs_path ^ "/" ^ n) b) assets;
     add_rss_item title description canonical_path date rss_content;
-    add_blog_post_card title description canonical_path date thumb_path thumb_alt;
+    add_blog_post_card title description canonical_path date edit_date thumb_path thumb_alt;
     add_sitemap_entry canonical_path "yearly" "0.9";
 ;;
 
-let add_blog_post title description html_content rss_content folder_name date thumb_path thumb_alt assets mastodon_thread = add_blog_post_raw
+let add_blog_post title description html_content rss_content folder_name date edit_date thumb_path thumb_alt assets mastodon_thread = add_blog_post_raw
     title
     description
     html_content
     rss_content
     ("blog/" ^ folder_name)
     date
+    edit_date
     thumb_path
     thumb_alt
     assets
@@ -507,7 +508,7 @@ let add_blog_post_from_folder title description date folder_name thumb_path thum
         (fun n -> (n, read_file_to_bytes ("blogs-v0/" ^ folder_name ^ "/" ^ n)))
         asset_filenames
     in
-    add_blog_post title description html html folder_name date thumb_path thumb_alt assets mastodon_thread
+    add_blog_post title description html html folder_name date None thumb_path thumb_alt assets mastodon_thread
 ;;
 
 let add_blog_post_from_folder_thumb_contained title description date folder_name thumb_filename thumb_alt mastodon_thread = add_blog_post_from_folder title description date folder_name ("blog/" ^ folder_name ^ "/" ^ thumb_filename) thumb_alt mastodon_thread;;
@@ -527,7 +528,7 @@ let parsed_obsidian_posts = List.stable_sort
         let date_string = In_channel.input_line ic in
         let pub_date =
             begin match date_string with
-                | None -> failwith ("missing date string in " ^ n)
+                | None -> failwith ("missing pub date string in " ^ n)
                 | Some s ->
                     begin match String.split_on_char '-' s with
                         | [year; month; day; hour; minute; second] ->
@@ -537,6 +538,14 @@ let parsed_obsidian_posts = List.stable_sort
             end
         in
         let edit_date_string = Option.get (In_channel.input_line ic) in
+        let edit_date =
+            if String.length edit_date_string = 0 then None else
+                begin match String.split_on_char '-' edit_date_string with
+                    | [year; month; day; hour; minute; second] ->
+                        Some (Date.new_date_et (int_of_string year) (int_of_string month) (int_of_string day) (int_of_string hour) (int_of_string minute) (int_of_string second))
+                    | _ -> failwith ("malformed date on " ^ n)
+                end
+        in
         let mastodon_thread_string = Option.get (In_channel.input_line ic) in
         let mastodon_thread = if String.length mastodon_thread_string = 0 then None else Some mastodon_thread_string in
         let html = In_channel.input_all ic in
@@ -544,17 +553,18 @@ let parsed_obsidian_posts = List.stable_sort
             (fun n2 -> (n2, read_file_to_bytes ("blogs-v1/" ^ n ^ "/" ^ n2)))
             (List.filter (fun n2 -> not (String.equal n2 "index.html")) (Array.to_list (Sys.readdir ("blogs-v1/" ^ n))))
         in
-        (title, description, n, thumb_path, thumb_alt, mastodon_thread, html, html, assets, pub_date, None)
+        (title, description, n, thumb_path, thumb_alt, mastodon_thread, html, html, assets, pub_date, edit_date)
     ) (Array.to_list (Sys.readdir "blogs-v1")))
 ;;
 
-List.iter (fun (title, description, folder_name, thumb_path, thumb_alt, mastodon_thread, html_content, rss_content, assets, pub_date, _) -> add_blog_post
+List.iter (fun (title, description, folder_name, thumb_path, thumb_alt, mastodon_thread, html_content, rss_content, assets, pub_date, edit_date) -> add_blog_post
     title
     description
     html_content
     rss_content
     folder_name
     pub_date
+    edit_date
     thumb_path
     thumb_alt
     assets
