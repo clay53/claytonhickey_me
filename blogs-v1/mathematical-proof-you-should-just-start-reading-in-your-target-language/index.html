@@ -9,53 +9,52 @@ https://cdt.social/@clayton/112158503466908943
 <h1>Mathematical Proof: You Should Just Start Reading in Your Target Language</h1>
 <p>The goal is to find a function to approximate the ease of reading as a function as progress through a book with the assumption that nothing is known at the beginning of reading.</p>
 <p>To create a model to simulate one's mind when reading a book, let's first set up some variables.</p>
-<p>\[\text{Let }n=\text{the number of unique words in the book}\]</p>
-<p>\[\text{Let }L=\text{the total number of words in the book}\]</p>
+<p>Let \(n=\)the number of unique words in the book</p>
+<p>Let \(L=\)the total number of words in the book</p>
 <p>We will consider the list of unique words in the book to be ordered from most frequent to least frequent and numbered 1 to \(n\)</p>
-<p>\[\text{Let }p(w)\text{ be a function that gets the frequency of the \(w\)th word in the list}\]</p>
+<p>Let \(p(w)\) be a function that gets the frequency of the \(w\)th word in the list</p>
 <p>According <a href="https://en.wikipedia.org/wiki/Zipf%27s_law" target="_BLANK">Zipf's Law</a>, the frequency of each word will be equal to \(p(w)=\frac{f_1}{w}\) where \(f_1\) is the frequency of the most frequent word (\(w=1\)).</p>
 <p>The sum of the frequencies of the words, \(\sum_{w=1}^{n}p(w)\), will be equal to \(100\%\) simply because the chance of a given word being any word in the list of all possible words is \(100\%\).</p>
-<p>Therefore, to find \(f_1\) so that we can fully define \(p(w)\), we need to find what value of \(f_1\) will make the equality \(\sum_{w=1}^{n}p(w)=\sum_{w=1}^{n}\frac{f_1}{w}=100\%\) true.
-\[\sum_{w=1}^{n}\frac{f_1}{w}=100\%\]
-is equivalent to
-\[f_1*\sum_{w=1}^{n}\frac{1}{w}=100*\frac{1}{100}\]
-because multiplying each term of the sum by \(f_1\) is the same as multiplying the whole sum by \(f_1\) and \(\%=\frac{1}{100}\) by definition. Simplifying the right side and then dividing each side by \(\sum_{w=1}^{n}\frac{1}{w}\) to isolate \(f_1\) then yields:
-\[f_1=\frac{1}{\sum_{w=1}^{n}\frac{1}{w}}\]
-This cannot be simplified any further because \(\sum_{w=1}^{n}\frac{1}{w}\) is the partial sum of the <a href="https://en.wikipedia.org/wiki/Harmonic_series_(mathematics)#Partial_sums" target="_BLANK">harmonic series</a> which does not have a simpler solution, but you can use a calculator to calculate it. It can also be approximated by \(\frac{1}{ln(n)}\) (a slight overestimate).</p>
+<p>Therefore, to find \(f_1\) so that we can fully define \(p(w)\), we need to find what value of \(f_1\) will make the equality \(\sum_{w=1}^{n}p(w)=\sum_{w=1}^{n}\frac{f_1}{w}=100\%\) true.</p>
+<p>\(\sum_{w=1}^{n}\frac{f_1}{w}=100\%\)</p>
+<p>is equivalent to</p>
+<p>\(f_1*\sum_{w=1}^{n}\frac{1}{w}=100*\frac{1}{100}\)</p>
+<p>because multiplying each term of the sum by \(f_1\) is the same as multiplying the whole sum by \(f_1\) and \(\%=\frac{1}{100}\) by definition. Simplifying the right side and then dividing each side by \(\sum_{w=1}^{n}\frac{1}{w}\) to isolate \(f_1\) then yields:</p>
+<p>\(f_1=\frac{1}{\sum_{w=1}^{n}\frac{1}{w}}\)</p>
+<p>This cannot be simplified any further because \(\sum_{w=1}^{n}\frac{1}{w}\) is the partial sum of the <a href="https://en.wikipedia.org/wiki/Harmonic_series_(mathematics)#Partial_sums" target="_BLANK">harmonic series</a> which does not have a simpler solution, but you can use a calculator to calculate it. It can also be approximated by \(\frac{1}{ln(n)}\) (a slight overestimate).</p>
 <p>Continuing expanding on the model:</p>
-<p>\[\text{Let }r=\text{ the chance of learning a word after seeing it}\]</p>
-<p>\[\text{Let }k(w,i)=\text{the probability of remembering the \(w\)th most frequent word after reading \(i\) words}\]
-by the opposite:
-\[k(w,i)=100\%-\text{the probability of not remembering the \(w\)th most frequent word after reading \(i\) words}\]
-from \(i\) repeated independent events (not really independent, but it's only a slight underestimate):
-\[k(w,i)=100\%-(\text{the probability of not learning the \(w\)th most frequent word after reading a word})^i\]
-by the opposite:
-\[k(w,i)=100\%-(100\%-\text{the probability of learning the \(w\)th most frequent word after reading a word})^i\]
-\[k(w,i)=100\%-(100\%-\text{the probability of reading the \(w\)th most frequent word}*\text{the probability of learning a word after seeing it})^i\]
-\[k(w,i)=100\%-(100\%-p(w)*r)^i\]
-converting from percents \(100\%=1\):
-\[k(w,i)=1-(1-p(w)*r)^i\]
-This completes the definition of \(k(w,i)\) because \(r\) is a variable we manually manipulate, \(p(w)\) is already defined, and \(w\) and \(i\) are inputs.</p>
-<p>\[\text{Let }e_w(i)=\text{the probability of remembering the \(i\)th word read}\]
-\[\text{Let }e_w(i)=\text{the sum of the probabilities of remembering each word after reading \(i\) words weighted by the probability of seeing each word}\]
-\[e_w(i)=\sum_{w=1}^{n}(\text{the probability of remembering the \(w\)th most frequent word}*\text{the probability of seeing the \(w\)th most frequent word})\]
-\[e_w(i)=\sum_{w=1}^{n}(k(w,i)*p(w))\]
-This completes the definition of \(y(i)\).</p>
-<p>\[\text{Let }a=\text{the average sentence length}\]</p>
-<p>\[\text{Let }e_s(i)=\text{the probability of remembering all the words in the next sentence after reading \(i\) words}\]
-\[e_s(i)=\text{the probability of remembering the next \(a\) words}\]
-by repeated \(a\) repeated independent events (not really independent, but it's only a slight overestimate)
-\[e_s(i)=\prod_{x=i}^{x+a-1}\text{the probability of remembering the \(x\)th word}\]
-\[e_s(i)=\prod_{x=i}^{x+a-1}e_w(x)\]
-</p>
-<p>\[\text{Let }E_w(t)=\text{the chance of remembering the next word after reading \(t\) percent of the book}\]
-\[E_w(t)=e_w(\text{how many words read after reading \(t\) percent of the book})\]
-\[E_w(t)=e_w(\text{the number of words in the book}*\text{the percent of words read})\]
-\[E_w(t)=e_w(L*t)\]</p>
-<p>\[\text{Let }E_s(t)=\text{the chance of remembering the next sentence after reading \(t\) percent of the book}\]
-\[E_s(t)=e_s(\text{how many words read after reading \(t\) percent of the book})\]
-\[E_w(t)=e_s(\text{the number of words in the book}*\text{the percent of words read})\]
-\[E_w(t)=e_s(L*t)\]</p>
+<p>Let \(r=\) the chance of learning a word after seeing it</p>
+<p>Let \(k(w,i)=\)the probability of remembering the \(w\)th most frequent word after reading \(i\) words</p>
+<p>by the opposite:</p>
+<p>\(k(w,i)=100\%-\)the probability of not remembering the \(w\)th most frequent word after reading \(i\) words</p>
+<p>from \(i\) repeated independent events (not really independent, but it's only a slight underestimate):</p>
+<p>\(k(w,i)=100\%-(\)the probability of not learning the \(w\)th most frequent word after reading a word\()^i\)</p>
+<p>by the opposite:</p>
+<p>\(k(w,i)=100\%-(100\%-\)the probability of learning the \(w\)th most frequent word after reading a word\()^i\)</p>
+<p>\(k(w,i)=100\%-(100\%-\)the probability of reading the \(w\)th most frequent word\(*\)the probability of learning a word after seeing it\()^i\)</p>
+<p>\(k(w,i)=100\%-(100\%-p(w)*r)^i\)</p>
+<p>converting from percents \(100\%=1\):</p>
+<p>\(k(w,i)=1-(1-p(w)*r)^i\)</p>
+<p>This completes the definition of \(k(w,i)\) because \(r\) is a variable we manually manipulate, \(p(w)\) is already defined, and \(w\) and \(i\) are inputs.</p>
+<p>Let \(e_w(i)=\)the probability of remembering the \(i\)th word read</p>
+<p>Let \(e_w(i)=\)the sum of the probabilities of remembering each word after reading \(i\) words weighted by the probability of seeing each word</p>
+<p>\(e_w(i)=\sum_{w=1}^{n}(\)the probability of remembering the \(w\)th most frequent word\(*\)the probability of seeing the \(w\)th most frequent word\()\)</p>
+<p>\(e_w(i)=\sum_{w=1}^{n}(k(w,i)*p(w))\)</p>
+<p>This completes the definition of \(y(i)\).</p>
+<p>Let \(a=\)the average sentence length</p>
+<p>Let \(e_s(i)=\)the probability of remembering all the words in the next sentence after reading \(i\) words</p>
+<p>\(e_s(i)=\)the probability of remembering the next \(a\) words</p>
+<p>by repeated \(a\) repeated independent events (not really independent, but it's only a slight overestimate):</p>
+<p>\(e_s(i)=\prod_{x=i}^{x+a-1}\)the probability of remembering the \(x\)th word</p>
+<p>\(e_s(i)=\prod_{x=i}^{x+a-1}e_w(x)\)</p>
+<p>Let \(E_w(t)=\)the chance of remembering the next word after reading \(t\) percent of the book</p>
+<p>\(E_w(t)=e_w(\)how many words read after reading \(t\) percent of the book\()\)</p>
+<p>\(E_w(t)=e_w(\)the number of words in the book\(*\)the percent of words read\()\)</p>
+<p>\(E_w(t)=e_w(L*t)\)</p>
+<p>Let \(E_s(t)=\)the chance of remembering the next sentence after reading \(t\) percent of the book</p>
+<p>\(E_s(t)=e_s(\)how many words read after reading \(t\) percent of the book\()\)</p>
+<p>\(E_w(t)=e_s(\)the number of words in the book\(*\)the percent of words read\()\)</p>
+<p>\(E_w(t)=e_s(L*t)\)</p>
 <p>This completes the model as we have found a few functions \((e_w(i), e_s(i), E_w(t), E_s(t))\) to estimate the ease of reading as a function of progress. Below is an implementation of the model you can manipulate (note: not all the input variables will be used depending on the calculation).</p>
 <script>
     function calculate_f_1() {
