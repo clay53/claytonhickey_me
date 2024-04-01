@@ -449,7 +449,7 @@ let add_blog_post_card title description canonical_path pub_date edit_date thumb
                 html_a ("/" ^ canonical_path) false ["Read"]
             ]
         ];
-        html_a ("/" ^ canonical_path) false [html_img ("/" ^ thumb_path) thumb_alt [("class", PString "experience-img")]];
+        html_a ("/" ^ canonical_path ^ "/") false [html_img ("/" ^ thumb_path) thumb_alt [("class", PString "experience-img")]];
         html_p (("Published: " ^ Date.as_rss_date pub_date) :: begin match edit_date with | None -> [] | Some d -> ["<br>Edited: " ^ Date.as_rss_date d] end);
         html_p [description];
     ]);
@@ -461,7 +461,7 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
     let full_html = build_page
         (title ^ " - Clayton Hickey")
         description
-        canonical_path
+        (canonical_path ^ "/")
         Blog
         (Some thumb_path)
         (html_content :: [
@@ -482,9 +482,9 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
         full_html
     ;
     List.iter (fun (n, b) -> write_bytes_to_file (fs_path ^ "/" ^ n) b) assets;
-    add_rss_item title description canonical_path date rss_content;
+    add_rss_item title description (canonical_path ^ "/") date rss_content;
     add_blog_post_card title description canonical_path date edit_date thumb_path thumb_alt;
-    add_sitemap_entry canonical_path "yearly" "0.9";
+    add_sitemap_entry (canonical_path ^ "/") "yearly" "0.9";
 ;;
 
 let add_blog_post title description html_content rss_content folder_name date edit_date thumb_path thumb_alt assets mastodon_thread = add_blog_post_raw
@@ -589,13 +589,13 @@ write_string_to_file "www/blog/index.html" (
     build_page
         "Blog - Clayton Hickey"
         "Clayton Hickey's blog"
-        "blog"
+        "blog/"
         Blog
         None
         [html_div [("class", PString "experience-container")] [Buffer.contents blog_post_cards]]
 );;
 
-add_sitemap_entry "blog" "weekly" "1";;
+add_sitemap_entry "blog/" "weekly" "1";;
 
 Sys.mkdir "www/more-nodes" 0o777;;
 
@@ -603,13 +603,13 @@ write_string_to_file "www/more-nodes/index.html" (
     build_page
         "More Nodes - Clayton Hickey"
         "This page is for if the internet dies and AI takes over. If you want more human-controlled nodes (websites/blogs), then this is the page for you."
-        "more-nodes"
+        "more-nodes/"
         MoreNodes
         None
         [read_file_to_string "more-nodes.html"]
 );;
 
-add_sitemap_entry "more-nodes" "weekly" "1";;
+add_sitemap_entry "more-nodes/" "weekly" "1";;
 
 write_string_to_file "www/sitemap.xml" (
     "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">" ^ Buffer.contents sitemap_entries ^ "</urlset>"
