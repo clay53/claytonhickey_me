@@ -467,7 +467,7 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
         (html_content :: [
             html_p ["Title: " ^ title ^ "<br>Authors: Clayton Lopez Hickey<br>Published: " ^ Date.as_rss_date date ^ begin match edit_date with | Some edit_date -> "<br>Last updated: " ^ Date.as_rss_date edit_date | None -> "" end];
             html_div [] [
-                "<script>document.addEventListener(\"DOMContentLoaded\", () => {let d = new Date(); mlaCitation.innerText += ` Accessed ${d.getDay()} ${['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'][d.getMonth()]} ${d.getFullYear()}.`;})</script>";
+                "<script>document.addEventListener(\"DOMContentLoaded\", () => {let d = new Date(); mlaCitation.innerHTML += ` Accessed ${d.getDay()} ${['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'][d.getMonth()]} ${d.getFullYear()}.`;})</script>";
                 let href = "https://claytonhickey.me/" ^ (canonical_path ^ "/") in
                 html_element_string "p" [("id", PString "mlaCitation")] (List (["MLA citation:<br>" ^ "Hickey, C. L. (" ^ string_of_int (Date.year date) ^ ", " ^ Date.en_month_from_int (Date.month date) ^ " " ^ string_of_int (Date.day date) ^ "). <i>" ^ title ^ "</i>. Clayton Hickey. " ^ html_a href false [href] ^ "."], false));
             ];
