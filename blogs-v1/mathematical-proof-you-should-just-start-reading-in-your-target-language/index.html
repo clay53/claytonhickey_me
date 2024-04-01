@@ -3,7 +3,7 @@ For Christmas 2 years ago, I received every light novel of Re:Zero in Japanese, 
 blog/mathematical-proof-you-should-just-start-reading-in-your-target-language/Re-Zero-recognition-graph.webp
 A graph of the predicted recognition chance of Re:Zero Volume 1 showing word recognition rapidly increasing at the beginning and leveling off at around 80-90% after reading 20% of the book and sentence recognition increasing slowly, with some acceleration towards the end, to about 20%.
 2024-03-25-17-36-40
-2024-03-26-14-14-20
+2024-04-01-16-02-40
 https://cdt.social/@clayton/112158503466908943
 <script id="MathJax-script" src="/scripts/mathjax/tex-mml-chtml.js"></script>
 <h1>Mathematical Proof: You Should Just Start Reading in Your Target Language</h1>
@@ -37,10 +37,10 @@ https://cdt.social/@clayton/112158503466908943
 <p>\(k(w,i)=1-(1-p(w)*r)^i\)</p>
 <p>This completes the definition of \(k(w,i)\) because \(r\) is a variable we manually manipulate, \(p(w)\) is already defined, and \(w\) and \(i\) are inputs.</p>
 <p>Let \(e_w(i)=\)the probability of remembering the \(i\)th word read</p>
-<p>Let \(e_w(i)=\)the sum of the probabilities of remembering each word after reading \(i\) words weighted by the probability of seeing each word</p>
+<p>\(e_w(i)=\)the sum of the probabilities of remembering each word after reading \(i\) words weighted by the probability of seeing each word</p>
 <p>\(e_w(i)=\sum_{w=1}^{n}(\)the probability of remembering the \(w\)th most frequent word\(*\)the probability of seeing the \(w\)th most frequent word\()\)</p>
 <p>\(e_w(i)=\sum_{w=1}^{n}(k(w,i)*p(w))\)</p>
-<p>This completes the definition of \(y(i)\).</p>
+<p>This completes the definition of \(e_w(i)\).</p>
 <p>Let \(a=\)the average sentence length</p>
 <p>Let \(e_s(i)=\)the probability of remembering all the words in the next sentence after reading \(i\) words</p>
 <p>\(e_s(i)=\)the probability of remembering the next \(a\) words after reading \(i\) words</p>
@@ -49,12 +49,12 @@ https://cdt.social/@clayton/112158503466908943
 <p>\(e_s(i)=(e_w(i))^a\)</p>
 <p>Let \(E_w(t)=\)the chance of remembering the next word after reading \(t\) percent of the book</p>
 <p>\(E_w(t)=e_w(\)how many words read after reading \(t\) percent of the book\()\)</p>
-<p>\(E_w(t)=e_w(\)the number of words in the book\(*\)the percent of words read\()\)</p>
-<p>\(E_w(t)=e_w(L*t)\)</p>
+<p>\(E_w(t)=e_w(\)the number of words in the book\(*\)the percent of words read\(*\frac{1}{100\%})\)</p>
+<p>\(E_w(t)=e_w(\frac{L*t}{100\%})\)</p>
 <p>Let \(E_s(t)=\)the chance of remembering the next sentence after reading \(t\) percent of the book</p>
 <p>\(E_s(t)=e_s(\)how many words read after reading \(t\) percent of the book\()\)</p>
-<p>\(E_w(t)=e_s(\)the number of words in the book\(*\)the percent of words read\()\)</p>
-<p>\(E_w(t)=e_s(L*t)\)</p>
+<p>\(E_w(t)=e_s(\)the number of words in the book\(*\)the percent of words read\(*\frac{1}{100\%})\)</p>
+<p>\(E_w(t)=e_s(\frac{L*t}{100\%})\)</p>
 <p>This completes the model as we have found a few functions \((e_w(i), e_s(i), E_w(t), E_s(t))\) to estimate the ease of reading as a function of progress. Below is an implementation of the model you can manipulate (note: not all the input variables will be used depending on the calculation).</p>
 <script>
     function calculate_f_1() {
