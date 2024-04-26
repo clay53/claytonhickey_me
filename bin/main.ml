@@ -512,10 +512,9 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
                 "Comment to me directly: ";
                 html_a ("mailto:clayton@claytondoesthings.xyz?subject=<short> - comment on https:%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path ^ "&body=Hey Clayton,%0A%0A%0A%0ASigned,%0A<your name>") false ["clayton@claytondoesthings.xyz"];
             ];
-            script_import_string "/mastodonComments.js";
             begin match mastodon_thread with
-                | None -> html_element_string "mastodon-comments" [] (List ([], false))
-                | Some thread_url -> html_element_string "mastodon-comments" [("post-url", PString thread_url)] (List ([], false))
+                | None -> ""
+                | Some thread_url -> String.cat (script_import_string "/mastodonComments.js") (html_element_string "mastodon-comments" [("post-url", PString thread_url)] (List ([], false)))
             end;
         ])
     in
