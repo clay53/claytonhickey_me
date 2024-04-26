@@ -1,0 +1,47 @@
+Handling Comments Attempt #2
+Handling comments on a blog is difficult. My solution: don't (directly)
+blog/handling-comments-attempt-2/stick-figure-on-a-computer.webp
+A crudely drawn stick figure using a computer
+2024-04-26-11-11-30
+
+
+<h1>Handling Comments Attempt #2</h1>
+<p>I noticed that despite having all the cool meta tags I put on my site, the SEO (search engine optimization/discoverability through Google-like searches) for my blog is still kind of terrible.</p>
+<figure>
+    <img src="/blog/handling-comments-attempt-2/google-search.webp">
+    <figcaption>Tiny, at the bottom (13th position) of this screenshot of a Google search for "Clayton Hickey", you can see my blog with some weird description.</figcaption>
+</figure>
+<p>While I don't feel too bad about myself because I also occupy the 3rd, 6th, and 9th position, I obviously aspire to be 1st, and I definitely want <b>my</b> blog to be above "my" LinkedIn.</p>
+<p>Unfortunately, I don't believe this is a technical issue - it's a popularity issue.</p>
+<p>Popularity issues is completely understandable. Most people don't read blogs as far as I know and how would one even find my blog? I'm not popular on any other platform and no one is talking about the blog.</p>
+<p>There is actually pretty good data to support the previous paragraph's statement:</p>
+<figure>
+    <img src="/blog/handling-comments-attempt-2/cloudflare-traffic.png">
+    <figcaption>1.73k unique visitors per month according to Cloudflare. This number is likely very inflated because about half of the traffic is apparently coming from non-English speaking countries (China and Singapore) and because it probably includes a good number of bots since I don't use Cloudflare's on-site analytics (can't disable DNS level and I get ~22 attacks/month, so I need Cloudflare).</figcaption>
+</figure>
+<p>I failed to get a screenshot before wasting my "free lookups", but the only sites linking to this site are mine/sites I've posted on and <a href="https://haydenshuker.com/articles/l2.html" target="_BLANK">Hayden Shuker's blog</a>. External links from other (also highly &amp; reputably linked) sites are pretty much the most important thing for SEO.</p>
+<p>So, when it comes to the question of how I should implement comments, I consider this and a few other things. Firstly, I should acknowledge the most intuitive implementation based on what other popular sites do would be to either add an account-like system to my site (note: this situation is nearly equivalent to my old solution of loading comments from my Mastodon server, <a href="https://cdt.social" target="_BLANK">https://cdt.social</a>) so users can create comments directly. This solution has many issues that make me not want to do it:</p>
+<ul>
+    <li>I would have to do a lot of work to get such a complex system working (including creating a whole new API server for the blog)</li>
+    <li>I would have to curate comments to make sure they're not breaking any laws or something (too much work)</li>
+    <li>I would be the source of trust of what comments are genuine (could be accused of over-curating or falsifying)</li>
+    <li>It wouldn't help SEO since all comments are site-only</li>
+    <li>Commenter's accounts would have little external significance (Is "Joe Biden" on Clayton Hickey's blog really the president?)</li>
+</ul>
+<p>The second most intuitive solution (to me) is to simply not have comments. "It's not <i>my</i> responsibility to serve your every desire." Though, I would be lying because it's actually my desire. On other platforms, like <a href="https://twitter.com/ClaytonsThings" target="_BLANK">𝕏</a>, one of my favorite things to do when reading something mildly interesting is to read what other people/bots are saying about it.</p>
+<p>So, what I want from a comment system:</p>
+<ul>
+    <li>Promotes people talking about posts on other platforms (linking to them for juicy SEO)</li>
+    <li>I would be able to easily find them</li>
+    <li>I wouldn't have to do much work</li>
+</ul>
+<p>From this, I devised another plan without thinking too much: just show posts mentioning the specific blog post other platforms already aggregated (like 𝕏, Google, and Reddit). Unfortunately, those platforms have disabled embedding with iframes, so I can't display the posts directly on the blog. However, it probably suffices to link out instead because one cannot read a blog post and comments simultaneously anyway.</p>
+<figure>
+    <img src="/blog/handling-comments-attempt-2/old-comments.png">
+    <figcaption>The old comments: just pulling from a thread on <a href="https://cdt.social" target="_BLANK">cdt.social</a> (no one has ever commented with the old system).</figcaption>
+</figure>
+<figure>
+    <img src="/blog/handling-comments-attempt-2/new-comments.png">
+    <figcaption>The new comments: "Like this post? Follow with RSS; What others are saying on: 𝕏, Google, Reddit; Comment on: 𝕏, Reddit, Facebook; Comment to me directly: clayton@claytondoesthings.xyz" + the old comments still (cut off in the image because it doesn't work in development mode).</figcaption>
+</figure>
+<p>Unfortunately, it looks pretty ugly in my opinion. Fortunately, the whole site looks kinda ugly in my opinion, so it doesn't really change anything. It's a problem for another day.</p>

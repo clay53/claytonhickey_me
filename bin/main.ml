@@ -455,6 +455,23 @@ let add_blog_post_card title description canonical_path pub_date edit_date thumb
     ]);
 ;;
 
+let urlencode s =
+    let helper (rules:(char*string) list) (i:string) =
+        let char_to_escaped (c: char) =
+            let rec char_to_escaped_helper (unchecked_rules: (char*string) list) =
+                begin match unchecked_rules with
+                    | (m, r) :: t -> if m=c then r else char_to_escaped_helper t
+                    | [] -> String.make 1 c
+                end
+            in
+            char_to_escaped_helper rules
+        in
+        String.fold_left (fun a c -> String.cat a (char_to_escaped c)) "" i
+    in
+    helper [('/', "%2F")] s
+;;
+            
+
 let add_blog_post_raw title description html_content rss_content canonical_path date edit_date thumb_path thumb_alt assets mastodon_thread =
     let fs_path = "www/" ^ canonical_path in
     Sys.mkdir fs_path 0o777;
@@ -470,6 +487,30 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
                 "<script>document.addEventListener(\"DOMContentLoaded\", () => {let d = new Date(); mlaCitation.innerHTML += ` Accessed ${d.getDay()} ${['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'][d.getMonth()]} ${d.getFullYear()}.`;})</script>";
                 let href = "https://claytonhickey.me/" ^ (canonical_path ^ "/") in
                 html_element_string "p" [("id", PString "mlaCitation")] (List (["MLA citation:<br>" ^ "Hickey, C. L. (" ^ string_of_int (Date.year date) ^ ", " ^ Date.en_month_from_int (Date.month date) ^ " " ^ string_of_int (Date.day date) ^ "). <i>" ^ title ^ "</i>. Clayton Hickey. " ^ html_a href false [href] ^ "."], false));
+            ];
+            html_header 2 [
+                "Like this post? ";
+                html_a "https://claytonhickey.me/rss.xml" true ["Follow with RSS"];
+            ];
+            html_header 2 [
+                "What others are saying on: ";
+                html_a ("https://twitter.com/search?q=url%3Aclaytonhickey.me%2F" ^ urlencode canonical_path) true ["𝕏"];
+                ", ";
+                html_a ("https://google.com/search?q=%22claytonhickey.me%2F" ^ urlencode canonical_path ^ "%22") true ["Google"];
+                ", ";
+                html_a ("https://reddit.com/search?q=url%3Aclaytonhickey.me%2F" ^ urlencode canonical_path) true ["Reddit"];
+            ];
+            html_header 2 [
+                "Comment on: ";
+                html_a ("https://twitter.com/intent/tweet?text=%0A%0A@ClaytonsThings claytonhickey.me%2F" ^ urlencode canonical_path) true ["𝕏"];
+                ", ";
+                html_a ("https://www.reddit.com/submit?url=https%3A%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path ^ "&title=" ^ urlencode title) true ["Reddit"];
+                ", ";
+                html_a ("https://www.facebook.com/sharer.php?u=https%3A%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path) true ["Facebook"];
+            ];
+            html_header 2 [
+                "Comment to me directly: ";
+                html_a ("mailto:clayton@claytondoesthings.xyz?subject=<short> - comment on https:%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path ^ "&body=Hey Clayton,%0A%0A%0A%0ASigned,%0A<your name>") false ["clayton@claytondoesthings.xyz"];
             ];
             script_import_string "/mastodonComments.js";
             begin match mastodon_thread with
