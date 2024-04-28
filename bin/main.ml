@@ -430,9 +430,9 @@ add_sitemap_entry "" "weekly" "1";;
 
 let rss_items = Buffer.create 1000;;
 
-let add_rss_item title description canonical_path date html_content =
+let add_rss_item title description canonical_path date html_content enclosure =
     Buffer.add_string rss_items (
-        "<item><title>" ^ title ^ "</title><description>" ^ description ^ "</description><link>https://claytonhickey.me/" ^ canonical_path ^ "</link><guid>https://claytonhickey.me/" ^ canonical_path ^ "</guid><pubDate>" ^ Date.as_rss_date date ^ "</pubDate><content:encoded><![CDATA[" ^ html_content ^ "]]></content:encoded></item>"
+        "<item><title>" ^ title ^ "</title><description>" ^ description ^ "</description><link>https://claytonhickey.me/" ^ canonical_path ^ "</link><guid>https://claytonhickey.me/" ^ canonical_path ^ "</guid><pubDate>" ^ Date.as_rss_date date ^ "</pubDate><content:encoded><![CDATA[" ^ html_content ^ "]]></content:encoded></item>" ^ begin match enclosure with | None -> "" | Some (path, ty, size) -> "<enclosure url=\"https://claytonhickey.me" ^ path ^ "\" length=\"" ^ string_of_int size ^ "\" type=\"" ^ ty ^ "\"/>" end
     );
 ;;
 
@@ -472,7 +472,7 @@ let urlencode s =
 ;;
             
 
-let add_blog_post_raw title description html_content rss_content canonical_path date edit_date thumb_path thumb_alt assets mastodon_thread =
+let add_blog_post_raw title description html_content rss_content canonical_path date edit_date thumb_path thumb_alt assets mastodon_thread voiceover =
     let fs_path = "www/" ^ canonical_path in
     Sys.mkdir fs_path 0o777;
     let full_html = build_page
@@ -481,17 +481,27 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
         (canonical_path ^ "/")
         Blog
         (Some thumb_path)
-        (html_content :: [
+        [
+            begin match voiceover with
+                | None -> ""
+                | Some (path, ty, _size) -> html_p [
+                    "voiceover: ";
+                    html_element_string "audio" [("controls", PBool true)] (List ([
+                        html_element_string "source" [("src", PString path); ("type", PString ty)] SelfClosing
+                    ], false))
+                ]
+            end;
+            html_content;
             html_p ["Title: " ^ title ^ "<br>Authors: Clayton Lopez Hickey<br>Published: " ^ Date.as_rss_date date ^ begin match edit_date with | Some edit_date -> "<br>Last updated: " ^ Date.as_rss_date edit_date | None -> "" end];
             html_div [] [
                 "<script>document.addEventListener(\"DOMContentLoaded\", () => {let d = new Date(); mlaCitation.innerHTML += ` Accessed ${d.getDay()} ${['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'][d.getMonth()]} ${d.getFullYear()}.`;})</script>";
                 let href = "https://claytonhickey.me/" ^ (canonical_path ^ "/") in
                 html_element_string "p" [("id", PString "mlaCitation")] (List (["MLA citation:<br>" ^ "Hickey, C. L. (" ^ string_of_int (Date.year date) ^ ", " ^ Date.en_month_from_int (Date.month date) ^ " " ^ string_of_int (Date.day date) ^ "). <i>" ^ title ^ "</i>. Clayton Hickey. " ^ html_a href false [href] ^ "."], false));
-            ];
+                ];
             html_header 2 [
                 "Like this post? ";
                 html_a "https://claytonhickey.me/rss.xml" true ["Follow with RSS"];
-            ];
+                ];
             html_header 2 [
                 "What others are saying on: ";
                 html_a ("https://twitter.com/search?q=url%3Aclaytonhickey.me%2F" ^ urlencode canonical_path) true ["𝕏"];
@@ -499,7 +509,7 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
                 html_a ("https://google.com/search?q=%22claytonhickey.me%2F" ^ urlencode canonical_path ^ "%22") true ["Google"];
                 ", ";
                 html_a ("https://reddit.com/search?q=url%3Aclaytonhickey.me%2F" ^ urlencode canonical_path) true ["Reddit"];
-            ];
+                ];
             html_header 2 [
                 "Comment on: ";
                 html_a ("https://twitter.com/intent/tweet?text=%0A%0A@ClaytonsThings claytonhickey.me%2F" ^ urlencode canonical_path) true ["𝕏"];
@@ -507,28 +517,28 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
                 html_a ("https://www.reddit.com/submit?url=https%3A%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path ^ "&title=" ^ urlencode title) true ["Reddit"];
                 ", ";
                 html_a ("https://www.facebook.com/sharer.php?u=https%3A%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path) true ["Facebook"];
-            ];
+                ];
             html_header 2 [
                 "Comment to me directly: ";
                 html_a ("mailto:clayton@claytondoesthings.xyz?subject=<short> - comment on https:%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path ^ "&body=Hey Clayton,%0A%0A%0A%0ASigned,%0A<your name>") false ["clayton@claytondoesthings.xyz"];
-            ];
+                ];
             begin match mastodon_thread with
                 | None -> ""
                 | Some thread_url -> String.cat (script_import_string "/mastodonComments.js") (html_element_string "mastodon-comments" [("post-url", PString thread_url)] (List ([], false)))
             end;
-        ])
+                ]
     in
     write_string_to_file
         (fs_path ^ "/index.html") 
         full_html
     ;
     List.iter (fun (n, b) -> write_bytes_to_file (fs_path ^ "/" ^ n) b) assets;
-    add_rss_item title description (canonical_path ^ "/") date rss_content;
+    add_rss_item title description (canonical_path ^ "/") date rss_content voiceover;
     add_blog_post_card title description canonical_path date edit_date thumb_path thumb_alt;
     add_sitemap_entry (canonical_path ^ "/") "yearly" "0.9";
 ;;
 
-let add_blog_post title description html_content rss_content folder_name date edit_date thumb_path thumb_alt assets mastodon_thread = add_blog_post_raw
+let add_blog_post title description html_content rss_content folder_name date edit_date thumb_path thumb_alt assets mastodon_thread voiceover = add_blog_post_raw
     title
     description
     html_content
@@ -540,6 +550,7 @@ let add_blog_post title description html_content rss_content folder_name date ed
     thumb_alt
     assets
     mastodon_thread
+    voiceover
 ;;
 
 let add_blog_post_from_folder title description date folder_name thumb_path thumb_alt mastodon_thread =
@@ -549,15 +560,24 @@ let add_blog_post_from_folder title description date folder_name thumb_path thum
         (fun n -> (n, read_file_to_bytes ("blogs-v0/" ^ folder_name ^ "/" ^ n)))
         asset_filenames
     in
-    add_blog_post title description html html folder_name date None thumb_path thumb_alt assets mastodon_thread
+    add_blog_post title description html html folder_name date None thumb_path thumb_alt assets mastodon_thread None
 ;;
 
 let add_blog_post_from_folder_thumb_contained title description date folder_name thumb_filename thumb_alt mastodon_thread = add_blog_post_from_folder title description date folder_name ("blog/" ^ folder_name ^ "/" ^ thumb_filename) thumb_alt mastodon_thread;;
 
+let file_size filename =
+    let ic = open_in_bin filename in  
+    let () = seek_in ic 0 in
+    seek_in ic 0;
+    let size = in_channel_length ic in
+    close_in ic; 
+    size
+;;
+
 let parsed_obsidian_posts = List.stable_sort
     (fun a b ->
-        let (_, _, _, _, _, _, _, _, _, date1, _) = a in
-        let (_, _, _, _, _, _, _, _, _, date2, _) = b in
+        let (_, _, _, _, _, _, _, _, _, date1, _, _) = a in
+        let (_, _, _, _, _, _, _, _, _, date2, _, _) = b in
         -(Date.compare date1 date2)
     )
     (List.map (fun n ->
@@ -594,11 +614,13 @@ let parsed_obsidian_posts = List.stable_sort
             (fun n2 -> (n2, read_file_to_bytes ("blogs-v1/" ^ n ^ "/" ^ n2)))
             (List.filter (fun n2 -> not (String.equal n2 "index.html")) (Array.to_list (Sys.readdir ("blogs-v1/" ^ n))))
         in
-        (title, description, n, thumb_path, thumb_alt, mastodon_thread, html, html, assets, pub_date, edit_date)
+        let voiceover = if Sys.file_exists ("blogs-v1/" ^ n ^ "/voiceover.ogg") then (Some (("/blog/" ^ n ^ "/voiceover.ogg"), "audio/ogg", file_size ("blogs-v1/" ^ n ^ "/voiceover.ogg"))) else None
+        in
+        (title, description, n, thumb_path, thumb_alt, mastodon_thread, html, html, assets, pub_date, edit_date, voiceover)
     ) (Array.to_list (Sys.readdir "blogs-v1")))
 ;;
 
-List.iter (fun (title, description, folder_name, thumb_path, thumb_alt, mastodon_thread, html_content, rss_content, assets, pub_date, edit_date) -> add_blog_post
+List.iter (fun (title, description, folder_name, thumb_path, thumb_alt, mastodon_thread, html_content, rss_content, assets, pub_date, edit_date, voiceover) -> add_blog_post
     title
     description
     html_content
@@ -610,6 +632,7 @@ List.iter (fun (title, description, folder_name, thumb_path, thumb_alt, mastodon
     thumb_alt
     assets
     mastodon_thread
+    voiceover
 ) parsed_obsidian_posts;;
 
 add_blog_post_from_folder_thumb_contained "My User-Control-Focused Stack" "How I use various systems like RSS, Mastodon/Activity Pub, Linode, Nextcloud, and Nix to increase my computational independence." (Date.new_date_et 2024 2 11 0 32 0) "my-user-control-focused-stack" "thumb.png" "Various logos including RSS, Mastodon, Nextcloud, Linode, Nix, Vaultwarden" (Some "https://cdt.social/@clayton/111736390933029700");;

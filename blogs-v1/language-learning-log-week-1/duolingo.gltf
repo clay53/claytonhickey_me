@@ -1,0 +1,579 @@
+{
+  "accessors": [
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 3292,
+      "max": [
+        2.2465524673461914,
+        0.9910908341407776,
+        4.0983757972717285
+      ],
+      "min": [
+        -2.2886648178100586,
+        -0.9139217734336853,
+        0.31152045726776123
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 39504,
+      "componentType": 5126,
+      "count": 3292,
+      "max": [
+        0.999983549118042,
+        0.9999024868011475,
+        0.9998608231544495
+      ],
+      "min": [
+        -0.999983549118042,
+        -0.999984860420227,
+        -0.9987897872924805
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 19740,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 79008,
+      "componentType": 5126,
+      "count": 4666,
+      "max": [
+        1.4212467670440674,
+        -0.49752724170684814,
+        3.772951602935791
+      ],
+      "min": [
+        -1.4141056537628174,
+        -0.9608632326126099,
+        0.868477463722229
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 135000,
+      "componentType": 5126,
+      "count": 4666,
+      "max": [
+        0.9956337809562683,
+        0.9999573230743408,
+        0.9999973177909851
+      ],
+      "min": [
+        -0.9956338405609131,
+        -0.9999001622200012,
+        -0.9985594153404236
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 78960,
+      "componentType": 5125,
+      "count": 27948,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 190992,
+      "componentType": 5126,
+      "count": 1046,
+      "max": [
+        0.8440185189247131,
+        0.4279743432998657,
+        2.304764747619629
+      ],
+      "min": [
+        -0.8368773460388184,
+        -1.1475090980529785,
+        3.910064697265625e-05
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 203544,
+      "componentType": 5126,
+      "count": 1046,
+      "max": [
+        0.9981078505516052,
+        0.9988793134689331,
+        0.9994842410087585
+      ],
+      "min": [
+        -0.9981078505516052,
+        -0.9999561905860901,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 190752,
+      "componentType": 5125,
+      "count": 6216,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 216096,
+      "componentType": 5126,
+      "count": 324,
+      "max": [
+        0.32010579109191895,
+        -0.7797791361808777,
+        2.5702311992645264
+      ],
+      "min": [
+        -0.3129732608795166,
+        -1.2229149341583252,
+        2.2833058834075928
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 219984,
+      "componentType": 5126,
+      "count": 324,
+      "max": [
+        0.9990406036376953,
+        0.9999997019767761,
+        0.9922140836715698
+      ],
+      "min": [
+        -0.9990406036376953,
+        -0.9972845315933228,
+        -0.9999992847442627
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 215616,
+      "componentType": 5125,
+      "count": 1932,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 223872,
+      "componentType": 5126,
+      "count": 1402,
+      "max": [
+        1.2095704078674316,
+        -0.6801354885101318,
+        3.3115530014038086
+      ],
+      "min": [
+        -1.2024623155593872,
+        -0.9987763166427612,
+        2.174490451812744
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 240696,
+      "componentType": 5126,
+      "count": 1402,
+      "max": [
+        0.999946117401123,
+        0.9975309371948242,
+        0.9947028160095215
+      ],
+      "min": [
+        -0.9999460577964783,
+        -0.9997859001159668,
+        -0.9982575178146362
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 223344,
+      "componentType": 5125,
+      "count": 8388,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 257520,
+      "componentType": 5126,
+      "count": 1061,
+      "max": [
+        0.9036329984664917,
+        -0.8497157692909241,
+        3.0527305603027344
+      ],
+      "min": [
+        -0.9138695597648621,
+        -1.0094929933547974,
+        2.4350242614746094
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 270252,
+      "componentType": 5126,
+      "count": 1061,
+      "max": [
+        0.9985904097557068,
+        0.9998879432678223,
+        0.9919777512550354
+      ],
+      "min": [
+        -0.9980654120445251,
+        -0.9999098777770996,
+        -0.95872962474823
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 256896,
+      "componentType": 5125,
+      "count": 6342,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "TOY WAR (https://sketchfab.com/toywar.com)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/duolingo-6e98824568be4666b44577b7a41120ee",
+      "title": "Duolingo"
+    },
+    "generator": "Sketchfab-15.77.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 282264,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 282984,
+      "byteOffset": 282264,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 565248,
+      "uri": "scene.bin"
+    }
+  ],
+  "extensionsUsed": [
+    "KHR_materials_unlit"
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_unlit": {}
+      },
+      "name": "midori.001",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.184474,
+          0.571122,
+          0.0,
+          1.0
+        ],
+        "metallicFactor": 0.0
+      }
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_unlit": {}
+      },
+      "name": "usui_midori.002",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.371567,
+          0.737942,
+          0.0922839,
+          1.0
+        ],
+        "metallicFactor": 0.0
+      }
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_unlit": {}
+      },
+      "name": "orengi.002",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.904645,
+          0.27468,
+          0.0,
+          1.0
+        ],
+        "metallicFactor": 0.0
+      }
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_unlit": {}
+      },
+      "name": "kiiroi.001",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1.0,
+          0.527105,
+          0.0,
+          1.0
+        ],
+        "metallicFactor": 0.0
+      }
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_unlit": {}
+      },
+      "name": "me.002",
+      "pbrMetallicRoughness": {
+        "metallicFactor": 0.0
+      }
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_unlit": {}
+      },
+      "name": "me.003",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "metallicFactor": 0.0
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Retopo_karada.001_midori.001_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0
+          },
+          "indices": 2,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Retopo_karada.001_usui_midori.002_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 4,
+            "POSITION": 3
+          },
+          "indices": 5,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Retopo_karada.001_orengi.002_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 7,
+            "POSITION": 6
+          },
+          "indices": 8,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Retopo_karada.001_kiiroi.001_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 10,
+            "POSITION": 9
+          },
+          "indices": 11,
+          "material": 3,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Retopo_karada.001_me.002_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 13,
+            "POSITION": 12
+          },
+          "indices": 14,
+          "material": 4,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Retopo_karada.001_me.003_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 16,
+            "POSITION": 15
+          },
+          "indices": 17,
+          "material": 5,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.009999999776482582,
+        0.0,
+        0.0,
+        -0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "duo.fbx"
+    },
+    {
+      "children": [
+        3
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "matrix": [
+        100.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -4.371139006309477e-06,
+        -99.9999999999999,
+        0.0,
+        0.0,
+        99.9999999999999,
+        -4.371139006309477e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Retopo_karada.001"
+    },
+    {
+      "mesh": 0,
+      "name": "Retopo_karada.001_midori.001_0"
+    },
+    {
+      "mesh": 1,
+      "name": "Retopo_karada.001_usui_midori.002_0"
+    },
+    {
+      "mesh": 2,
+      "name": "Retopo_karada.001_orengi.002_0"
+    },
+    {
+      "mesh": 3,
+      "name": "Retopo_karada.001_kiiroi.001_0"
+    },
+    {
+      "mesh": 4,
+      "name": "Retopo_karada.001_me.002_0"
+    },
+    {
+      "mesh": 5,
+      "name": "Retopo_karada.001_me.003_0"
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}
