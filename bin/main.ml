@@ -432,7 +432,7 @@ let rss_items = Buffer.create 1000;;
 
 let add_rss_item title description canonical_path date html_content enclosure =
     Buffer.add_string rss_items (
-        "<item><title>" ^ title ^ "</title><description>" ^ description ^ "</description><link>https://claytonhickey.me/" ^ canonical_path ^ "</link><guid>https://claytonhickey.me/" ^ canonical_path ^ "</guid><pubDate>" ^ Date.as_rss_date date ^ "</pubDate><content:encoded><![CDATA[" ^ html_content ^ "]]></content:encoded></item>" ^ begin match enclosure with | None -> "" | Some (path, ty, size) -> "<enclosure url=\"https://claytonhickey.me" ^ path ^ "\" length=\"" ^ string_of_int size ^ "\" type=\"" ^ ty ^ "\"/>" end
+        "<item><title>" ^ title ^ "</title><description>" ^ description ^ "</description><link>https://claytonhickey.me/" ^ canonical_path ^ "</link><guid>https://claytonhickey.me/" ^ canonical_path ^ "</guid><pubDate>" ^ Date.as_rss_date date ^ "</pubDate><content:encoded><![CDATA[" ^ html_content ^ "]]></content:encoded>" ^ begin match enclosure with | None -> "" | Some (path, ty, size) -> "<enclosure url=\"https://claytonhickey.me" ^ path ^ "\" length=\"" ^ string_of_int size ^ "\" type=\"" ^ ty ^ "\"/>" end ^ "</item>"
     );
 ;;
 
