@@ -359,8 +359,11 @@ write_string_to_file "www/index.html" (build_page
             html_div [] [
                 html_header 1 ["Clayton Hickey"];
                 html_p [
-                    "I am currently working at GameSense Sports working as a fullstack web/mobile/deployment/software engineer. For them, I have developed a web-based video editor using React, Rust, Actix, FFMpeg, PHP, Laravel, Auth0, and AWS used to create pitch recognition training videos used by MLB teams based on the research and direction of Dr. Peter Fadde. I'm currently studying Bioengineering and Computer Science at the University of Pennsylvania. I have been teaching myself programming since 2nd grade by doing projects I was interested in. I'm currently working on developing an educational software suite to compete with Anki, Quizlet, Kahoot, GimKit, Google Classroom, and Duolingo that runs on all platforms (desktop, web, &amp; mobile) and is federated-like (similar to Mastodon), free, and open source. The language learning portion of the suite's development is being documented on 𝕏: ";
-                    html_a "https://twitter.com/tutor_engine" true ["@tutor_engine"]
+                    "I am currently working at GameSense Sports working as a fullstack web/mobile/deployment/software engineer. For them, I have developed a web-based video editor using React, Rust, Actix, FFMpeg, PHP, Laravel, Auth0, and AWS used to create pitch recognition training videos used by MLB teams based on the research and direction of Dr. Peter Fadde. I'm currently studying Bioengineering and Computer Science at the University of Pennsylvania. I have been teaching myself programming since 2nd grade by doing projects I was interested in. I'm currently developing a language learning app, ";
+                    html_a "https://tutorengine.org" true ["Tutor Engine"];
+                    ". The app's development is being documented on ";
+                    html_a "/blog/" true ["my blog"];
+                    ".";
                 ];
             ];
             html_img "/images/headshot.jpg" "Headshot of Clayton Hickey" [("id", PString "headshot")];
