@@ -121,6 +121,7 @@ img {
 
 .experience-img {
     width: 100%;
+    max-width: 100%;
 }
 
 #tidbits-container {
