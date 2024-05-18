@@ -648,9 +648,6 @@ add_blog_post_from_folder_thumb_contained "A Theoretical Algorithm for Deciding 
 
 add_blog_post_from_folder_thumb_contained "Recommendation Algorithms and Ethics" "A not-very-short not-very-source-heavy dive into recommendation algorithms and the ethical questions surrounding them. Written for Tech Roulette 2021, P4M1 - Justice Matrix" (Date.new_date_et 2021 7 9 0 0 0) "recommendation-algorithms-and-ethics" "youtube-handing-viewer-burning-baby.png" "YouTube logo handing viewer a burning baby" (Some "https://cdt.social/@clayton/111678761831022044");;
 
-write_string_to_file "www/rss.xml" (
-    "<?xml version=\"1.0\" encoding=\"UTF-8\"?><rss version=\"2.0\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\" xmlns:atom=\"http://www.w3.org/2005/Atom\"><channel><title>Clayton Hickey's Blog</title><link>https://claytonhickey.me/blog</link><description>The latest blog posts by Clayton Hickey</description><language>en-us</language><copyright>Unless otherwise specified, all rights reserved to Clayton Hickey</copyright><webMaster>clayton@claytondoesthings.xyz (Clayton Hickey)</webMaster><docs>https://www.rssboard.org/rss-specification</docs><generator>Custom OCaml</generator><atom:link href=\"https://claytonhickey.me/rss.xml\" rel=\"self\" type=\"application/rss+xml\"/>" ^ Buffer.contents rss_items ^ "</channel></rss>"
-);;
 
 write_string_to_file "www/blog/index.html" (
     build_page
@@ -682,6 +679,9 @@ write_string_to_file "www/sitemap.xml" (
     "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">" ^ Buffer.contents sitemap_entries ^ "</urlset>"
 );;
 
+write_string_to_file "www/rss.xml" (
+    "<?xml version=\"1.0\" encoding=\"UTF-8\"?><rss version=\"2.0\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\" xmlns:atom=\"http://www.w3.org/2005/Atom\"><channel><title>Clayton Hickey's Blog</title><link>https://claytonhickey.me/blog</link><description>The latest blog posts by Clayton Hickey</description><image>https://claytonhickey.me/images/headshot.jpg</image><language>en-us</language><copyright>Unless otherwise specified, all rights reserved to Clayton Hickey</copyright><managingEditor>clayton@claytondoesthings.xyz (Clayton Hickey)</managingEditor><webMaster>clayton@claytondoesthings.xyz (Clayton Hickey)</webMaster><docs>https://www.rssboard.org/rss-specification</docs><generator>Custom OCaml</generator><atom:link href=\"https://claytonhickey.me/rss.xml\" rel=\"self\" type=\"application/rss+xml\"/>" ^ Buffer.contents rss_items ^ "</channel></rss>"
+);;
 copy_file "common.css" "www/common.css";;
 copy_file "favicon.ico" "www/favicon.ico";;
 copy_file "nav.js" "www/nav.js";;
