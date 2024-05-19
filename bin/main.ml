@@ -435,7 +435,7 @@ let rss_items = Buffer.create 1000;;
 
 let add_rss_item title description canonical_path cover_image_url date html_content enclosure =
     Buffer.add_string rss_items (
-        "<item><title>" ^ title ^ "</title><description>" ^ description ^ "</description><link>https://claytonhickey.me/" ^ canonical_path ^ "</link><guid>https://claytonhickey.me/" ^ canonical_path ^ "</guid><pubDate>" ^ Date.as_rss_date date ^ "</pubDate>" ^ begin match cover_image_url with | Some cover_image_url -> "<itunes:image href=\"" ^ cover_image_url ^ "\"/>" | None -> "" end ^ "<content:encoded><![CDATA[" ^ html_content ^ "]]></content:encoded>" ^ begin match enclosure with | None -> "" | Some (path, ty, size) -> "<enclosure url=\"https://claytonhickey.me" ^ path ^ "\" length=\"" ^ string_of_int size ^ "\" type=\"" ^ ty ^ "\"/>" end ^ "<media:description type=\"plain\">https://claytonhickey.me/" ^ canonical_path ^ " " ^ description ^ "</media:description></item>"
+        "<item><title>" ^ title ^ "</title><description>" ^ description ^ "</description><media:description type=\"plain\">" ^ description ^ "</media:description><link>https://claytonhickey.me/" ^ canonical_path ^ "</link><guid>https://claytonhickey.me/" ^ canonical_path ^ "</guid><pubDate>" ^ Date.as_rss_date date ^ "</pubDate>" ^ begin match cover_image_url with | Some cover_image_url -> "<itunes:image href=\"" ^ cover_image_url ^ "\"/>" | None -> "" end ^ "<content:encoded><![CDATA[" ^ html_content ^ "]]></content:encoded>" ^ begin match enclosure with | None -> "" | Some (path, ty, size) -> "<enclosure url=\"https://claytonhickey.me" ^ path ^ "\" length=\"" ^ string_of_int size ^ "\" type=\"" ^ ty ^ "\"/>" end ^ "</item>"
     );
 ;;
 
@@ -536,7 +536,7 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
         full_html
     ;
     List.iter (fun (n, b) -> write_bytes_to_file (fs_path ^ "/" ^ n) b) assets;
-    add_rss_item title description (canonical_path ^ "/") (Some ("https://claytonhickey.me/" ^ thumb_path)) date rss_content voiceover;
+    add_rss_item title description (canonical_path ^ "/") (Some ("https://claytonhickey.me/" ^ thumb_path)) date ("Read directly: <a href=\"https://claytonhickey.me/" ^ canonical_path ^ "\">https://claytonhickey.me/" ^ canonical_path ^ "</a>" ^ rss_content) voiceover;
     add_blog_post_card title description canonical_path date edit_date thumb_path thumb_alt;
     add_sitemap_entry (canonical_path ^ "/") "yearly" "0.9";
 ;;
