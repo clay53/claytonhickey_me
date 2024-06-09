@@ -617,7 +617,7 @@ let parsed_obsidian_posts = List.stable_sort
             (fun n2 -> (n2, read_file_to_bytes ("blogs-v1/" ^ n ^ "/" ^ n2)))
             (List.filter (fun n2 -> not (String.equal n2 "index.html")) (Array.to_list (Sys.readdir ("blogs-v1/" ^ n))))
         in
-        let voiceover = if Sys.file_exists ("blogs-v1/" ^ n ^ "/voiceover.ogg") then (Some (("/blog/" ^ n ^ "/voiceover.ogg"), "audio/ogg", file_size ("blogs-v1/" ^ n ^ "/voiceover.ogg"))) else None
+        let voiceover = if Sys.file_exists ("blogs-v1/" ^ n ^ "/voiceover.mp3") then (Some (("/blog/" ^ n ^ "/voiceover.mp3"), "audio/mpeg", file_size ("blogs-v1/" ^ n ^ "/voiceover.mp3"))) else None
         in
         (title, description, n, thumb_path, thumb_alt, mastodon_thread, html, html, assets, pub_date, edit_date, voiceover)
     ) (Array.to_list (Sys.readdir "blogs-v1")))
