@@ -1,0 +1,11 @@
+{ pkgs ? import <nixpkgs> {} }:
+pkgs.mkShell {
+    buildInputs = with pkgs; [
+        dune_3
+        ocaml
+        ocamlPackages.findlib
+        ocamlPackages.lambdasoup
+    ];
+
+    TOPFIND = "${pkgs.ocamlPackages.findlib}/lib/ocaml/*/site-lib/topfind";
+}

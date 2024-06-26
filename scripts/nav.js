@@ -1,16 +1,16 @@
 const PAGES = [
     {
-        title: "Home",
+        title: "<ml-s><span lang=\"en\">Home</span><span lang=\"ja\">ホーム</span></ml-s>",
         href: "/",
         type: "home",
     },
     {
-        title: "Blog",
+        title: "<ml-s><span lang=\"en\">Blog</span><span lang=\"ja\">ブログ</span></ml-s>",
         href: "/blog",
         type: "blog",
     },
     {
-        title: "More Nodes",
+        title: "<ml-s><span lang=\"en\">More Nodes</span><span lang=\"ja\">他のノード</span></ml-s>",
         href: "/more-nodes",
         type: "more-nodes",
     },
@@ -36,7 +36,7 @@ class MyNav extends HTMLElement {
             }
 
             #nav .nav-item {
-                display: inline-block;
+                display: table-cell;
                 padding: 0.5rem 1rem;
                 background-color: #182533;
             }
@@ -60,7 +60,7 @@ class MyNav extends HTMLElement {
             }
             const a = document.createElement("a");
             a.href = page.href;
-            a.innerText = page.title;
+            a.innerHTML = page.title;
             div.appendChild(a);
             nav.appendChild(div);
         }

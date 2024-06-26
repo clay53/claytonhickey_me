@@ -35,7 +35,7 @@ monitor_directory() {
         # Wait for a change in the directory with a debounce period
         if inotifywait -r -e modify,create,delete,move -qq --timefmt '%s' --format '%T' -t 1 "$dir"; then
             #echo "changed!"
-            ocaml bin/main.ml
+            ocaml no_dune.ml
         fi
     done &
     INOTIFY_PIDS+=($!)

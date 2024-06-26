@@ -1,3 +1,5 @@
+open Soup
+
 type htmlChildren = SelfClosing | List of string list * bool;;
 
 type htmlPropertyData = PBool of bool | PInt of int | PFloat of float | PString of string;;
@@ -119,7 +121,8 @@ let build_page title description canonical_path nav_type og_image_path content =
             | Some path -> "https://claytonhickey.me/" ^ path
         end;
         html_element_string "link" [("rel", PString "alternate"); ("type", PString "application/rss+xml"); ("title", PString "Clayton Hickey's Blog"); ("href", PString "/rss.xml")] SelfClosing;
-        script_import_string "/nav.js";
+        script_import_string "/scripts/nav.js";
+        html_element_string "script" [("src", PString "/scripts/multilingual.js"); ("defer", PBool(true))] (List ([], false))
     ], false))
     ^ html_element_string "body" [] (List ([
         html_element_string "my-nav" [("type", PString begin match nav_type with
@@ -131,6 +134,51 @@ let build_page title description canonical_path nav_type og_image_path content =
         html_element_string "main" [("id", PString "content")] (List (content, false));
         footer;
     ], true))
+;;
+
+let extract_language lang html =
+    let soup = parse html in
+    let to_return = ref (Some soup) in
+    Soup.iter (fun mls -> (
+        let pulled = ref None in
+        Soup.iter (fun pullable -> (
+            begin match Soup.attribute "lang" pullable with
+                | Some langAttr ->
+                    if String.equal langAttr lang then
+                        pulled := Some pullable
+                    else begin match !pulled with
+                        | None -> pulled := Some pullable
+                        | Some _ -> ()
+                    end
+                | None -> ()
+            end
+        )) (Soup.elements (Soup.children mls));
+        begin match Soup.parent mls with
+            | Some _ -> begin match !pulled with
+                | Some pulled -> (Soup.replace mls pulled)
+                | None -> Soup.delete mls
+            end
+            | None -> begin match !pulled with
+                | Some pulled ->
+                    (
+                        Soup.append_root soup pulled;
+                        Soup.delete mls;
+                    )
+                | None -> to_return := None
+            end
+        end
+    )) (Soup.select "ml-s" soup);
+    begin match !to_return with
+        | Some to_return -> to_return |> to_string
+        | None -> ""
+    end
+;;
+
+let extract_en = extract_language "en";;
+
+let remove_html html =
+    let soup = parse html in
+    String.concat "" (Soup.texts soup)
 ;;
 
 let card_viewer_elem card_set = html_element_string "card-viewer" [("card-set", PString card_set)] (List ([], false));;
@@ -437,7 +485,7 @@ let rss_items = Buffer.create 1000;;
 
 let add_rss_item title description canonical_path cover_image_url date html_content enclosure =
     Buffer.add_string rss_items (
-        "<item><title>" ^ title ^ "</title><description>" ^ description ^ "</description><media:description type=\"plain\">" ^ description ^ "</media:description><link>https://claytonhickey.me/" ^ canonical_path ^ "</link><guid>https://claytonhickey.me/" ^ canonical_path ^ "</guid><pubDate>" ^ Date.as_rss_date date ^ "</pubDate>" ^ begin match cover_image_url with | Some cover_image_url -> "<itunes:image href=\"" ^ cover_image_url ^ "\"/>" | None -> "" end ^ "<content:encoded><![CDATA[" ^ html_content ^ "]]></content:encoded>" ^ begin match enclosure with | None -> "" | Some (path, ty, size) -> "<enclosure url=\"https://claytonhickey.me" ^ path ^ "\" length=\"" ^ string_of_int size ^ "\" type=\"" ^ ty ^ "\"/>" end ^ "</item>"
+        "<item><title>" ^ (title |> extract_en |> remove_html) ^ "</title><description>" ^ (description |> extract_en |> remove_html) ^ "</description><media:description type=\"plain\">" ^ (description |> extract_en |> remove_html) ^ "</media:description><link>https://claytonhickey.me/" ^ canonical_path ^ "</link><guid>https://claytonhickey.me/" ^ canonical_path ^ "</guid><pubDate>" ^ Date.as_rss_date date ^ "</pubDate>" ^ begin match cover_image_url with | Some cover_image_url -> "<itunes:image href=\"" ^ cover_image_url ^ "\"/>" | None -> "" end ^ "<content:encoded><![CDATA[" ^ (html_content |> extract_en) ^ "]]></content:encoded>" ^ begin match enclosure with | None -> "" | Some (path, ty, size) -> "<enclosure url=\"https://claytonhickey.me" ^ path ^ "\" length=\"" ^ string_of_int size ^ "\" type=\"" ^ ty ^ "\"/>" end ^ "</item>"
     );
 ;;
 
@@ -480,9 +528,11 @@ let urlencode s =
 let add_blog_post_raw title description html_content rss_content canonical_path date edit_date thumb_path thumb_alt assets mastodon_thread voiceover =
     let fs_path = "www/" ^ canonical_path in
     Sys.mkdir fs_path 0o777;
+    let no_html_en_title = title |> extract_en |> remove_html in
+    let no_html_en_description = description |> extract_en |> remove_html in
     let full_html = build_page
-        (title ^ " - Clayton Hickey")
-        description
+        (no_html_en_title ^ " - Clayton Hickey")
+        no_html_en_description
         (canonical_path ^ "/")
         Blog
         (Some thumb_path)
@@ -519,7 +569,7 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
                 "Comment on: ";
                 html_a ("https://twitter.com/intent/tweet?text=%0A%0A@ClaytonsThings claytonhickey.me%2F" ^ urlencode canonical_path) true ["𝕏"];
                 ", ";
-                html_a ("https://www.reddit.com/submit?url=https%3A%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path ^ "&title=" ^ urlencode title) true ["Reddit"];
+                html_a ("https://www.reddit.com/submit?url=https%3A%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path ^ "&title=" ^ urlencode no_html_en_title) true ["Reddit"];
                 ", ";
                 html_a ("https://www.facebook.com/sharer.php?u=https%3A%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path) true ["Facebook"];
                 ];
@@ -769,7 +819,6 @@ write_string_to_file "www/rss.xml" (
 
 copy_file "common.css" "www/common.css";;
 copy_file "favicon.ico" "www/favicon.ico";;
-copy_file "nav.js" "www/nav.js";;
 copy_file "stuff.js" "www/stuff.js";;
 copy_file "cardViewer.js" "www/cardViewer.js";;
 copy_file "mastodonComments.js" "www/mastodonComments.js";;
