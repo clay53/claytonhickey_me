@@ -88,6 +88,7 @@ type page_nav_type =
     | Home
     | Blog
     | MoreNodes
+    | Games
 ;;
 
 let build_page title description canonical_path nav_type og_image_path content =
@@ -125,6 +126,7 @@ let build_page title description canonical_path nav_type og_image_path content =
             | Home -> "home"
             | Blog -> "blog"
             | MoreNodes -> "more-nodes"
+            | Games -> "games"
         end)] (List ([], false));
         html_element_string "main" [("id", PString "content")] (List (content, false));
         footer;
@@ -648,7 +650,6 @@ add_blog_post_from_folder_thumb_contained "A Theoretical Algorithm for Deciding 
 
 add_blog_post_from_folder_thumb_contained "Recommendation Algorithms and Ethics" "A not-very-short not-very-source-heavy dive into recommendation algorithms and the ethical questions surrounding them. Written for Tech Roulette 2021, P4M1 - Justice Matrix" (Date.new_date_et 2021 7 9 0 0 0) "recommendation-algorithms-and-ethics" "youtube-handing-viewer-burning-baby.png" "YouTube logo handing viewer a burning baby" (Some "https://cdt.social/@clayton/111678761831022044");;
 
-
 write_string_to_file "www/blog/index.html" (
     build_page
         "Blog - Clayton Hickey"
@@ -679,9 +680,93 @@ write_string_to_file "www/sitemap.xml" (
     "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">" ^ Buffer.contents sitemap_entries ^ "</urlset>"
 );;
 
+Sys.mkdir "www/games" 0o777;;
+
+let games = Array.map (fun game_path ->
+    let full_game_path = "games/" ^ game_path in
+    let ic = open_in (full_game_path ^ "/index.html") in
+    let title = Option.get (In_channel.input_line ic) in
+    let author = Option.get (In_channel.input_line ic) in
+    let short_description = Option.get (In_channel.input_line ic) in
+    let description = In_channel.input_all ic in
+    let channels =
+        List.map (fun channel_path ->
+            let full_channel_path = full_game_path ^ "/channels/" ^ channel_path in
+            let ic2 = open_in (full_channel_path ^ "/index.html") in
+            let channel_name = Option.get (In_channel.input_line ic2) in
+            let releases =
+                List.filter_map (fun release_path ->
+                    let full_release_path = full_channel_path ^ "/" ^ release_path in
+                    if String.equal release_path "index.html" then None else Some (
+                        let ic3 = open_in (full_release_path ^ "/index.html") in
+                        let web = String.equal (Option.get (In_channel.input_line ic3)) "web" in
+                        let index_or_file_name = if web then (In_channel.input_all ic3) else Option.get (In_channel.input_line ic3) in
+                        (release_path, web, index_or_file_name)
+                    )
+                ) (Array.to_list (Sys.readdir ("games/" ^ game_path ^ "/channels/" ^ channel_path)))
+            in
+            close_in ic2;
+            (channel_path, channel_name, releases)
+        ) (Array.to_list (Sys.readdir ("games/" ^ game_path ^ "/channels")))
+    in
+    close_in ic;
+    (game_path, title, author, short_description, description, channels)
+) (Sys.readdir "games")
+;;
+
+Array.iter (fun (game_path, game_title, author, short_description, description, channels) ->
+    let src_game_path = "games/" ^ game_path in
+    let out_game_path = "www/games/" ^ game_path in
+    Sys.mkdir out_game_path 0o777;
+    write_string_to_file (out_game_path ^ "/index.html") (
+        build_page
+            (game_title ^ " - Games - Clayton Hickey")
+            short_description
+            ("games/" ^ game_path ^ "/")
+            Games
+            None
+            [
+                html_header 1 [game_title];
+                "By: ";author;
+                description;
+                html_header 2 ["Release Channels"];
+                String.concat "" (List.map (fun (channel_path, channel_name, releases) ->
+                    String.concat "" [
+                        html_header 3 [channel_name];
+                        String.concat "" (List.map (fun (release_path, web, index_or_file_name) ->
+                            if web then
+                                html_a (channel_path ^ "/" ^ release_path ^ "/") false [release_path]
+                            else
+                                html_a (channel_path ^ "/" ^ release_path ^ "/" ^ index_or_file_name) false [release_path]
+                        ) releases)
+                    ]
+                ) channels)
+            ]
+    );
+    List.iter (fun (channel_path, channel_name, releases) -> (
+        let src_channel_path = src_game_path ^ "/channels/" ^ channel_path in
+        let out_channel_path = out_game_path ^ "/" ^ channel_path in
+        Sys.mkdir out_channel_path 0o777;
+        List.iter (fun (release_path, web, index_or_file_name) ->
+            let src_release_path = src_channel_path ^ "/" ^ release_path in
+            let out_release_path = out_channel_path ^ "/" ^ release_path in
+            if web then (
+                copy_fs src_release_path out_release_path;
+                Sys.remove (out_release_path ^ "/index.html");
+                write_string_to_file (out_release_path ^ "/index.html") index_or_file_name;
+            ) else (
+                Sys.mkdir out_release_path 0o777;
+                copy_file (src_release_path ^ "/" ^ index_or_file_name) (out_release_path ^ "/" ^ index_or_file_name);
+            )
+        ) releases;
+    )) channels;
+) games
+;;
+
 write_string_to_file "www/rss.xml" (
     "<?xml version=\"1.0\" encoding=\"UTF-8\"?><rss version=\"2.0\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\" xmlns:atom=\"http://www.w3.org/2005/Atom\" xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\" xmlns:media=\"http://search.yahoo.com/mrss/\"><channel><title>Clayton Hickey's Blog</title><link>https://claytonhickey.me/blog</link><description>The latest blog posts by Clayton Hickey</description><image><title>Clayton Hickey's Blog</title><url>https://claytonhickey.me/images/headshot.jpg</url><link>https://claytonhickey.me/blog</link></image><language>en-us</language><copyright>Unless otherwise specified, all rights reserved to Clayton Hickey</copyright><managingEditor>clayton@claytondoesthings.xyz (Clayton Hickey)</managingEditor><webMaster>clayton@claytondoesthings.xyz (Clayton Hickey)</webMaster><itunes:owner><itunes:name>Clayton Hickey</itunes:name><itunes:email>clayton@claytondoesthings.xyz</itunes:email></itunes:owner><docs>https://www.rssboard.org/rss-specification</docs><generator>Custom OCaml</generator><atom:link href=\"https://claytonhickey.me/rss.xml\" rel=\"self\" type=\"application/rss+xml\"/>" ^ Buffer.contents rss_items ^ "</channel></rss>"
 );;
+
 copy_file "common.css" "www/common.css";;
 copy_file "favicon.ico" "www/favicon.ico";;
 copy_file "nav.js" "www/nav.js";;
