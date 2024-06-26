@@ -78,7 +78,7 @@ let footer = html_element_string "footer" [] (List ([
     "<ml-s><span lang=\"en\">Switch Language</span><span lang=\"ja\">言語を交わる</span></ml-s>: ";
     "<button onclick=\"setPreferredLang('en')\">English</button><button onclick=\"setPreferredLang('ja')\">日本語</button>";
     "<br>";
-    "Check out the code on ";
+    "<ml-s><span lang=\"en\">Check out the code on </span><span lang=\"ja\">コードを見る：</span></ml-s>";
     html_a "https://github.com/clay53/claytonhickey_me" false ["GitHub.com"];
     html_div [("id", PString "footer-social-media")] [
         html_a "https://twitter.com/ClaytonsThings" true [html_img "/images/socials/white_icon/twitter.svg" "Twitter" []];
@@ -502,11 +502,11 @@ let add_blog_post_card title description canonical_path pub_date edit_date thumb
         html_header 3 [
             html_div [("class", PString "experience-title-links")] [
                 html_element_string "a" [("class", PString "experience-title"); ("href", PString ("/" ^ canonical_path))] (List ([title], false));
-                html_a ("/" ^ canonical_path) false ["Read"]
+                html_a ("/" ^ canonical_path) false ["<ml-s><span lang=\"en\">Read</span><span lang=\"ja\">読む</span></ml-s>"]
             ]
         ];
         html_a ("/" ^ canonical_path ^ "/") false [html_img ("/" ^ thumb_path) thumb_alt [("class", PString "experience-img")]];
-        html_p (("Published: " ^ Date.as_rss_date pub_date) :: begin match edit_date with | None -> [] | Some d -> ["<br>Edited: " ^ Date.as_rss_date d] end);
+        html_p (("<ml-s><span lang=\"en\">Published: </span><span lang=\"ja\">著した日付：</span></ml-s>" ^ Date.as_rss_date pub_date) :: begin match edit_date with | None -> [] | Some d -> ["<br>Edited: " ^ Date.as_rss_date d] end);
         html_p [description];
     ]);
 ;;
@@ -550,18 +550,18 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
                 ]
             end;
             html_content;
-            html_p ["Title: " ^ title ^ "<br>Authors: Clayton Lopez Hickey<br>Published: " ^ Date.as_rss_date date ^ begin match edit_date with | Some edit_date -> "<br>Last updated: " ^ Date.as_rss_date edit_date | None -> "" end];
+            html_p ["<ml-s><span lang=\"en\">Title: </span><span lang=\"ja\">題名：</span></ml-s>" ^ title ^ "<br><ml-s><span lang=\"en\">Authors: </span><span lang=\"ja\">作家・</span></ml-s>Clayton Lopez Hickey<br><ml-s><span lang=\"en\">Published: </span><span lang=\"ja\">著した日付：</span></ml-s>" ^ Date.as_rss_date date ^ begin match edit_date with | Some edit_date -> "<br>Last updated: " ^ Date.as_rss_date edit_date | None -> "" end];
             html_div [] [
                 "<script>document.addEventListener(\"DOMContentLoaded\", () => {let d = new Date(); mlaCitation.innerHTML += ` Accessed ${d.getDay()} ${['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'][d.getMonth()]} ${d.getFullYear()}.`;})</script>";
                 let href = "https://claytonhickey.me/" ^ (canonical_path ^ "/") in
-                html_element_string "p" [("id", PString "mlaCitation")] (List (["MLA citation:<br>" ^ "Hickey, C. L. (" ^ string_of_int (Date.year date) ^ ", " ^ Date.en_month_from_int (Date.month date) ^ " " ^ string_of_int (Date.day date) ^ "). <i>" ^ title ^ "</i>. Clayton Hickey. " ^ html_a href false [href] ^ "."], false));
+                html_element_string "p" [("id", PString "mlaCitation")] (List (["<ml-s><span lang=\"en\">MLA Citation:</span><span lang=\"ja\">MLA引用：</span></ml-s><br>" ^ "Hickey, C. L. (" ^ string_of_int (Date.year date) ^ ", " ^ Date.en_month_from_int (Date.month date) ^ " " ^ string_of_int (Date.day date) ^ "). <i>" ^ title ^ "</i>. Clayton Hickey. " ^ html_a href false [href] ^ "."], false));
                 ];
             html_header 2 [
-                "Like this post? ";
-                html_a "https://claytonhickey.me/rss.xml" true ["Follow with RSS"];
+                "<ml-s><span lang=\"en\">Like this post? </span><span lang=\"ja\">このポストが好き？</span></ml-s>";
+                html_a "https://claytonhickey.me/rss.xml" true ["<ml-s><span lang=\"en\">Follow with RSS</span><span lang=\"ja\">RSSでフォローする</span></ml-s>"];
                 ];
             html_header 2 [
-                "What others are saying on: ";
+                "<ml-s><span lang=\"en\">What others are saying on: </span><span lang=\"ja\">他の会話があるサイト：</span></ml-s>";
                 html_a ("https://twitter.com/search?q=url%3Aclaytonhickey.me%2F" ^ urlencode canonical_path) true ["𝕏"];
                 ", ";
                 html_a ("https://google.com/search?q=%22claytonhickey.me%2F" ^ urlencode canonical_path ^ "%22") true ["Google"];
@@ -569,7 +569,7 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
                 html_a ("https://reddit.com/search?q=url%3Aclaytonhickey.me%2F" ^ urlencode canonical_path) true ["Reddit"];
                 ];
             html_header 2 [
-                "Comment on: ";
+                "<ml-s><span lang=\"en\">Comment on: </span><span lang=\"ja\">返事のサイト：</span></ml-s>";
                 html_a ("https://twitter.com/intent/tweet?text=%0A%0A@ClaytonsThings claytonhickey.me%2F" ^ urlencode canonical_path) true ["𝕏"];
                 ", ";
                 html_a ("https://www.reddit.com/submit?url=https%3A%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path ^ "&title=" ^ urlencode no_html_en_title) true ["Reddit"];
@@ -577,7 +577,7 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
                 html_a ("https://www.facebook.com/sharer.php?u=https%3A%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path) true ["Facebook"];
                 ];
             html_header 2 [
-                "Comment to me directly: ";
+                "<ml-s><span lang=\"en\">Comment to me directly: </span><span lang=\"ja\">メールで返事する：</span></ml-s>";
                 html_a ("mailto:clayton@claytondoesthings.xyz?subject=<short> - comment on https:%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path ^ "&body=Hey Clayton,%0A%0A%0A%0ASigned,%0A<your name>") false ["clayton@claytondoesthings.xyz"];
                 ];
             begin match mastodon_thread with
