@@ -40,6 +40,8 @@ class MultilingualSwitcher extends HTMLElement {
             return;
         }
         this.initialized = true;
+        
+        const root = this.attachShadow({mode: "open"});
 
         /** @type {Map<String,HTMLElement>} */
         this.languages = new Map();;
@@ -51,8 +53,6 @@ class MultilingualSwitcher extends HTMLElement {
             }
             this.languages.set(lang, child);
         }
-
-        this.replaceChildren();
 
         this.onLanguageChange = () => {
             let elem = undefined;
@@ -66,7 +66,7 @@ class MultilingualSwitcher extends HTMLElement {
                 return;
             }
 
-            this.replaceChildren(elem);
+            root.replaceChildren(elem.cloneNode(true));
         }
 
         ON_LANGUAGE_CHANGE.add(this.onLanguageChange);
