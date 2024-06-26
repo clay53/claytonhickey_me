@@ -75,6 +75,9 @@ let meta_og types content =
 
 let footer = html_element_string "footer" [] (List ([
     "<hr>";
+    "<ml-s><span lang=\"en\">Switch Language</span><span lang=\"ja\">言語を交わる</span></ml-s>: ";
+    "<button onclick=\"setPreferredLang('en')\">English</button><button onclick=\"setPreferredLang('ja')\">日本語</button>";
+    "<br>";
     "Check out the code on ";
     html_a "https://github.com/clay53/claytonhickey_me" false ["GitHub.com"];
     html_div [("id", PString "footer-social-media")] [
