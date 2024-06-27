@@ -485,11 +485,16 @@ write_string_to_file "www/index.html" (build_page
 add_sitemap_entry "" "weekly" "1";;
 
 let rss_items = Buffer.create 1000;;
+let rss_items_ja = Buffer.create 1000;;
 
 let add_rss_item title description canonical_path cover_image_url date html_content enclosure =
-    Buffer.add_string rss_items (
-        "<item><title>" ^ (title |> extract_en |> remove_html) ^ "</title><description>" ^ (description |> extract_en |> remove_html) ^ "</description><media:description type=\"plain\">" ^ (description |> extract_en |> remove_html) ^ "</media:description><link>https://claytonhickey.me/" ^ canonical_path ^ "</link><guid>https://claytonhickey.me/" ^ canonical_path ^ "</guid><pubDate>" ^ Date.as_rss_date date ^ "</pubDate>" ^ begin match cover_image_url with | Some cover_image_url -> "<itunes:image href=\"" ^ cover_image_url ^ "\"/>" | None -> "" end ^ "<content:encoded><![CDATA[" ^ (html_content |> extract_en) ^ "]]></content:encoded>" ^ begin match enclosure with | None -> "" | Some (path, ty, size) -> "<enclosure url=\"https://claytonhickey.me" ^ path ^ "\" length=\"" ^ string_of_int size ^ "\" type=\"" ^ ty ^ "\"/>" end ^ "</item>"
-    );
+    let add_by_lang buffer lang =
+        Buffer.add_string buffer (
+            "<item><title>" ^ (title |> extract_language lang |> remove_html) ^ "</title><description>" ^ (description |> extract_language lang |> remove_html) ^ "</description><media:description type=\"plain\">" ^ (description |> extract_language lang |> remove_html) ^ "</media:description><link>https://claytonhickey.me/" ^ canonical_path ^ "</link><guid>https://claytonhickey.me/" ^ canonical_path ^ "</guid><pubDate>" ^ Date.as_rss_date date ^ "</pubDate>" ^ begin match cover_image_url with | Some cover_image_url -> "<itunes:image href=\"" ^ cover_image_url ^ "\"/>" | None -> "" end ^ "<content:encoded><![CDATA[" ^ (html_content |> extract_language lang) ^ "]]></content:encoded>" ^ begin match enclosure with | None -> "" | Some (path, ty, size) -> "<enclosure url=\"https://claytonhickey.me" ^ path ^ "\" length=\"" ^ string_of_int size ^ "\" type=\"" ^ ty ^ "\"/>" end ^ "</item>"
+        );
+    in
+    add_by_lang rss_items "en";
+    add_by_lang rss_items_ja "ja";
 ;;
 
 Sys.mkdir "www/blog" 0o777
@@ -816,8 +821,12 @@ Array.iter (fun (game_path, game_title, author, short_description, description, 
 ) games
 ;;
 
+let rss_channel title description language name items =
+    "<channel><title>" ^ title ^ "</title><link>https://claytonhickey.me/blog</link><description>" ^ description ^ "</description><image><title>" ^ title ^ "</title><url>https://claytonhickey.me/images/headshot.jpg</url><link>https://claytonhickey.me/blog</link></image><language>" ^ language ^ "</language><copyright>Unless otherwise specified, all rights reserved to Clayton Hickey</copyright><managingEditor>clayton@claytondoesthings.xyz (" ^ name ^ ")</managingEditor><webMaster>clayton@claytondoesthings.xyz (" ^ name ^ ")</webMaster><itunes:owner><itunes:name>" ^ name ^ "</itunes:name><itunes:email>clayton@claytondoesthings.xyz</itunes:email></itunes:owner><docs>https://www.rssboard.org/rss-specification</docs><generator>Custom OCaml</generator><atom:link href=\"https://claytonhickey.me/rss.xml\" rel=\"self\" type=\"application/rss+xml\"/>" ^ items ^ "</channel>"
+;;
+
 write_string_to_file "www/rss.xml" (
-    "<?xml version=\"1.0\" encoding=\"UTF-8\"?><rss version=\"2.0\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\" xmlns:atom=\"http://www.w3.org/2005/Atom\" xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\" xmlns:media=\"http://search.yahoo.com/mrss/\"><channel><title>Clayton Hickey's Blog</title><link>https://claytonhickey.me/blog</link><description>The latest blog posts by Clayton Hickey</description><image><title>Clayton Hickey's Blog</title><url>https://claytonhickey.me/images/headshot.jpg</url><link>https://claytonhickey.me/blog</link></image><language>en-us</language><copyright>Unless otherwise specified, all rights reserved to Clayton Hickey</copyright><managingEditor>clayton@claytondoesthings.xyz (Clayton Hickey)</managingEditor><webMaster>clayton@claytondoesthings.xyz (Clayton Hickey)</webMaster><itunes:owner><itunes:name>Clayton Hickey</itunes:name><itunes:email>clayton@claytondoesthings.xyz</itunes:email></itunes:owner><docs>https://www.rssboard.org/rss-specification</docs><generator>Custom OCaml</generator><atom:link href=\"https://claytonhickey.me/rss.xml\" rel=\"self\" type=\"application/rss+xml\"/>" ^ Buffer.contents rss_items ^ "</channel></rss>"
+    "<?xml version=\"1.0\" encoding=\"UTF-8\"?><rss version=\"2.0\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\" xmlns:atom=\"http://www.w3.org/2005/Atom\" xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\" xmlns:media=\"http://search.yahoo.com/mrss/\">" ^ (rss_channel "Clayton Hickey's Blog" "The latest blog posts by Clayton Hickey" "en-us" "Clayton Hickey" (Buffer.contents rss_items)) ^ (rss_channel "クレイトン・ヒッキーのブログ" "クレイトン・ヒッキーの新しいブログのポスト" "ja" "クレイトン・ヒッキー" (Buffer.contents rss_items_ja)) ^ "</rss>"
 );;
 
 copy_file "common.css" "www/common.css";;
