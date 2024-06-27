@@ -821,13 +821,13 @@ Array.iter (fun (game_path, game_title, author, short_description, description, 
 ) games
 ;;
 
-let rss_channel title description language name items =
-    "<?xml version=\"1.0\" encoding=\"UTF-8\"?><rss version=\"2.0\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\" xmlns:atom=\"http://www.w3.org/2005/Atom\" xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\" xmlns:media=\"http://search.yahoo.com/mrss/\"><channel><title>" ^ title ^ "</title><link>https://claytonhickey.me/blog</link><description>" ^ description ^ "</description><image><title>" ^ title ^ "</title><url>https://claytonhickey.me/images/headshot.jpg</url><link>https://claytonhickey.me/blog</link></image><language>" ^ language ^ "</language><copyright>Unless otherwise specified, all rights reserved to Clayton Hickey</copyright><managingEditor>clayton@claytondoesthings.xyz (" ^ name ^ ")</managingEditor><webMaster>clayton@claytondoesthings.xyz (" ^ name ^ ")</webMaster><itunes:owner><itunes:name>" ^ name ^ "</itunes:name><itunes:email>clayton@claytondoesthings.xyz</itunes:email></itunes:owner><docs>https://www.rssboard.org/rss-specification</docs><generator>Custom OCaml</generator><atom:link href=\"https://claytonhickey.me/rss.xml\" rel=\"self\" type=\"application/rss+xml\"/>" ^ items ^ "</channel></rss>"
+let write_rss_channel route title description language name items =
+    write_string_to_file ("www/" ^ route) ("<?xml version=\"1.0\" encoding=\"UTF-8\"?><rss version=\"2.0\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\" xmlns:atom=\"http://www.w3.org/2005/Atom\" xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\" xmlns:media=\"http://search.yahoo.com/mrss/\"><channel><title>" ^ title ^ "</title><link>https://claytonhickey.me/blog</link><description>" ^ description ^ "</description><image><title>" ^ title ^ "</title><url>https://claytonhickey.me/images/headshot.jpg</url><link>https://claytonhickey.me/blog</link></image><language>" ^ language ^ "</language><copyright>Unless otherwise specified, all rights reserved to Clayton Hickey</copyright><managingEditor>clayton@claytondoesthings.xyz (" ^ name ^ ")</managingEditor><webMaster>clayton@claytondoesthings.xyz (" ^ name ^ ")</webMaster><itunes:owner><itunes:name>" ^ name ^ "</itunes:name><itunes:email>clayton@claytondoesthings.xyz</itunes:email></itunes:owner><docs>https://www.rssboard.org/rss-specification</docs><generator>Custom OCaml</generator><atom:link href=\"https://claytonhickey.me/" ^ route ^ "\" rel=\"self\" type=\"application/rss+xml\"/>" ^ items ^ "</channel></rss>")
 ;;
 
-write_string_to_file "www/rss.xml" (rss_channel "Clayton Hickey's Blog" "The latest blog posts by Clayton Hickey" "en-us" "Clayton Hickey" (Buffer.contents rss_items));;
+write_rss_channel "rss.xml" "Clayton Hickey's Blog" "The latest blog posts by Clayton Hickey" "en-us" "Clayton Hickey" (Buffer.contents rss_items);;
 
-write_string_to_file "www/rss.ja.xml" (rss_channel "クレイトン・ヒッキーのブログ" "クレイトン・ヒッキーの新しいブログのポスト" "ja" "クレイトン・ヒッキー" (Buffer.contents rss_items_ja));;
+write_rss_channel "rss.ja.xml" "クレイトン・ヒッキーのブログ" "クレイトン・ヒッキーの新しいブログのポスト" "ja" "クレイトン・ヒッキー" (Buffer.contents rss_items_ja);;
 
 copy_file "common.css" "www/common.css";;
 copy_file "favicon.ico" "www/favicon.ico";;
