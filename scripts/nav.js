@@ -67,7 +67,10 @@ class MyNav extends HTMLElement {
             nav.appendChild(div);
         }
         nav.innerHTML += `<div class="nav-item">
-            <a href="/rss.xml" target="_BLANK">RSS</a>
+            <ml-s>
+                <a style="color: white; text-decoration: none;" lang="en" href="/rss.xml" target="_BLANK">RSS</a>
+                <a style="color: white; text-decoration: none;" lang="ja" href="/rss.ja.xml" target="_BLANK">RSS</a>
+            </ml-s>
         </div>`;
         shadow.appendChild(nav);
     }
