@@ -401,7 +401,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://claytondoesthings.xyz/software/word-search-cheats-ocr/web",
-                text: "<ml-s><span lang=\"en\">Live</span><span lang=\"ja\">ライブ</span></ml-s>",
+                text: "<ml-s><span lang=\"en\">Live</span><span lang=\"ja\">見る</span></ml-s>",
             },
         ],
         thumb: {
@@ -444,7 +444,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://claytondoesthings.xyz",
-                text: "<ml-s><span lang=\"en\">Live</span><span lang=\"ja\">ライブ</span></ml-s>",
+                text: "<ml-s><span lang=\"en\">Live</span><span lang=\"ja\">見る</span></ml-s>",
             },
             {
                 href: "https://github.com/clay53/ClaytonXYZ",
@@ -476,7 +476,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://claytondoesthings.xyz/games/carai/web",
-                text: "<ml-s><span lang=\"en\">Live</span><span lang=\"ja\">ライブ</span></ml-s>",
+                text: "<ml-s><span lang=\"en\">Live</span><span lang=\"ja\">見る</span></ml-s>",
             },
             {
                 href: "https://github.com/clay53/CarAI",
@@ -569,7 +569,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://meet-with-pong.clay53.repl.co/w/index.html",
-                text: "<ml-s><span lang=\"en\">Live</span><span lang=\"ja\">ライブ</span></ml-s>",
+                text: "<ml-s><span lang=\"en\">Live</span><span lang=\"ja\">見る</span></ml-s>",
             },
             {
                 href: "https://github.com/clay53/Meet-With-Pong",
@@ -632,7 +632,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://claytondoesthings.xyz/software/symbol-translator/web",
-                text: "<ml-s><span lang=\"en\">Live</span><span lang=\"ja\">ライブ</span></ml-s>",
+                text: "<ml-s><span lang=\"en\">Live</span><span lang=\"ja\">見る</span></ml-s>",
             },
             {
                 href: "https://github.com/ClaytonDoesThings/SymbolTranslator",
@@ -716,7 +716,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://claytondoesthings.xyz/software/legitimate-images-made-from-images",
-                text: "<ml-s><span lang=\"en\">Live</span><span lang=\"ja\">ライブ</span></ml-s>",
+                text: "<ml-s><span lang=\"en\">Live</span><span lang=\"ja\">見る</span></ml-s>",
             },
             {
                 href: "https://github.com/clay53/Legitimate-Images-From-Images",
@@ -754,7 +754,7 @@ const IDTOCARD = {
             },
             {
                 href: "https://MultiKahoot.claytonhickey.repl.co/",
-                text: "<ml-s><span lang=\"en\">Live</span><span lang=\"ja\">ライブ</span></ml-s>",
+                text: "<ml-s><span lang=\"en\">Live</span><span lang=\"ja\">見る</span></ml-s>",
             },
         ],
         thumb: null,
@@ -958,7 +958,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://claytonhickey.me",
-                text: "<ml-s><span \"en\">Live</span><span lang=\"ja\">ライブ</span></ml-s>",
+                text: "<ml-s><span \"en\">Live</span><span lang=\"ja\">見る</span></ml-s>",
             },
             {
                 href: "https://github.com/clay53/claytonhickey_me",
