@@ -42,6 +42,10 @@ class MultilingualSwitcher extends HTMLElement {
         this.initialized = true;
         
         const root = this.attachShadow({mode: "open"});
+        const styleLink = document.createElement("link");
+        styleLink.setAttribute("rel", "stylesheet");
+        styleLink.setAttribute("type", "text/css");
+        styleLink.setAttribute("href", "/common.css");
 
         /** @type {Map<String,HTMLElement>} */
         this.languages = new Map();;
@@ -66,7 +70,7 @@ class MultilingualSwitcher extends HTMLElement {
                 return;
             }
 
-            root.replaceChildren(elem.cloneNode(true));
+            root.replaceChildren(styleLink, elem.cloneNode(true));
         }
 
         ON_LANGUAGE_CHANGE.add(this.onLanguageChange);

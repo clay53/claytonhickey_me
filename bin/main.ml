@@ -363,8 +363,12 @@ let copy_file src dest = write_bytes_to_file dest (read_file_to_bytes src);;
 
 let rec copy_fs src dest =
     if Sys.is_directory src then (
-        Sys.mkdir dest 0o777;
-        (Array.iter (fun n -> copy_fs (src ^ "/" ^ n) (dest ^ "/" ^ n))) (Sys.readdir src);)
+        if Sys.file_exists dest then (
+            (Array.iter (fun n -> copy_fs (src ^ "/" ^ n) (dest ^ "/" ^ n))) (Sys.readdir src);
+        ) else (
+            Sys.mkdir dest 0o777;
+            (Array.iter (fun n -> copy_fs (src ^ "/" ^ n) (dest ^ "/" ^ n))) (Sys.readdir src);)
+        )
     else
         copy_file src dest
 ;;
@@ -381,6 +385,8 @@ if Sys.file_exists "www" then
 
 Sys.mkdir "www" 0o777
 ;;
+
+copy_fs "copy" "www";;
 
 let sitemap_entries = Buffer.create 1000;;
 
@@ -405,7 +411,7 @@ write_string_to_file "www/index.html" (build_page
     ""
     Home
     None
-    [read_file_to_string "home-body.html"]
+    [read_file_to_string "includes/home-body.html"]
 );;
 
 
@@ -758,8 +764,6 @@ write_rss_channel "rss.ja.xml" "クレイトン・ヒッキーのブログ" "ク
 
 copy_file "common.css" "www/common.css";;
 copy_file "favicon.ico" "www/favicon.ico";;
-copy_file "stuff.js" "www/stuff.js";;
-copy_file "cardViewer.js" "www/cardViewer.js";;
 copy_file "mastodonComments.js" "www/mastodonComments.js";;
 
 copy_fs "images" "www/images";;

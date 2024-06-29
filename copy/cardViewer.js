@@ -4,8 +4,6 @@ class CardViewer extends HTMLElement {
     }
 
     connectedCallback() {
-        const shadow = this.attachShadow({ mode: "open" });
-
         const cardSetAttribute = this.getAttribute("card-set");
 
         const cardSet = cardSetAttribute === "projects" ? [
@@ -48,9 +46,6 @@ class CardViewer extends HTMLElement {
             day: 'numeric'
         });
 
-        const style = document.createElement("style");
-        style.innerHTML = `@import "/common.css"`;
-        shadow.appendChild(style);
         const container = document.createElement("div");
         container.className = "experience-container";
         for (const thingKey of cardSet) {
@@ -72,7 +67,7 @@ class CardViewer extends HTMLElement {
                 for (const link of thing.links) {
                     const linkElm = document.createElement("a");
                     linkElm.href = link.href;
-                    linkElm.innerText = link.text;
+                    linkElm.innerHTML = link.text;
                     thingTitleLinks.appendChild(linkElm);
                 }
             }
@@ -131,7 +126,7 @@ class CardViewer extends HTMLElement {
 
             container.appendChild(thingContainer);
         }
-        shadow.appendChild(container);
+        this.appendChild(container);
     }
 }
 

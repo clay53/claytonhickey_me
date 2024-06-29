@@ -259,11 +259,11 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://github.com/clay53/wgpu_game_of_life",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
             {
                 href: "https://github.com/clay53/wgpu_game_of_life/releases/",
-                text: "Download",
+                text: "<ml-s><span lang=\"en\">Download</span><span lang=\"ja\">ダウンロード</span></ml-s>",
             },
         ],
         thumb: {
@@ -291,7 +291,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://github.com/clay53/bui_basic",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
         ],
         thumb: null,
@@ -314,7 +314,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://github.com/clay53/bui",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
         ],
         thumb: null,
@@ -341,11 +341,11 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://github.com/clay53/micro_vsrg",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
             {
                 href: "/videos/experiences/micro-vsrg.mp4",
-                text: "Showcase",
+                text: "<ml-s><span lang=\"en\">Showcase</span><span>紹介</span></ml-s>",
             },
         ],
         thumb: {
@@ -376,7 +376,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://github.com/clay53/claytonhickey_me/tree/5ae5be4883054a938d0cfe588a54e19d179e3a65",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
         ],
         thumb: null,
@@ -401,7 +401,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://claytondoesthings.xyz/software/word-search-cheats-ocr/web",
-                text: "Live",
+                text: "<ml-s><span \"en\">Live</span><span \"ja\">ライブ</span></ml-s>",
             },
         ],
         thumb: {
@@ -444,11 +444,11 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://claytondoesthings.xyz",
-                text: "Live",
+                text: "<ml-s><span \"en\">Live</span><span \"ja\">ライブ</span></ml-s>",
             },
             {
                 href: "https://github.com/clay53/ClaytonXYZ",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
         ],
         thumb: null,
@@ -476,19 +476,19 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://claytondoesthings.xyz/games/carai/web",
-                text: "Live",
+                text: "<ml-s><span \"en\">Live</span><span \"ja\">ライブ</span></ml-s>",
             },
             {
                 href: "https://github.com/clay53/CarAI",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
             {
                 href: "https://claytondoesthings.xyz/games/carai",
-                text: "Download",
+                text: "<ml-s><span lang=\"en\">Download</span><span lang=\"ja\">ダウンロード</span></ml-s>",
             },
             {
                 href: "https://youtu.be/jjhNab0bJgQ",
-                text: "Showcase",
+                text: "<ml-s><span lang=\"en\">Showcase</span><span>紹介</span></ml-s>",
             },
         ],
         thumb: {
@@ -524,15 +524,15 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://github.com/clay53/sound_galaxy/releases",
-                text: "Download",
+                text: "<ml-s><span lang=\"en\">Download</span><span lang=\"ja\">ダウンロード</span></ml-s>",
             },
             {
                 href: "https://github.com/clay53/sound_galaxy",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
             {
                 href: "https://www.youtube.com/watch?v=kzUnaH4M824",
-                text: "Showcase",
+                text: "<ml-s><span lang=\"en\">Showcase</span><span>紹介</span></ml-s>",
             },
         ],
         thumb: {
@@ -569,11 +569,11 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://meet-with-pong.clay53.repl.co/w/index.html",
-                text: "Live",
+                text: "<ml-s><span \"en\">Live</span><span \"ja\">ライブ</span></ml-s>",
             },
             {
                 href: "https://github.com/clay53/Meet-With-Pong",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
         ],
         thumb: {
@@ -607,7 +607,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://github.com/clay53/Osu-Keypad",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
         ],
         thumb: {
@@ -632,11 +632,11 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://claytondoesthings.xyz/software/symbol-translator/web",
-                text: "Live",
+                text: "<ml-s><span \"en\">Live</span><span \"ja\">ライブ</span></ml-s>",
             },
             {
                 href: "https://github.com/ClaytonDoesThings/SymbolTranslator",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
         ],
         thumb: {
@@ -664,11 +664,11 @@ const IDTOCARD = {
             },
             {
                 href: "https://github.com/ClaytonDoesThings/PebbleXCTimer",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
             {
                 href: "https://github.com/clay53/PebbleXCTimer/releases",
-                text: "Download",
+                text: "<ml-s><span lang=\"en\">Download</span><span lang=\"ja\">ダウンロード</span></ml-s>",
             },
         ],
         thumb: {
@@ -692,7 +692,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://github.com/clay53/images_from_images2",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
         ],
         thumb: {
@@ -716,11 +716,11 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://claytondoesthings.xyz/software/legitimate-images-made-from-images",
-                text: "Live",
+                text: "<ml-s><span \"en\">Live</span><span \"ja\">ライブ</span></ml-s>",
             },
             {
                 href: "https://github.com/clay53/Legitimate-Images-From-Images",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
         ],
         thumb: {
@@ -750,11 +750,11 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://replit.com/@ClaytonHickey/MultiKahoot",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
             {
                 href: "https://MultiKahoot.claytonhickey.repl.co/",
-                text: "Live",
+                text: "<ml-s><span \"en\">Live</span><span \"ja\">ライブ</span></ml-s>",
             },
         ],
         thumb: null,
@@ -779,7 +779,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://github.com/clay53/GivingDuo",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
             {
                 href: "https://chrome.google.com/webstore/detail/giving-duo/lacfjcephcjbihliackggaifbkbiimfl",
@@ -791,7 +791,7 @@ const IDTOCARD = {
             },
             {
                 href: "https://github.com/clay53/GivingDuo/releases",
-                text: "Download",
+                text: "<ml-s><span lang=\"en\">Download</span><span lang=\"ja\">ダウンロード</span></ml-s>",
             },
         ],
         thumb: {
@@ -820,7 +820,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://github.com/ClaytonDoesThings/Live-Stream-Music-Player",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
         ],
         thumb: null,
@@ -852,7 +852,7 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://github.com/clay53/from_anarchy",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             }
         ],
     },
@@ -958,11 +958,11 @@ const IDTOCARD = {
         links: [
             {
                 href: "https://claytonhickey.me",
-                text: "Live",
+                text: "<ml-s><span \"en\">Live</span><span \"ja\">ライブ</span></ml-s>",
             },
             {
                 href: "https://github.com/clay53/claytonhickey_me",
-                text: "Code",
+                text: "<ml-s><span lang=\"en\">Code</span><span lang=\"ja\">コード</span></ml-s>",
             },
         ],
     },

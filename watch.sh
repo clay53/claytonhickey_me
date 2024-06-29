@@ -1,5 +1,5 @@
 # Define an array of target directories
-TARGET_DIRS=("bin" "blogs-v0" "blogs-v1" "images" "videos" "scripts") # Add more directories as needed
+TARGET_DIRS=("bin" "blogs-v0" "blogs-v1" "images" "videos" "scripts" "includes" "copy") # Add more directories as needed
 
 # Start dune build -w in the background
 dune build -w &
