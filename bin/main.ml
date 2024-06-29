@@ -761,11 +761,3 @@ let write_rss_channel route title description language name items =
 write_rss_channel "rss.xml" "Clayton Hickey's Blog" "The latest blog posts by Clayton Hickey" "en-us" "Clayton Hickey" (Buffer.contents rss_items);;
 
 write_rss_channel "rss.ja.xml" "クレイトン・ヒッキーのブログ" "クレイトン・ヒッキーの新しいブログのポスト" "ja" "クレイトン・ヒッキー" (Buffer.contents rss_items_ja);;
-
-copy_file "common.css" "www/common.css";;
-copy_file "favicon.ico" "www/favicon.ico";;
-copy_file "mastodonComments.js" "www/mastodonComments.js";;
-
-copy_fs "images" "www/images";;
-copy_fs "videos" "www/videos";;
-copy_fs "scripts" "www/scripts";;

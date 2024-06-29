@@ -44,7 +44,7 @@ class MultilingualSwitcher extends HTMLElement {
         for (let child of this.children) {
             let lang = child.getAttribute("lang");
             if (!lang) {
-                return;
+                continue;
             }
             languages.set(lang, child);
         }
