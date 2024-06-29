@@ -22,9 +22,8 @@ class MyNav extends HTMLElement {
     }
 
     connectedCallback() {
-        const shadow = this.attachShadow({ mode: "open" });
         const pageType = this.getAttribute("type");
-        shadow.innerHTML = `<style>
+        this.innerHTML = `<style>
             #nav, #content, #footer {
                 max-width: 70rem;
             }
@@ -72,7 +71,7 @@ class MyNav extends HTMLElement {
                 <a lang="ja" href="/rss.ja.xml" target="_BLANK">RSS</a>
             </ml-s>
         </div>`;
-        shadow.appendChild(nav);
+        this.appendChild(nav);
     }
 }
 
