@@ -490,9 +490,9 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
             html_content;
             html_p ["<ml-s><span lang=\"en\">Title: </span><span lang=\"ja\">題名：</span></ml-s>" ^ title ^ "<br><ml-s><span lang=\"en\">Authors: </span><span lang=\"ja\">作家・</span></ml-s>Clayton Lopez Hickey<br><ml-s><span lang=\"en\">Published: </span><span lang=\"ja\">著した日付：</span></ml-s>" ^ Date.as_rss_date date ^ begin match edit_date with | Some edit_date -> "<br>Last updated: " ^ Date.as_rss_date edit_date | None -> "" end];
             html_div [] [
-                "<script>document.addEventListener(\"DOMContentLoaded\", () => {let d = new Date(); mlaCitation.innerHTML += ` Accessed ${d.getDay()} ${['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'][d.getMonth()]} ${d.getFullYear()}.`;})</script>";
+                "<script>document.addEventListener(\"DOMContentLoaded\", () => {let d = new Date(); MLAAccessedPosition.innerHTML += ` Accessed ${d.getDay()} ${['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'][d.getMonth()]} ${d.getFullYear()}.`;})</script>";
                 let href = "https://claytonhickey.me/" ^ (canonical_path ^ "/") in
-                html_element_string "p" [("id", PString "mlaCitation")] (List (["<ml-s><span lang=\"en\">MLA Citation:</span><span lang=\"ja\">MLA引用：</span></ml-s><br>" ^ "Hickey, C. L. (" ^ string_of_int (Date.year date) ^ ", " ^ Date.en_month_from_int (Date.month date) ^ " " ^ string_of_int (Date.day date) ^ "). <i>" ^ title ^ "</i>. Clayton Hickey. " ^ html_a href false [href] ^ "."], false));
+                html_element_string "p" [("id", PString "mlaCitation")] (List (["<ml-s><span lang=\"en\">MLA Citation:</span><span lang=\"ja\">MLA引用：</span></ml-s><br>" ^ "Hickey, C. L. (" ^ string_of_int (Date.year date) ^ ", " ^ Date.en_month_from_int (Date.month date) ^ " " ^ string_of_int (Date.day date) ^ "). <i>" ^ title ^ "</i>. Clayton Hickey. " ^ html_a href false [href] ^ ".<span id=\"MLAAccessedPosition\"></span>"], false));
                 ];
             html_header 2 [
                 "<ml-s><span lang=\"en\">Like this post? </span><span lang=\"ja\">このポストが好き？</span></ml-s>";

@@ -36,32 +36,23 @@ class MultilingualSwitcher extends HTMLElement {
     }
 
     connectedCallback() {
-        if (this.initialized) {
-            return;
-        }
-        this.initialized = true;
+        let currentPresentation = this;
         
-        const root = this.attachShadow({mode: "open"});
-        const styleLink = document.createElement("link");
-        styleLink.setAttribute("rel", "stylesheet");
-        styleLink.setAttribute("type", "text/css");
-        styleLink.setAttribute("href", "/common.css");
-
         /** @type {Map<String,HTMLElement>} */
-        this.languages = new Map();;
+        const languages = new Map();;
 
         for (let child of this.children) {
             let lang = child.getAttribute("lang");
             if (!lang) {
                 return;
             }
-            this.languages.set(lang, child);
+            languages.set(lang, child);
         }
 
-        this.onLanguageChange = () => {
+        const onLanguageChange = () => {
             let elem = undefined;
             for (let lang of LANGUAGES) {
-                elem = this.languages.get(lang);
+                elem = languages.get(lang);
                 if (elem) {
                     break;
                 }
@@ -70,15 +61,16 @@ class MultilingualSwitcher extends HTMLElement {
                 return;
             }
 
-            root.replaceChildren(styleLink, elem.cloneNode(true));
+            const newPresentation = elem.cloneNode(true);
+            newPresentation.addEventListener("disconnect", () => {
+                ON_LANGUAGE_CHANGE.remove(onLanguageChange);
+            });
+            currentPresentation.replaceWith(newPresentation);
+            currentPresentation = newPresentation;
         }
 
-        ON_LANGUAGE_CHANGE.add(this.onLanguageChange);
-        this.onLanguageChange();
-    }
-
-    disconnectedCallback() {
-        ON_LANGUAGE_CHANGE.delete(this.onLanguageChange);
+        ON_LANGUAGE_CHANGE.add(onLanguageChange);
+        onLanguageChange();
     }
 }
 
