@@ -32,7 +32,7 @@ class MyNav extends HTMLElement {
                 background-color: #15222e;
                 font-size: xx-large;
                 margin: auto;
-                overflow-x: scroll;
+                overflow-x: auto;
                 white-space: nowrap;
             }
 
