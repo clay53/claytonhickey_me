@@ -550,10 +550,10 @@ let add_blog_post title description html_content rss_content folder_name date ed
 ;;
 
 let add_blog_post_from_folder title description date folder_name thumb_path thumb_alt mastodon_thread =
-    let html = read_file_to_string ("blogs-v0/" ^ folder_name ^ "/index.html") in
-    let asset_filenames = List.filter (fun f -> not (String.equal f "index.html")) (Array.to_list (Sys.readdir ("blogs-v0/" ^ folder_name))) in
+    let html = read_file_to_string ("includes/blogs-v0/" ^ folder_name ^ "/index.html") in
+    let asset_filenames = List.filter (fun f -> not (String.equal f "index.html")) (Array.to_list (Sys.readdir ("includes/blogs-v0/" ^ folder_name))) in
     let assets = List.map
-        (fun n -> (n, read_file_to_bytes ("blogs-v0/" ^ folder_name ^ "/" ^ n)))
+        (fun n -> (n, read_file_to_bytes ("includes/blogs-v0/" ^ folder_name ^ "/" ^ n)))
         asset_filenames
     in
     add_blog_post title description html html folder_name date None thumb_path thumb_alt assets mastodon_thread None
@@ -577,7 +577,7 @@ let parsed_obsidian_posts = List.stable_sort
         -(Date.compare date1 date2)
     )
     (List.map (fun n ->
-        let ic = open_in ("blogs-v1/" ^ n ^ "/index.html") in
+        let ic = open_in ("includes/blogs-v1/" ^ n ^ "/index.html") in
         let title = Option.get (In_channel.input_line ic) in
         let description = Option.get (In_channel.input_line ic) in
         let thumb_path = Option.get (In_channel.input_line ic) in
@@ -607,13 +607,13 @@ let parsed_obsidian_posts = List.stable_sort
         let mastodon_thread = if String.length mastodon_thread_string = 0 then None else Some mastodon_thread_string in
         let html = In_channel.input_all ic in
         let assets = List.map
-            (fun n2 -> (n2, read_file_to_bytes ("blogs-v1/" ^ n ^ "/" ^ n2)))
-            (List.filter (fun n2 -> not (String.equal n2 "index.html")) (Array.to_list (Sys.readdir ("blogs-v1/" ^ n))))
+            (fun n2 -> (n2, read_file_to_bytes ("includes/blogs-v1/" ^ n ^ "/" ^ n2)))
+            (List.filter (fun n2 -> not (String.equal n2 "index.html")) (Array.to_list (Sys.readdir ("includes/blogs-v1/" ^ n))))
         in
-        let voiceover = if Sys.file_exists ("blogs-v1/" ^ n ^ "/voiceover.mp3") then (Some (("/blog/" ^ n ^ "/voiceover.mp3"), "audio/mpeg", file_size ("blogs-v1/" ^ n ^ "/voiceover.mp3"))) else None
+        let voiceover = if Sys.file_exists ("includes/blogs-v1/" ^ n ^ "/voiceover.mp3") then (Some (("/blog/" ^ n ^ "/voiceover.mp3"), "audio/mpeg", file_size ("includes/blogs-v1/" ^ n ^ "/voiceover.mp3"))) else None
         in
         (title, description, n, thumb_path, thumb_alt, mastodon_thread, html, html, assets, pub_date, edit_date, voiceover)
-    ) (Array.to_list (Sys.readdir "blogs-v1")))
+    ) (Array.to_list (Sys.readdir "includes/blogs-v1")))
 ;;
 
 List.iter (fun (title, description, folder_name, thumb_path, thumb_alt, mastodon_thread, html_content, rss_content, assets, pub_date, edit_date, voiceover) -> add_blog_post
@@ -662,7 +662,7 @@ write_string_to_file "www/more-nodes/index.html" (
         "more-nodes/"
         MoreNodes
         None
-        [read_file_to_string "more-nodes.html"]
+        [read_file_to_string "includes/more-nodes.html"]
 );;
 
 add_sitemap_entry "more-nodes/" "weekly" "1";;
@@ -674,7 +674,7 @@ write_string_to_file "www/sitemap.xml" (
 Sys.mkdir "www/games" 0o777;;
 
 let games = Array.map (fun game_path ->
-    let full_game_path = "games/" ^ game_path in
+    let full_game_path = "includes/games/" ^ game_path in
     let ic = open_in (full_game_path ^ "/index.html") in
     let title = Option.get (In_channel.input_line ic) in
     let author = Option.get (In_channel.input_line ic) in
@@ -694,19 +694,19 @@ let games = Array.map (fun game_path ->
                         let index_or_file_name = if web then (In_channel.input_all ic3) else Option.get (In_channel.input_line ic3) in
                         (release_path, web, index_or_file_name)
                     )
-                ) (Array.to_list (Sys.readdir ("games/" ^ game_path ^ "/channels/" ^ channel_path)))
+                ) (Array.to_list (Sys.readdir ("includes/games/" ^ game_path ^ "/channels/" ^ channel_path)))
             in
             close_in ic2;
             (channel_path, channel_name, releases)
-        ) (Array.to_list (Sys.readdir ("games/" ^ game_path ^ "/channels")))
+        ) (Array.to_list (Sys.readdir ("includes/games/" ^ game_path ^ "/channels")))
     in
     close_in ic;
     (game_path, title, author, short_description, description, channels)
-) (Sys.readdir "games")
+) (Sys.readdir "includes/games")
 ;;
 
 Array.iter (fun (game_path, game_title, author, short_description, description, channels) ->
-    let src_game_path = "games/" ^ game_path in
+    let src_game_path = "includes/games/" ^ game_path in
     let out_game_path = "www/games/" ^ game_path in
     Sys.mkdir out_game_path 0o777;
     write_string_to_file (out_game_path ^ "/index.html") (
