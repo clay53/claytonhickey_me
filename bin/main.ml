@@ -542,7 +542,7 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
         full_html
     ;
     List.iter (fun (n, b) -> write_bytes_to_file (fs_path ^ "/" ^ n) b) assets;
-    add_rss_item title description (canonical_path ^ "/") (Some ("https://claytonhickey.me/" ^ thumb_path)) date ("<p>Read directly: <a href=\"https://claytonhickey.me/" ^ canonical_path ^ "/\">https://claytonhickey.me/" ^ canonical_path ^ "/</a></p>" ^ rss_content) voiceovers;
+    add_rss_item title description (canonical_path ^ "/") (Some ("https://claytonhickey.me/" ^ thumb_path)) date ("<p><ml-s><span lang=\"en\">Read directly: </span><span lang=\"ja\">ここで読んでください</span></ml-s><a href=\"https://claytonhickey.me/" ^ canonical_path ^ "/\">https://claytonhickey.me/" ^ canonical_path ^ "/</a></p>" ^ rss_content) voiceovers;
     add_blog_post_card title description canonical_path date edit_date thumb_path thumb_alt;
     add_sitemap_entry (canonical_path ^ "/") "yearly" "0.9";
 ;;
