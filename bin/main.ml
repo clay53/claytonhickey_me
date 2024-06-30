@@ -420,14 +420,15 @@ add_sitemap_entry "" "weekly" "1";;
 let rss_items = Buffer.create 1000;;
 let rss_items_ja = Buffer.create 1000;;
 
-let add_rss_item title description canonical_path cover_image_url date html_content enclosure =
-    let add_by_lang buffer lang =
+let add_rss_item title description canonical_path cover_image_url date html_content enclosures =
+    let add_by_lang buffer lang enclosure =
         Buffer.add_string buffer (
             "<item><title>" ^ (title |> extract_language lang |> remove_html) ^ "</title><description>" ^ (description |> extract_language lang |> remove_html) ^ "</description><media:description type=\"plain\">" ^ (description |> extract_language lang |> remove_html) ^ "</media:description><link>https://claytonhickey.me/" ^ canonical_path ^ "</link><guid>https://claytonhickey.me/" ^ canonical_path ^ "</guid><pubDate>" ^ Date.as_rss_date date ^ "</pubDate>" ^ begin match cover_image_url with | Some cover_image_url -> "<itunes:image href=\"" ^ cover_image_url ^ "\"/>" | None -> "" end ^ "<content:encoded><![CDATA[" ^ (html_content |> extract_language lang) ^ "]]></content:encoded>" ^ begin match enclosure with | None -> "" | Some (path, ty, size) -> "<enclosure url=\"https://claytonhickey.me" ^ path ^ "\" length=\"" ^ string_of_int size ^ "\" type=\"" ^ ty ^ "\"/>" end ^ "</item>"
         );
     in
-    add_by_lang rss_items "en";
-    add_by_lang rss_items_ja "ja";
+    let (en_enclosure, ja_enclosure) = enclosures in
+    add_by_lang rss_items "en" en_enclosure;
+    add_by_lang rss_items_ja "ja" ja_enclosure;
 ;;
 
 Sys.mkdir "www/blog" 0o777
@@ -466,7 +467,7 @@ let urlencode s =
 ;;
             
 
-let add_blog_post_raw title description html_content rss_content canonical_path date edit_date thumb_path thumb_alt assets mastodon_thread voiceover =
+let add_blog_post_raw title description html_content rss_content canonical_path date edit_date thumb_path thumb_alt assets mastodon_thread voiceovers =
     let fs_path = "www/" ^ canonical_path in
     Sys.mkdir fs_path 0o777;
     let no_html_en_title = title |> extract_en |> remove_html in
@@ -478,15 +479,27 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
         Blog
         (Some thumb_path)
         [
-            begin match voiceover with
-                | None -> ""
-                | Some (path, ty, _size) -> html_p [
-                    "voiceover: ";
-                    html_element_string "audio" [("controls", PBool true)] (List ([
-                        html_element_string "source" [("src", PString path); ("type", PString ty)] SelfClosing
+            html_element_string "ml-s" [] (let (en, ja) = voiceovers in List ([
+                
+                begin match en with
+                    | None -> ""
+                    | Some (path, ty, _size) -> html_element_string "p" [("lang", PString "en")] (List ([
+                        "voiceover: ";
+                        html_element_string "audio" [("controls", PBool true)] (List ([
+                            html_element_string "source" [("src", PString path); ("type", PString ty)] SelfClosing
+                        ], false))
                     ], false))
-                ]
-            end;
+                end;
+                begin match ja with
+                    | None -> ""
+                    | Some (path, ty, _size) -> html_element_string "p" [("lang", PString "ja")] (List ([
+                        "オーディオ：";
+                        html_element_string "audio" [("controls", PBool true)] (List ([
+                            html_element_string "source" [("src", PString path); ("type", PString ty)] SelfClosing
+                        ], false))
+                    ], false))
+                end;
+            ], false));
             html_content;
             html_p ["<ml-s><span lang=\"en\">Title: </span><span lang=\"ja\">題名：</span></ml-s>" ^ title ^ "<br><ml-s><span lang=\"en\">Authors: </span><span lang=\"ja\">作家・</span></ml-s>Clayton Lopez Hickey<br><ml-s><span lang=\"en\">Published: </span><span lang=\"ja\">著した日付：</span></ml-s>" ^ Date.as_rss_date date ^ begin match edit_date with | Some edit_date -> "<br>Last updated: " ^ Date.as_rss_date edit_date | None -> "" end];
             html_div [] [
@@ -529,12 +542,12 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
         full_html
     ;
     List.iter (fun (n, b) -> write_bytes_to_file (fs_path ^ "/" ^ n) b) assets;
-    add_rss_item title description (canonical_path ^ "/") (Some ("https://claytonhickey.me/" ^ thumb_path)) date ("<p>Read directly: <a href=\"https://claytonhickey.me/" ^ canonical_path ^ "/\">https://claytonhickey.me/" ^ canonical_path ^ "/</a></p>" ^ rss_content) voiceover;
+    add_rss_item title description (canonical_path ^ "/") (Some ("https://claytonhickey.me/" ^ thumb_path)) date ("<p>Read directly: <a href=\"https://claytonhickey.me/" ^ canonical_path ^ "/\">https://claytonhickey.me/" ^ canonical_path ^ "/</a></p>" ^ rss_content) voiceovers;
     add_blog_post_card title description canonical_path date edit_date thumb_path thumb_alt;
     add_sitemap_entry (canonical_path ^ "/") "yearly" "0.9";
 ;;
 
-let add_blog_post title description html_content rss_content folder_name date edit_date thumb_path thumb_alt assets mastodon_thread voiceover = add_blog_post_raw
+let add_blog_post title description html_content rss_content folder_name date edit_date thumb_path thumb_alt assets mastodon_thread voiceovers = add_blog_post_raw
     title
     description
     html_content
@@ -546,7 +559,7 @@ let add_blog_post title description html_content rss_content folder_name date ed
     thumb_alt
     assets
     mastodon_thread
-    voiceover
+    voiceovers
 ;;
 
 let add_blog_post_from_folder title description date folder_name thumb_path thumb_alt mastodon_thread =
@@ -556,7 +569,7 @@ let add_blog_post_from_folder title description date folder_name thumb_path thum
         (fun n -> (n, read_file_to_bytes ("includes/blogs-v0/" ^ folder_name ^ "/" ^ n)))
         asset_filenames
     in
-    add_blog_post title description html html folder_name date None thumb_path thumb_alt assets mastodon_thread None
+    add_blog_post title description html html folder_name date None thumb_path thumb_alt assets mastodon_thread (None, None)
 ;;
 
 let add_blog_post_from_folder_thumb_contained title description date folder_name thumb_filename thumb_alt mastodon_thread = add_blog_post_from_folder title description date folder_name ("blog/" ^ folder_name ^ "/" ^ thumb_filename) thumb_alt mastodon_thread;;
@@ -610,13 +623,14 @@ let parsed_obsidian_posts = List.stable_sort
             (fun n2 -> (n2, read_file_to_bytes ("includes/blogs-v1/" ^ n ^ "/" ^ n2)))
             (List.filter (fun n2 -> not (String.equal n2 "index.html")) (Array.to_list (Sys.readdir ("includes/blogs-v1/" ^ n))))
         in
-        let voiceover = if Sys.file_exists ("includes/blogs-v1/" ^ n ^ "/voiceover.mp3") then (Some (("/blog/" ^ n ^ "/voiceover.mp3"), "audio/mpeg", file_size ("includes/blogs-v1/" ^ n ^ "/voiceover.mp3"))) else None
-        in
-        (title, description, n, thumb_path, thumb_alt, mastodon_thread, html, html, assets, pub_date, edit_date, voiceover)
+        let en_voiceover = if Sys.file_exists ("includes/blogs-v1/" ^ n ^ "/voiceover.mp3") then (Some (("/blog/" ^ n ^ "/voiceover.mp3"), "audio/mpeg", file_size ("includes/blogs-v1/" ^ n ^ "/voiceover.mp3"))) else None in
+        let ja_voiceover = if Sys.file_exists ("includes/blogs-v1/" ^ n ^ "/voiceover.ja.mp3") then (Some (("/blog/" ^ n ^ "/voiceover.ja.mp3"), "audio/mpeg", file_size ("includes/blogs-v1/" ^ n ^ "/voiceover.ja.mp3"))) else None in
+        let voiceovers = (en_voiceover, ja_voiceover) in
+        (title, description, n, thumb_path, thumb_alt, mastodon_thread, html, html, assets, pub_date, edit_date, voiceovers)
     ) (Array.to_list (Sys.readdir "includes/blogs-v1")))
 ;;
 
-List.iter (fun (title, description, folder_name, thumb_path, thumb_alt, mastodon_thread, html_content, rss_content, assets, pub_date, edit_date, voiceover) -> add_blog_post
+List.iter (fun (title, description, folder_name, thumb_path, thumb_alt, mastodon_thread, html_content, rss_content, assets, pub_date, edit_date, voiceovers) -> add_blog_post
     title
     description
     html_content
@@ -628,7 +642,7 @@ List.iter (fun (title, description, folder_name, thumb_path, thumb_alt, mastodon
     thumb_alt
     assets
     mastodon_thread
-    voiceover
+    voiceovers
 ) parsed_obsidian_posts;;
 
 add_blog_post_from_folder_thumb_contained "My User-Control-Focused Stack" "How I use various systems like RSS, Mastodon/Activity Pub, Linode, Nextcloud, and Nix to increase my computational independence." (Date.new_date_et 2024 2 11 0 32 0) "my-user-control-focused-stack" "thumb.png" "Various logos including RSS, Mastodon, Nextcloud, Linode, Nix, Vaultwarden" (Some "https://cdt.social/@clayton/111736390933029700");;
