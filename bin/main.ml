@@ -1,5 +1,42 @@
 open Soup
 
+let extract_language lang html =
+    let soup = parse html in
+    let rec helper (node: general node) : general node option =
+        begin match Option.map (fun n -> (n, Soup.name n)) (Soup.element node) with
+            | Some (node, "ml-s") ->
+                let pulled = ref None in
+                Soup.iter (fun pullable -> (
+                    begin match Soup.attribute "lang" pullable with
+                        | Some langAttr ->
+                            if String.equal langAttr lang then
+                                pulled := Some pullable
+                            else begin match !pulled with
+                                | None -> pulled := Some pullable
+                                | Some _ -> ()
+                            end
+                        | None -> ()
+                    end
+                )) (Soup.elements (Soup.children node));
+                begin match !pulled with
+                    | Some pulled -> pulled |> Soup.children |> Soup.filter_map helper |> (Soup.clear pulled; Soup.iter (Soup.append_child pulled)); Some (Soup.coerce pulled)
+                    | None -> None
+                end
+            | Some (node, _) -> Soup.children node |> Soup.filter_map helper |> (Soup.clear node; Soup.iter (Soup.append_child node)); Some (Soup.coerce node)
+            | None -> Some node
+        end
+    in
+    soup |> Soup.children |> Soup.filter_map helper |> (Soup.clear soup; Soup.iter (Soup.append_root soup));
+    soup |> Soup.to_string
+;;
+
+let extract_en = extract_language "en";;
+
+let remove_html html =
+    let soup = parse html in
+    String.concat "" (Soup.texts soup)
+;;
+
 type htmlChildren = SelfClosing | List of string list * bool;;
 
 type htmlPropertyData = PBool of bool | PInt of int | PFloat of float | PString of string;;
@@ -97,17 +134,18 @@ type page_nav_type =
 ;;
 
 let build_page title description canonical_path nav_type og_image_path content =
+    let bare_title = title |> extract_en |> remove_html in
     "<!DOCTYPE html>"
     ^ html_element_string "html" [] (List ([], true))
     ^ html_element_string "head" [] (List ([
         html_element_string "meta" [("charset", PString "UTF-8")] SelfClosing;
-        html_element_string "title" [] (List ([title], false));
+        html_element_string "title" [] (List ([bare_title], false));
         meta_string "description" description;
         meta_link_string "canonical" None ("https://claytonhickey.me/" ^ canonical_path);
         meta_string "viewport" "width=device-width, initial-scale=1";
         meta_link_string "stylesheet" (Some "text/css") "/common.css";
         meta_link_string "icon" (Some "image/ico") "/favicon.ico";
-        meta_og ["title"] title;
+        meta_og ["title"] bare_title;
         meta_og ["type"] "website";
         meta_og ["description"] description;
         meta_og ["url"] ("https://claytonhickey.me/" ^ canonical_path);
@@ -117,7 +155,7 @@ let build_page title description canonical_path nav_type og_image_path content =
         end;
         meta_string "twitter:card" "summary_large_image";
         meta_string "twitter:site" "@ClaytonsThings";
-        meta_string "twitter:title" title;
+        meta_string "twitter:title" bare_title;
         meta_string "twitter:description" description;
         meta_string "twitter:image" begin match og_image_path with
             | None -> "https://claytonhickey.me/images/headshot.jpg"
@@ -125,9 +163,11 @@ let build_page title description canonical_path nav_type og_image_path content =
         end;
         html_element_string "link" [("rel", PString "alternate"); ("type", PString "application/rss+xml"); ("title", PString "Clayton Hickey's Blog"); ("href", PString "/rss.xml")] SelfClosing;
         script_import_string "/scripts/nav.js";
-        html_element_string "script" [("src", PString "/scripts/multilingual.js"); ("defer", PBool(true))] (List ([], false))
+        html_element_string "script" [("src", PString "/scripts/multilingual.js"); ("defer", PBool(true))] (List ([], false));
     ], false))
     ^ html_element_string "body" [] (List ([
+        html_div [("id", PString "htmlTitle"); ("style", PString "display: none;")] [title];
+        html_element_string "script" [] (List (["document.title = htmlTitle.innerText; (new MutationObserver(()=>{document.title = htmlTitle.innerText})).observe(htmlTitle, {subtree: true, childList: true, attributes: true, characterData: true});"], false));
         html_element_string "my-nav" [("type", PString begin match nav_type with
             | Home -> "home"
             | Blog -> "blog"
@@ -137,51 +177,6 @@ let build_page title description canonical_path nav_type og_image_path content =
         html_element_string "main" [("id", PString "content")] (List (content, false));
         footer;
     ], true))
-;;
-
-let extract_language lang html =
-    let soup = parse html in
-    let to_return = ref (Some soup) in
-    Soup.iter (fun mls -> (
-        let pulled = ref None in
-        Soup.iter (fun pullable -> (
-            begin match Soup.attribute "lang" pullable with
-                | Some langAttr ->
-                    if String.equal langAttr lang then
-                        pulled := Some pullable
-                    else begin match !pulled with
-                        | None -> pulled := Some pullable
-                        | Some _ -> ()
-                    end
-                | None -> ()
-            end
-        )) (Soup.elements (Soup.children mls));
-        begin match Soup.parent mls with
-            | Some _ -> begin match !pulled with
-                | Some pulled -> (Soup.replace mls pulled)
-                | None -> Soup.delete mls
-            end
-            | None -> begin match !pulled with
-                | Some pulled ->
-                    (
-                        Soup.append_root soup pulled;
-                        Soup.delete mls;
-                    )
-                | None -> to_return := None
-            end
-        end
-    )) (Soup.select "ml-s" soup);
-    begin match !to_return with
-        | Some to_return -> to_return |> to_string
-        | None -> ""
-    end
-;;
-
-let extract_en = extract_language "en";;
-
-let remove_html html =
-    let soup = parse html in
-    String.concat "" (Soup.texts soup)
 ;;
 
 let card_viewer_elem card_set = html_element_string "card-viewer" [("card-set", PString card_set)] (List ([], false));;
@@ -406,7 +401,7 @@ let build_tidbit header details =
     ], false))
 in
 write_string_to_file "www/index.html" (build_page
-    "Clayton Hickey"
+    "<ml-s><span lang=\"en\">Clayton Hickey</span><span lang=\"ja\">クレイトン・ヒッキー</span></ml-s>"
     "Clayton Hickey's Website"
     ""
     Home
@@ -473,7 +468,7 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
     let no_html_en_title = title |> extract_en |> remove_html in
     let no_html_en_description = description |> extract_en |> remove_html in
     let full_html = build_page
-        (no_html_en_title ^ " - Clayton Hickey")
+        (title ^ " - <ml-s><span lang=\"en\">Clayton Hickey</span><span lang=\"ja\">クレイトン・ヒッキー</span></ml-s>")
         no_html_en_description
         (canonical_path ^ "/")
         Blog
@@ -506,11 +501,11 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
                 "<script>document.addEventListener(\"DOMContentLoaded\", () => {let d = new Date(); MLAAccessedPosition.innerHTML += ` Accessed ${d.getDay()} ${['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'][d.getMonth()]} ${d.getFullYear()}.`;})</script>";
                 let href = "https://claytonhickey.me/" ^ (canonical_path ^ "/") in
                 html_element_string "p" [("id", PString "mlaCitation")] (List (["<ml-s><span lang=\"en\">MLA Citation:</span><span lang=\"ja\">MLA引用：</span></ml-s><br>" ^ "Hickey, C. L. (" ^ string_of_int (Date.year date) ^ ", " ^ Date.en_month_from_int (Date.month date) ^ " " ^ string_of_int (Date.day date) ^ "). <i>" ^ title ^ "</i>. Clayton Hickey. " ^ html_a href false [href] ^ ".<span id=\"MLAAccessedPosition\"></span>"], false));
-                ];
+            ];
             html_header 2 [
                 "<ml-s><span lang=\"en\">Like this post? </span><span lang=\"ja\">このポストが好き？</span></ml-s>";
                 html_a "https://claytonhickey.me/rss.xml" true ["<ml-s><span lang=\"en\">Follow with RSS</span><span lang=\"ja\">RSSでフォローする</span></ml-s>"];
-                ];
+            ];
             html_header 2 [
                 "<ml-s><span lang=\"en\">What others are saying on: </span><span lang=\"ja\">他の会話があるサイト：</span></ml-s>";
                 html_a ("https://twitter.com/search?q=url%3Aclaytonhickey.me%2F" ^ urlencode canonical_path) true ["𝕏"];
@@ -518,7 +513,7 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
                 html_a ("https://google.com/search?q=%22claytonhickey.me%2F" ^ urlencode canonical_path ^ "%22") true ["Google"];
                 ", ";
                 html_a ("https://reddit.com/search?q=url%3Aclaytonhickey.me%2F" ^ urlencode canonical_path) true ["Reddit"];
-                ];
+            ];
             html_header 2 [
                 "<ml-s><span lang=\"en\">Comment on: </span><span lang=\"ja\">返事のサイト：</span></ml-s>";
                 html_a ("https://twitter.com/intent/tweet?text=%0A%0A@ClaytonsThings claytonhickey.me%2F" ^ urlencode canonical_path) true ["𝕏"];
@@ -526,16 +521,16 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
                 html_a ("https://www.reddit.com/submit?url=https%3A%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path ^ "&title=" ^ urlencode no_html_en_title) true ["Reddit"];
                 ", ";
                 html_a ("https://www.facebook.com/sharer.php?u=https%3A%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path) true ["Facebook"];
-                ];
+            ];
             html_header 2 [
                 "<ml-s><span lang=\"en\">Comment to me directly: </span><span lang=\"ja\">メールで返事する：</span></ml-s>";
                 html_a ("mailto:clayton@claytondoesthings.xyz?subject=<short> - comment on https:%2F%2Fclaytonhickey.me%2F" ^ urlencode canonical_path ^ "&body=Hey Clayton,%0A%0A%0A%0ASigned,%0A<your name>") false ["clayton@claytondoesthings.xyz"];
-                ];
+            ];
             begin match mastodon_thread with
                 | None -> ""
                 | Some thread_url -> String.cat (script_import_string "/mastodonComments.js") (html_element_string "mastodon-comments" [("post-url", PString thread_url)] (List ([], false)))
             end;
-                ]
+        ]
     in
     write_string_to_file
         (fs_path ^ "/index.html") 
@@ -657,7 +652,7 @@ add_blog_post_from_folder_thumb_contained "Recommendation Algorithms and Ethics"
 
 write_string_to_file "www/blog/index.html" (
     build_page
-        "Blog - Clayton Hickey"
+        "<ml-s><span lang=\"en\">Blog - Clayton Hickey</span><span lang=\"ja\">ブログ - クレイトン・ヒッキー</span></ml-s>"
         "Clayton Hickey's blog"
         "blog/"
         Blog
