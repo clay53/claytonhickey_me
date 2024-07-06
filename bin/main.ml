@@ -112,7 +112,7 @@ let meta_og types content =
 
 let footer = html_element_string "footer" [] (List ([
     "<hr>";
-    "<ml-s><span lang=\"en\">Switch Language</span><span lang=\"ja\">言語を交わる</span></ml-s>: ";
+    "<ml-s><span lang=\"en\">Switch Language</span><span lang=\"ja\">言語を変える</span></ml-s>: ";
     "<button onclick=\"setPreferredLang('en')\">English</button><button onclick=\"setPreferredLang('ja')\">日本語</button>";
     "<br>";
     "<ml-s><span lang=\"en\">Check out the code on </span><span lang=\"ja\">コードを見る：</span></ml-s>";
