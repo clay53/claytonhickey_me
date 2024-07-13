@@ -1,0 +1,58 @@
+<ml-s><span lang="en">How I added multiple languages to my blog</span><span lang="ja">私のブログに他の言語を付け加え方</span></ml-s>
+<ml-s><span lang="en">Week 10 progress roundup: Duolingo and wack</span><span lang="ja">９週目の進歩：Duolingoを作ったし、ばかなものもをした</span></ml-s>
+blog/how-I-added-multiple-languages-to-my-blog/thumb.png
+Duolingoだけ, programming ok: gears and arrows
+2024-07-13-00-45-30
+
+
+<ml-s><h1 lang="en">How I added multiple languages to my blog</h1><h1 lang="ja">私のブログに他の言語を付け加え方</h1></ml-s>
+<ml-s>
+    <p lang="en">I like to study other languages, currently Japanese. So when I was talking to Hayden about improving our blogs, I decided I would just make it multilingual for fun. Now, at the bottom of the page, there are buttons to switch the language instantly:</p>
+    <p lang="ja">他の言語を勉強するのが好きです。今、日本語を勉強する。だから、Haydenと私達のブログを磨け方について話すときに、私は楽しみに他の言語を付け加えることに決めた。今、フッターに言語を変えるのボトンがある：</p>
+</ml-s> 
+<ml-s>
+    <figure lang="en">
+        <img src="/blog/how-I-added-multiple-languages-to-my-blog/language-switcher.png">
+        <figcaption>"Switch Language: [English] [日本語]"</figcaption>
+    </figure>
+    <figure lang="ja">
+        <img src="/blog/how-I-added-multiple-languages-to-my-blog/language-switcher.ja.png">
+        <figcaption>"言語を変える: [English] [日本語]"</figcaption>
+    </figure>
+</ml-s>
+<ml-s>
+    <p lang="en">I'm not fluent in Japanese yet, so there will probably be mistakes.</p>
+    <p lang="ja">まだ日本語がペラペラじゃないので、多分間違いがある。</p>
+</ml-s>
+<ml-s>
+    <p lang="en">I saw a bunch of Stack Overflow posts that said that the only acceptable way to support multiple languages on a website is to send a different version of a page server-side depending on the user's preferred language. It is said that this reduces the amount of data the user has to download, and I agree. However, doing that would require me to increase the complexity of this site by something like 20 times. So, I don't want to.</p>
+    <p lang="ja">Stack Overflowでたくさんの「できるだけ少ないデータを送るのためから、サイトに他の言語を一つの付け加え方はお客さんの言語でサーバーが他のページを送る必要」と言うポストを見た。そんな変化は私のサイトを２０倍複雑になるので、そんな変化をしたくない。</p>
+</ml-s>
+<ml-s>
+    <p lang="en">I love web components because they basically just add features to HTML, which is like 99% of what I want web frameworks like React to do. So, I created a web component with the tag name "ml-s" in 77 lines of code. Each of its children have a "lang" attribute to indicate the language of its contents. Depending on the user's browser-defined preferred languages and the override buttons in the footer, it chooses which of its children is the best and replaces itself with the best child and backs up the children. If the language preferences change, it replaces again based on the backed-up children.</p>
+    <p lang="ja">ウェブコンポーネントが大好きので、「ml-s」と言うウェブコンポーネントを作った。「lang」と言うしml-sの子要素につける属性は子要素の言語を決める。お客さんの言語でml-sは最高の子要素をして、最高の子要素とml-sを取り替えて、子要素を保全する。お客さんの言語が変えると、保全した子要素とページにある子要素を取り替える。</p>
+</ml-s>
+<figure>
+    <textarea readonly rows=5 style="width: 100%"><ml-s>
+    <h1 lang="en">How I added multiple languages to my blog</h1>
+    <h1 lang="ja">私のブログに他の言語を付け加え方</h1>
+</ml-s></textarea>
+    <ml-s>
+        <figcaption lang="en">The HTML for this page's header</figcaption>
+        <figcaption lang="ja">このページの見出し要素のHTML</figcaption>
+    </ml-s>
+</figure>
+<ml-s>
+    <p lang="en">I love this solution because it's super simple and effective for normal viewing. For RSS, it's a little more complicated. Luckily, HTML is structured data, so for the different English/Japanese RSS feeds, I just parse the HTML page, title, and description using <a href="https://aantron.github.io/lambdasoup/" target="_BLANK">Lambda Soup</a>, extract the language from each ml-s element, convert it back into HTML text.</p>
+    <p lang="ja">ページに見ることがとても単純で有効のでこの系統が大好き。RSSに見ることがもっと複雑だけどHTMLはデータだからほしい言語を抜き出しに<a href="https://aantron.github.io/lambdasoup/" target="_BLANK">Lambda Soup</a>を使える。</p>
+</ml-s>
+<ml-s>
+    <p lang="en">It's also a little complicated for the page title since HTML can only have text in the title, no HTML tags. So, I use a hidden element at the top of the body and everytime it changes, it updates the title with the text representation of itself. Still less complicated than <a href="https://dev.to/rohitnirban/adding-page-titles-to-react-app-23oe" target="_BLANK">React</a> 🤭.</p>
+    <p lang="ja">文書題名ももっと複雑、文書題名要素にHTMLがあるのができないから。それに、文書本体要素に見えない要素を付け加えて、その見えない要素から字を抜き出す。その見えない要素が変わると、また字を抜き出す。まだReactより簡単だと思うw。</p>
+</ml-s>
+<ml-s>
+    <p lang="en">Thank you for reading, I hope the simplicity inspires you as it does me.</p>
+    <p lang="ja">読んでくれてありがとうございます！</p>
+</ml-s>
+<a href="/blog/how-I-added-multiple-languages-to-my-blog/multilingual.js" target="_BLANK"><ml-s><span lang="en">a copy of the current relevant code</span><span lang="ja">コードのコピー</span></ml-s></a>
+
