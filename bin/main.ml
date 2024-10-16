@@ -528,7 +528,7 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
             ];
             begin match mastodon_thread with
                 | None -> ""
-                | Some thread_url -> String.cat (script_import_string "/mastodonComments.js") (html_element_string "mastodon-comments" [("post-url", PString thread_url)] (List ([], false)))
+                | Some thread_url -> raise (Failure ("maston disabled " ^ canonical_path))
             end;
         ]
     in
@@ -640,15 +640,15 @@ List.iter (fun (title, description, folder_name, thumb_path, thumb_alt, mastodon
     voiceovers
 ) parsed_obsidian_posts;;
 
-add_blog_post_from_folder_thumb_contained "My User-Control-Focused Stack" "How I use various systems like RSS, Mastodon/Activity Pub, Linode, Nextcloud, and Nix to increase my computational independence." (Date.new_date_et 2024 2 11 0 32 0) "my-user-control-focused-stack" "thumb.png" "Various logos including RSS, Mastodon, Nextcloud, Linode, Nix, Vaultwarden" (Some "https://cdt.social/@clayton/111736390933029700");;
+add_blog_post_from_folder_thumb_contained "My User-Control-Focused Stack" "How I use various systems like RSS, Mastodon/Activity Pub, Linode, Nextcloud, and Nix to increase my computational independence." (Date.new_date_et 2024 2 11 0 32 0) "my-user-control-focused-stack" "thumb.png" "Various logos including RSS, Mastodon, Nextcloud, Linode, Nix, Vaultwarden" (None);;
 
-add_blog_post_from_folder "My first semester as a UPenn student" "A description of my semester year as a student at the University of Pennsylvania (UPenn)" (Date.new_date_et 2023 12 29 3 30 0) "my-first-semester-as-a-upenn-student" "images/misc/dubois_college_house.jpg" "W.E.B. Dubois College House" (Some "https://cdt.social/@clayton/111678480314790286");;
+add_blog_post_from_folder "My first semester as a UPenn student" "A description of my semester year as a student at the University of Pennsylvania (UPenn)" (Date.new_date_et 2023 12 29 3 30 0) "my-first-semester-as-a-upenn-student" "images/misc/dubois_college_house.jpg" "W.E.B. Dubois College House" (None);;
 
-add_blog_post_from_folder_thumb_contained "How Should Bail Algorithms Be Used" "Should bail algorithms be used today or in the future? Here's my stance. Written for Tech Roulette 2021, P4M3 - Justice Matrix" (Date.new_date_et 2021 7 10 0 0 0) "how-should-bail-algorithms-be-used" "judge-handing-computer-an-L.png" "A judge handing a computer an L" (Some "https://cdt.social/@clayton/111678731664758658");;
+add_blog_post_from_folder_thumb_contained "How Should Bail Algorithms Be Used" "Should bail algorithms be used today or in the future? Here's my stance. Written for Tech Roulette 2021, P4M3 - Justice Matrix" (Date.new_date_et 2021 7 10 0 0 0) "how-should-bail-algorithms-be-used" "judge-handing-computer-an-L.png" "A judge handing a computer an L" (None);;
 
-add_blog_post_from_folder_thumb_contained "A Theoretical Algorithm for Deciding Bail" "A quick look into creating a computer algorithm for deciding bail for someone awaiting trial. Written for Tech Roulette 2021, P4M2 - Justice Matrix" (Date.new_date_et 2021 7 10 0 0 0) "a-theoretical-algorithm-for-deciding-bail" "computer-holding-freedom-random.png" "Your freedom will cost 100 million dollars" (Some "https://cdt.social/@clayton/111678742369126381");;
+add_blog_post_from_folder_thumb_contained "A Theoretical Algorithm for Deciding Bail" "A quick look into creating a computer algorithm for deciding bail for someone awaiting trial. Written for Tech Roulette 2021, P4M2 - Justice Matrix" (Date.new_date_et 2021 7 10 0 0 0) "a-theoretical-algorithm-for-deciding-bail" "computer-holding-freedom-random.png" "Your freedom will cost 100 million dollars" (None);;
 
-add_blog_post_from_folder_thumb_contained "Recommendation Algorithms and Ethics" "A not-very-short not-very-source-heavy dive into recommendation algorithms and the ethical questions surrounding them. Written for Tech Roulette 2021, P4M1 - Justice Matrix" (Date.new_date_et 2021 7 9 0 0 0) "recommendation-algorithms-and-ethics" "youtube-handing-viewer-burning-baby.png" "YouTube logo handing viewer a burning baby" (Some "https://cdt.social/@clayton/111678761831022044");;
+add_blog_post_from_folder_thumb_contained "Recommendation Algorithms and Ethics" "A not-very-short not-very-source-heavy dive into recommendation algorithms and the ethical questions surrounding them. Written for Tech Roulette 2021, P4M1 - Justice Matrix" (Date.new_date_et 2021 7 9 0 0 0) "recommendation-algorithms-and-ethics" "youtube-handing-viewer-burning-baby.png" "YouTube logo handing viewer a burning baby" (None);;
 
 write_string_to_file "www/blog/index.html" (
     build_page
