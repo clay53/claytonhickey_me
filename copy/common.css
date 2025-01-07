@@ -158,3 +158,12 @@ img {
 select {
     max-width: 100%;
 }
+
+table,th,td {
+    border: 1px solid white;
+    border-collapse: collapse;
+}
+
+th,td {
+    padding: 0.5em;
+}
