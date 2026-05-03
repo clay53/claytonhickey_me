@@ -496,6 +496,8 @@ let add_blog_post_raw title description html_content rss_content canonical_path 
                 end;
             ], false));
             html_content;
+            html_div [("id", PString "reactionsDiv")] [
+            ];
             html_p ["<ml-s><span lang=\"en\">Title: </span><span lang=\"ja\">題名：</span></ml-s>" ^ title ^ "<br><ml-s><span lang=\"en\">Authors: </span><span lang=\"ja\">作家・</span></ml-s>Clayton Lopez Hickey<br><ml-s><span lang=\"en\">Published: </span><span lang=\"ja\">著した日付：</span></ml-s>" ^ Date.as_rss_date date ^ begin match edit_date with | Some edit_date -> "<br>Last updated: " ^ Date.as_rss_date edit_date | None -> "" end];
             html_div [] [
                 "<script>document.addEventListener(\"DOMContentLoaded\", () => {let d = new Date(); MLAAccessedPosition.innerHTML += ` Accessed ${d.getDay()} ${['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'][d.getMonth()]} ${d.getFullYear()}.`;})</script>";
