@@ -401,7 +401,7 @@ let build_tidbit header details =
     ], false))
 in
 write_string_to_file "www/index.html" (build_page
-    "<ml-s><span lang=\"en\" style=\"color: yellow;\">Clayton Hickey</span><span lang=\"ja\">クレイトン・ヒッキー</span></ml-s>"
+    "<ml-s><span lang=\"en\">Clayton Hickey</span><span lang=\"ja\">クレイトン・ヒッキー</span></ml-s>"
     "Clayton Hickey's Website"
     ""
     Home
