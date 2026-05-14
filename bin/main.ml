@@ -164,6 +164,7 @@ let build_page title description canonical_path nav_type og_image_path content =
         html_element_string "link" [("rel", PString "alternate"); ("type", PString "application/rss+xml"); ("title", PString "Clayton Hickey's Blog"); ("href", PString "/rss.xml")] SelfClosing;
         script_import_string "/scripts/nav.js";
         html_element_string "script" [("src", PString "/scripts/multilingual.js"); ("defer", PBool(true))] (List ([], false));
+        html_element_string "script" [("defer", PBool true); ("src", PString "https://umami.claytonhickey.me/script.js"); ("data-website-id", PString "ea59f6d2-df0d-4e81-b117-e3d3b06f6b23")] (List([], false));
     ], false))
     ^ html_element_string "body" [] (List ([
         html_div [("id", PString "htmlTitle"); ("style", PString "display: none;")] [title];
