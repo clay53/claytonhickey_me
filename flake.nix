@@ -14,7 +14,6 @@
       buildInputs = with pkgs; [
           webfs
           ocamlPackages.odoc
-          dune_3
           ocaml
           inotify-tools
           ocamlPackages.findlib
@@ -31,7 +30,6 @@
       src = ./.;
 
       buildInputs = with pkgs; [
-        dune_3
         ocaml
         ocamlPackages.findlib
         ocamlPackages.lambdasoup
@@ -44,8 +42,7 @@
         cp -r $src $out/build
         chmod -R +w $out/build
         cd $out/build
-        dune build
-        ocaml no_dune.ml
+        ocaml entry.ml
         mv $out/build/www $out/www
         rm -r $out/build
       '';

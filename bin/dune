@@ -1,6 +1,0 @@
-(executable
- (public_name claytonhickeyme)
- (name main)
- (modes byte exe)
- (libraries claytonhickeyme lambdasoup))
-(env (dev (flags (:standard -warn-error -A))))
